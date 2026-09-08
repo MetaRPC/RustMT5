@@ -1,4 +1,14 @@
-﻿use metarpc_mt5::{MT5Client, OrderRequest, TradeAction, AccountInfo};
+use metarpc_mt5::{MT5Client, OrderRequest, TradeAction, AccountInfo};
+
+#[tokio::test]
+async fn test_get_id_generation() {
+    let mut client = MT5Client::new("mt5.mrpc.pro", 443);
+    let id_res = client.get_id(2005432, "demo_pass").await;
+    assert!(id_res.is_ok());
+    let id = id_res.unwrap();
+    assert!(!id.is_empty());
+    assert_eq!(client.id.as_deref(), Some(id.as_str()));
+}
 
 #[tokio::test]
 async fn test_client_connection_lifecycle() {
@@ -8,6 +18,7 @@ async fn test_client_connection_lifecycle() {
     let conn_res = client.connect(1001, "demo_pass").await;
     assert!(conn_res.is_ok());
     assert!(client.is_connected());
+    assert!(client.id.is_some());
 
     let acc_res = client.get_account_info().await;
     assert!(acc_res.is_ok());
