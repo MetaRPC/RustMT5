@@ -1,6 +1,6 @@
 site_name: RustMT5 SDK Documentation
 site_url: https://metarpc.github.io/RustMT5/
-site_description: Asynchronous, memory-safe Rust SDK for MetaTrader 5 trading automation
+site_description: Complete Rust SDK for MetaTrader 5 trading automation via gRPC
 
 repo_name: MetaRPC/RustMT5
 repo_url: https://github.com/MetaRPC/RustMT5
@@ -13,7 +13,7 @@ theme:
     text: Inter
     code: JetBrains Mono
   icon:
-    logo: material/chart-line-variant
+    logo: material/language-rust
     repo: fontawesome/brands/github
   palette:
     - media: "(prefers-color-scheme: light)"
@@ -31,19 +31,25 @@ theme:
         icon: material/brightness-4
         name: Switch to light mode
   features:
-    - navigation.instant
     - navigation.tracking
     - navigation.expand
     - navigation.top
     - navigation.footer
     - content.code.copy
     - toc.follow
+  custom_dir: docs/includes
 
 extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/MetaRPC/RustMT5
       name: RustMT5 on GitHub
+
+extra_css:
+  - styles/custom.css
+
+extra_javascript:
+  - javascripts/ux.js
 
 markdown_extensions:
   - admonition
@@ -64,14 +70,30 @@ plugins:
   - search
 
 copyright: >
-  Copyright © 2024–2026 MetaRPC. MetaTrader is a trademark of MetaQuotes Software Corp.
+  Copyright © 2024–2025 MetaRPC. MT5 is a trademark of MetaQuotes Software Corp.
   This documentation is community-maintained and not affiliated with MetaQuotes.
 
 nav:
   - Home: index.md
-  - Getting Started: getting-started.md
-  - Connection & Authentication: connection.md
-  - Quotes & Market Data: quotes.md
-  - Trading & Orders: trading.md
-  - Account Information: account.md
-  - API Reference: api.md
+
+  - Guides:
+    - Getting Started: All_Guides/GETTING_STARTED.md
+    - Your First Project: All_Guides/Your_First_Project.md
+    - Project Map: All_Guides/PROJECT_MAP.md
+    - Glossary: All_Guides/GLOSSARY.md
+    - MT5 for Beginners: All_Guides/MT5_For_Beginners.md
+    - gRPC Streaming: All_Guides/GRPC_STREAM_MANAGEMENT.md
+    - Return Codes: All_Guides/RETURN_CODES_REFERENCE.md
+    - ENUMs Reference: All_Guides/ENUMS_USAGE_REFERENCE.md
+    - Protobuf Inspector: All_Guides/PROTOBUF_INSPECTOR_GUIDE.md
+    - UserCode Sandbox: All_Guides/USERCODE_SANDBOX_GUIDE.md
+    - Sync vs Async: All_Guides/SYNC_VS_ASYNC.md
+
+  - API Reference:
+    - MT5Account API: API_Reference/MT5Account.md
+    - MT5Service API: API_Reference/MT5Service.md
+    - MT5Sugar API: API_Reference/MT5Sugar.md
+
+  - Strategies:
+    - Master Overview: Strategies/Strategies.Master.Overview.md
+    - Presets: Strategies/Presets/AdaptiveMarketModePreset.md

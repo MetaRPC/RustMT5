@@ -1,33 +1,53 @@
-# RustMT5 SDK
+# RustMT5 SDK Documentation
 
-Welcome to the **RustMT5 SDK** documentation. This high-performance asynchronous Rust crate connects directly to MetaTrader 5 servers without requiring a local desktop terminal or Wine.
+**Complete Rust SDK for MetaTrader 5 trading automation via gRPC**
 
-## Key Features
+<div class="home-grid">
 
-- **Memory Safety & Performance**: Built purely in safe, modern Rust.
-- **Asynchronous Tokio Engine**: Non-blocking channel streams for ticks and order responses.
-- **Complete Order Lifecycle**: Market execution, pending limit/stop/stop-limit orders, SL/TP modify, and position closing.
-- **Type-Safe Models**: Strongly typed structs and enums with Serde serialization.
+<!-- Top Card (0) - Quick Start - Red-Orange -->
+<a href="All_Guides/Your_First_Project/" class="card card-0">
+  <span class="material-symbols-rounded">rocket_launch</span>
+  <h3>Quick Start</h3>
+  <p>Your first project from scratch in 10 minutes</p>
+</a>
 
-## Architecture
+<!-- Wide Card (1) - Getting Started - Yellow-Orange-Pink -->
+<a href="All_Guides/GETTING_STARTED/" class="card card-1 card-wide">
+  <span class="material-symbols-rounded">bolt</span>
+  <h3>Getting Started</h3>
+  <p>New here? Start with setup and overview</p>
+</a>
 
-```mermaid
-graph TD
-    A[Rust Application] -->|Tokio Async Socket| B[MT5Client]
-    B -->|Encrypted Protocol| C[MetaTrader 5 Server]
-    C -->|Price Feeds| B
-    C -->|Order Confirmations| B
-    B -->|mpsc::Receiver<Quote>| A
-```
+<!-- Middle Row (2-3) - Yellow-Blue & Purple -->
+<a href="All_Guides/PROJECT_MAP/" class="card card-2">
+  <span class="material-symbols-rounded">map</span>
+  <h3>Project Map</h3>
+  <p>Architecture overview</p>
+</a>
 
-## Quick Installation
+<a href="All_Guides/GLOSSARY/" class="card card-3">
+  <span class="material-symbols-rounded">menu_book</span>
+  <h3>Glossary</h3>
+  <p>MT5 terms and concepts</p>
+</a>
 
-Add to your `Cargo.toml`:
+<!-- Bottom Row (4-5-6) - Teal, Mint, Green -->
+<a href="API_Reference/MT5Service/" class="card card-4">
+  <span class="material-symbols-rounded">build</span>
+  <h3>MT5Service</h3>
+  <p>Wrapper methods layer</p>
+</a>
 
-```toml
-[dependencies]
-metarpc-mt5 = { git = "https://github.com/MetaRPC/RustMT5.git" }
-tokio = { version = "1.38", features = ["full"] }
-```
+<a href="API_Reference/MT5Account/" class="card card-5">
+  <span class="material-symbols-rounded">settings</span>
+  <h3>MT5Account</h3>
+  <p>Low-level gRPC protocol layer</p>
+</a>
 
-See [Getting Started](getting-started.md) to build your first strategy.
+<a href="API_Reference/MT5Sugar/" class="card card-6">
+  <span class="material-symbols-rounded">auto_awesome</span>
+  <h3>MT5Sugar</h3>
+  <p>High-level convenience API</p>
+</a>
+
+</div>
