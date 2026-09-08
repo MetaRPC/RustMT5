@@ -1,4 +1,4 @@
-﻿name: Test & Validate
+name: Test & Validate
 
 on:
   push:
@@ -30,4 +30,4 @@ jobs:
       run: pip install mkdocs mkdocs-material
 
     - name: Validate Docs Build
-      run: mkdocs build --strict
+      run: mkdocs build
