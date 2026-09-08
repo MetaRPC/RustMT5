@@ -448,6 +448,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#account-id-generation-getid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🆔 Account ID Generation (GetId)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🆔 Account ID Generation (GetId)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#calling-getid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calling GetId
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#minimal-connection-example" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1094,6 +1122,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#account-id-generation-getid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🆔 Account ID Generation (GetId)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🆔 Account ID Generation (GetId)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#calling-getid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calling GetId
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#minimal-connection-example" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1163,12 +1219,35 @@
 <li><strong>Configure Connection</strong>: Pass your API key / token along with the server address (<code>mt5.mrpc.pro:443</code>) in your connection settings.</li>
 </ol>
 <hr />
+<hr />
+<h2 id="account-id-generation-getid">🆔 Account ID Generation (<code>GetId</code>)<a class="headerlink" href="#account-id-generation-getid" title="Permanent link">¶</a></h2>
+<blockquote>
+<p>⚠️ <strong>Important</strong>: You must generate your deterministic account ID with <code>GetId</code> <strong>firstly</strong> before connecting or streaming.</p>
+</blockquote>
+<p>MetaRPC endpoints require two essential credentials for all operations:
+1. <strong><code>APIKey</code></strong>: Your personal authentication token from <a href="https://mrpc.pro/my">https://mrpc.pro/my</a> (obtained by registering at <a href="https://mrpc.pro/signup">https://mrpc.pro/signup</a>). Sent in the <code>APIKey</code> header.
+2. <strong><code>id</code></strong>: A deterministic account GUID generated from your MetaTrader <code>user</code> (login number) and <code>password</code>. The same credentials always produce the exact same GUID.</p>
+<h3 id="calling-getid">Calling GetId<a class="headerlink" href="#calling-getid" title="Permanent link">¶</a></h3>
+<h4 id="via-rest-api">Via REST API:<a class="headerlink" href="#via-rest-api" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="s2">"https://mt5.mrpc.pro/GetId?user=YOUR_LOGIN&amp;password=YOUR_PASSWORD"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">     </span>-H<span class="w"> </span><span class="s2">"APIKey: YOUR_API_KEY"</span>
+</code></pre></div>
+<p>Response:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e8d91060-c3d3-4f4d-8d2a-9e1b2c3d4e5f"</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="p">}</span>
+</code></pre></div></p>
+<h4 id="via-grpc">Via gRPC:<a class="headerlink" href="#via-grpc" title="Permanent link">¶</a></h4>
+<p>Send a <code>GetIdRequest</code> with <code>user</code> and <code>password</code> to the connection service before calling <code>ConnectEx</code>.</p>
+<p>Use this returned <code>id</code> GUID in the <code>id</code> header or session parameter for <code>ConnectEx</code>, <code>AccountSummary</code>, and all other terminal operations.</p>
 <h2 id="minimal-connection-example">🔌 Minimal Connection Example<a class="headerlink" href="#minimal-connection-example" title="Permanent link">¶</a></h2>
 <p>Here is how easy it is to initialize <code>MT5Account</code>, connect to your MetaTrader terminal, and retrieve your account balance:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>let mut account = MT5Account::new(user, password, grpc_server);
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>account.connect_by_server_name(server_name, "EURUSD", 30).await?;
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>let summary = account.account_summary().await?;
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>println!("Balance: {}, Equity: {}", summary.account_balance, summary.account_equity);
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>let mut account = MT5Account::new(user, password, grpc_server);
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>account.connect_by_server_name(server_name, "EURUSD", 30).await?;
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>let summary = account.account_summary().await?;
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>println!("Balance: {}, Equity: {}", summary.account_balance, summary.account_equity);
 </code></pre></div>
 <hr />
 <h2 id="documentation-road-map">🗺️ Documentation Road Map<a class="headerlink" href="#documentation-road-map" title="Permanent link">¶</a></h2>
