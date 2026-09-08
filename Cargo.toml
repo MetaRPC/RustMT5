@@ -1,0 +1,15 @@
+[package]
+name = "metarpc-mt5"
+version = "0.1.0"
+edition = "2021"
+authors = ["MetaRPC <info@metarpc.pro>"]
+description = "Asynchronous, memory-safe Rust SDK for MetaTrader 5 algorithmic trading automation"
+license = "MIT"
+repository = "https://github.com/MetaRPC/RustMT5"
+
+[dependencies]
+tokio = { version = "1.38", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
+async-trait = "0.1"

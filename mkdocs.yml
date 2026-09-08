@@ -1,0 +1,77 @@
+site_name: RustMT5 SDK Documentation
+site_url: https://metarpc.github.io/RustMT5/
+site_description: Asynchronous, memory-safe Rust SDK for MetaTrader 5 trading automation
+
+repo_name: MetaRPC/RustMT5
+repo_url: https://github.com/MetaRPC/RustMT5
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: en
+  font:
+    text: Inter
+    code: JetBrains Mono
+  icon:
+    logo: material/chart-line-variant
+    repo: fontawesome/brands/github
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - content.code.copy
+    - toc.follow
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/MetaRPC/RustMT5
+      name: RustMT5 on GitHub
+
+markdown_extensions:
+  - admonition
+  - md_in_html
+  - tables
+  - attr_list
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - toc:
+      permalink: "¶"
+      toc_depth: 3
+
+plugins:
+  - search
+
+copyright: >
+  Copyright © 2024–2026 MetaRPC. MetaTrader is a trademark of MetaQuotes Software Corp.
+  This documentation is community-maintained and not affiliated with MetaQuotes.
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Connection & Authentication: connection.md
+  - Quotes & Market Data: quotes.md
+  - Trading & Orders: trading.md
+  - Account Information: account.md
+  - API Reference: api.md
