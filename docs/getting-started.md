@@ -11,7 +11,7 @@ use metarpc_mt5::{MT5Client, OrderRequest, TradeAction};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut client = MT5Client::new("mt5.broker.com", 443);
+    let mut client = MT5Client::new("mt5.mrpc.pro", 443);
 
     client.connect(2005432, "account_pass").await?;
     println!("Connected to MT5!");
@@ -37,3 +37,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 ```
+
+
+> **Authentication Note**: Connecting to `mt5.mrpc.pro:443` requires a valid MetaRPC API key. Register for free at [https://mrpc.pro/signup](https://mrpc.pro/signup) and generate your token in [https://mrpc.pro/my](https://mrpc.pro/my).
+
