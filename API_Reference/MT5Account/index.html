@@ -2845,7 +2845,7 @@ and updates the instance GUID (self.id) from server response.</p>
 </ul>
 <div class="admonition example">
 <p class="admonition-title">Usage Example</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">account</span> <span class="o">=</span> <span class="n">MT5Account</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">"pass"</span><span class="p">,</span> <span class="n">grpc_server</span><span class="o">=</span><span class="s2">"localhost:9999"</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">account</span> <span class="o">=</span> <span class="n">MT5Account</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">"pass"</span><span class="p">,</span> <span class="n">grpc_server</span><span class="o">=</span><span class="s2">"mt5.mrpc.pro:443"</span><span class="p">)</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">await</span> <span class="n">account</span><span class="o">.</span><span class="n">connect_by_server_name</span><span class="p">(</span><span class="s2">"MetaQuotes-Demo"</span><span class="p">,</span> <span class="s2">"EURUSD"</span><span class="p">)</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Connected! Terminal GUID: </span><span class="si">{</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
@@ -2874,7 +2874,7 @@ and updates the instance GUID (self.id) from server response.</p>
 <td><code>host</code></td>
 <td>str</td>
 <td>-</td>
-<td>Server IP address or hostname (e.g., "mt5.broker.com")</td>
+<td>Server IP address or hostname (e.g., "mt5.mrpc.pro")</td>
 </tr>
 <tr>
 <td><code>port</code></td>
@@ -2915,8 +2915,8 @@ and updates the instance GUID (self.id) from server response.</p>
 </ul>
 <div class="admonition example">
 <p class="admonition-title">Usage Example</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">account</span> <span class="o">=</span> <span class="n">MT5Account</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">"pass"</span><span class="p">,</span> <span class="n">grpc_server</span><span class="o">=</span><span class="s2">"localhost:9999"</span><span class="p">)</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">await</span> <span class="n">account</span><span class="o">.</span><span class="n">connect_by_host_port</span><span class="p">(</span><span class="s2">"mt5.broker.com"</span><span class="p">,</span> <span class="mi">443</span><span class="p">,</span> <span class="s2">"EURUSD"</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">account</span> <span class="o">=</span> <span class="n">MT5Account</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">"pass"</span><span class="p">,</span> <span class="n">grpc_server</span><span class="o">=</span><span class="s2">"mt5.mrpc.pro:443"</span><span class="p">)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">await</span> <span class="n">account</span><span class="o">.</span><span class="n">connect_by_host_port</span><span class="p">(</span><span class="s2">"mt5.mrpc.pro"</span><span class="p">,</span> <span class="mi">443</span><span class="p">,</span> <span class="s2">"EURUSD"</span><span class="p">)</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Connected! Terminal GUID: </span><span class="si">{</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
 </div>

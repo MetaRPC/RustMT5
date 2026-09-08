@@ -437,6 +437,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#api-key-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔑 API Key &amp; Authentication
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#minimal-connection-example" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1072,6 +1083,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#api-key-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔑 API Key &amp; Authentication
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#minimal-connection-example" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1132,6 +1154,14 @@
 <p>Install RustMT5 via your standard Rust package manager:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cargo<span class="w"> </span>add<span class="w"> </span>metarpc-mt5
 </code></pre></div>
+<hr />
+<h2 id="api-key-authentication">🔑 API Key &amp; Authentication<a class="headerlink" href="#api-key-authentication" title="Permanent link">¶</a></h2>
+<p>Connecting to MetaRPC production endpoints (<code>mt5.mrpc.pro:443</code>) requires an API key:</p>
+<ol>
+<li><strong>Sign Up</strong>: Create an account for free at <a href="https://mrpc.pro/signup">https://mrpc.pro/signup</a>.</li>
+<li><strong>Generate API Key</strong>: In your MetaRPC Portal dashboard at <a href="https://mrpc.pro/my">https://mrpc.pro/my</a>, go to <strong>API Keys</strong> to generate and copy your personal API token.</li>
+<li><strong>Configure Connection</strong>: Pass your API key / token along with the server address (<code>mt5.mrpc.pro:443</code>) in your connection settings.</li>
+</ol>
 <hr />
 <h2 id="minimal-connection-example">🔌 Minimal Connection Example<a class="headerlink" href="#minimal-connection-example" title="Permanent link">¶</a></h2>
 <p>Here is how easy it is to initialize <code>MT5Account</code>, connect to your MetaTrader terminal, and retrieve your account balance:</p>

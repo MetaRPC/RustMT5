@@ -936,7 +936,7 @@
 <p>Managing connections with <code>MT5Client</code>.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">use</span><span class="w"> </span><span class="n">metarpc_mt5</span><span class="p">::</span><span class="n">MT5Client</span><span class="p">;</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MT5Client</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="s">"demo.broker.com"</span><span class="p">,</span><span class="w"> </span><span class="mi">443</span><span class="p">);</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MT5Client</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="s">"mt5.mrpc.pro"</span><span class="p">,</span><span class="w"> </span><span class="mi">443</span><span class="p">);</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="mi">2005432</span><span class="p">,</span><span class="w"> </span><span class="s">"password"</span><span class="p">).</span><span class="k">await</span><span class="o">?</span><span class="p">;</span>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">if</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">is_connected</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
@@ -945,6 +945,9 @@
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">client</span><span class="p">.</span><span class="n">disconnect</span><span class="p">().</span><span class="k">await</span><span class="p">;</span>
 </code></pre></div>
+<blockquote>
+<p><strong>Authentication Note</strong>: Connecting to <code>mt5.mrpc.pro:443</code> requires a valid MetaRPC API key. Register for free at <a href="https://mrpc.pro/signup">https://mrpc.pro/signup</a> and generate your token in <a href="https://mrpc.pro/my">https://mrpc.pro/my</a>.</p>
+</blockquote>
 
 
 
