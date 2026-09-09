@@ -437,10 +437,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-1-generate-account-id-getid" class="md-nav__link">
+  <a href="#step-1-create-your-project" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 1: Generate Account ID (GetId)
+        Step 1: Create Your Project
       
     </span>
   </a>
@@ -448,10 +448,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-create-your-project" class="md-nav__link">
+  <a href="#step-2-write-your-trading-code" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: Create Your Project
+        Step 2: Write Your Trading Code
       
     </span>
   </a>
@@ -459,21 +459,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-write-your-trading-code" class="md-nav__link">
+  <a href="#step-3-run-the-program" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: Write Your Trading Code
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-4-run-the-program" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 4: Run the Program
+        Step 3: Run the Program
       
     </span>
   </a>
@@ -1049,10 +1038,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-1-generate-account-id-getid" class="md-nav__link">
+  <a href="#step-1-create-your-project" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 1: Generate Account ID (GetId)
+        Step 1: Create Your Project
       
     </span>
   </a>
@@ -1060,10 +1049,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-create-your-project" class="md-nav__link">
+  <a href="#step-2-write-your-trading-code" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: Create Your Project
+        Step 2: Write Your Trading Code
       
     </span>
   </a>
@@ -1071,21 +1060,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-write-your-trading-code" class="md-nav__link">
+  <a href="#step-3-run-the-program" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: Write Your Trading Code
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-4-run-the-program" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 4: Run the Program
+        Step 3: Run the Program
       
     </span>
   </a>
@@ -1134,39 +1112,30 @@
 2. Generate your API token in your dashboard at <a href="https://mrpc.pro/my">https://mrpc.pro/my</a>.
 3. Set your token in your environment or connection config.</p>
 <hr />
-<hr />
-<h2 id="step-1-generate-account-id-getid">Step 1: Generate Account ID (<code>GetId</code>)<a class="headerlink" href="#step-1-generate-account-id-getid" title="Permanent link">¶</a></h2>
-<blockquote>
-<p>⚠️ <strong>Prerequisite</strong>: You must generate your deterministic account ID with <code>GetId</code> <strong>firstly</strong> before connecting or streaming.</p>
-</blockquote>
-<p>MetaRPC endpoints route terminal calls using a deterministic GUID (<code>id</code>) derived from your account login number and password:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="s2">"https://mt5.mrpc.pro/GetId?user=YOUR_LOGIN&amp;password=YOUR_PASSWORD"</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">     </span>-H<span class="w"> </span><span class="s2">"APIKey: YOUR_API_KEY"</span>
-</code></pre></div>
-<p>Save the resulting <code>data.id</code> token. This token is passed as the <code>id</code> parameter / header in Step 2.</p>
-<h2 id="step-2-create-your-project">Step 2: Create Your Project<a class="headerlink" href="#step-2-create-your-project" title="Permanent link">¶</a></h2>
+<h2 id="step-1-create-your-project">Step 1: Create Your Project<a class="headerlink" href="#step-1-create-your-project" title="Permanent link">¶</a></h2>
 <p>Create a new directory for your trading bot:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mkdir<span class="w"> </span>my_rustmt5_bot
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">cd</span><span class="w"> </span>my_rustmt5_bot
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir<span class="w"> </span>my_rustmt5_bot
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>my_rustmt5_bot
 </code></pre></div>
 <p>Install the package:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>cargo<span class="w"> </span>add<span class="w"> </span>metarpc-mt5
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cargo<span class="w"> </span>add<span class="w"> </span>metarpc-mt5
 </code></pre></div>
 <hr />
-<h2 id="step-3-write-your-trading-code">Step 3: Write Your Trading Code<a class="headerlink" href="#step-3-write-your-trading-code" title="Permanent link">¶</a></h2>
+<h2 id="step-2-write-your-trading-code">Step 2: Write Your Trading Code<a class="headerlink" href="#step-2-write-your-trading-code" title="Permanent link">¶</a></h2>
 <p>Create your main application file and paste the following snippet:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>use metarpc_mt5::MT5Account;
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>let mut account = MT5Account::new(user, password, grpc_server);
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>account.connect_by_server_name(server_name, "EURUSD", 30).await?;
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>let summary = account.account_summary().await?;
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>println!("Balance: {}, Equity: {}", summary.account_balance, summary.account_equity);
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>use metarpc_mt5::MT5Account;
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>// Account ID generation (GetId) and authentication are handled automatically
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>let mut account = MT5Account::new(user, password, grpc_server, apiKey);
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>account.connect_by_server_name(server_name, "EURUSD", 30).await?;
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>let summary = account.account_summary().await?;
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>println!("Balance: {}, Equity: {}", summary.account_balance, summary.account_equity);
 </code></pre></div>
 <hr />
-<h2 id="step-4-run-the-program">Step 4: Run the Program<a class="headerlink" href="#step-4-run-the-program" title="Permanent link">¶</a></h2>
+<h2 id="step-3-run-the-program">Step 3: Run the Program<a class="headerlink" href="#step-3-run-the-program" title="Permanent link">¶</a></h2>
 <p>Run your application:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Verify connection output</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># Balance: 10000.00, Equity: 10000.00</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Verify connection output</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># Balance: 10000.00, Equity: 10000.00</span>
 </code></pre></div>
 <hr />
 <h2 id="next-steps">🚀 Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
