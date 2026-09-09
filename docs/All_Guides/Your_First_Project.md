@@ -13,23 +13,7 @@ To connect to MetaRPC endpoints (`mt5.mrpc.pro:443`), obtain your API key:
 
 ---
 
-
----
-
-## Step 1: Generate Account ID (`GetId`)
-
-> ⚠️ **Prerequisite**: You must generate your deterministic account ID with `GetId` **firstly** before connecting or streaming.
-
-MetaRPC endpoints route terminal calls using a deterministic GUID (`id`) derived from your account login number and password:
-
-```bash
-curl -X GET "https://mt5.mrpc.pro/GetId?user=YOUR_LOGIN&password=YOUR_PASSWORD" \
-     -H "APIKey: YOUR_API_KEY"
-```
-
-Save the resulting `data.id` token. This token is passed as the `id` parameter / header in Step 2.
-
-## Step 2: Create Your Project
+## Step 1: Create Your Project
 
 Create a new directory for your trading bot:
 
@@ -46,14 +30,15 @@ cargo add metarpc-mt5
 
 ---
 
-## Step 3: Write Your Trading Code
+## Step 2: Write Your Trading Code
 
 Create your main application file and paste the following snippet:
 
 ```
 use metarpc_mt5::MT5Account;
 
-let mut account = MT5Account::new(user, password, grpc_server);
+// Account ID generation (GetId) and authentication are handled automatically
+let mut account = MT5Account::new(user, password, grpc_server, apiKey);
 account.connect_by_server_name(server_name, "EURUSD", 30).await?;
 let summary = account.account_summary().await?;
 println!("Balance: {}, Equity: {}", summary.account_balance, summary.account_equity);
@@ -61,7 +46,7 @@ println!("Balance: {}, Equity: {}", summary.account_balance, summary.account_equ
 
 ---
 
-## Step 4: Run the Program
+## Step 3: Run the Program
 
 Run your application:
 

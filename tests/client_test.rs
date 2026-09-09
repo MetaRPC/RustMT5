@@ -1,6 +1,12 @@
 use metarpc_mt5::{MT5Client, OrderRequest, TradeAction, AccountInfo};
 
 #[tokio::test]
+async fn test_deterministic_id() {
+    let id = MT5Client::compute_deterministic_id(12345678, "demo_password");
+    assert_eq!(id, "6ce74465-7aa9-3a79-2bd8-e40241b50c43");
+}
+
+#[tokio::test]
 async fn test_get_id_generation() {
     let mut client = MT5Client::new("mt5.mrpc.pro", 443);
     let id_res = client.get_id(2005432, "demo_pass").await;

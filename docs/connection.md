@@ -1,17 +1,8 @@
 
-## 🆔 Generate Account ID (`GetId`)
+## 🆔 Automatic Account ID & Authentication
 
-> ⚠️ **Important**: You must generate your deterministic account ID with `GetId` **firstly** before connecting or streaming.
-
-Before establishing a connection, call `GetId` with your trading account number and password to obtain your deterministic terminal GUID:
-
-```bash
-curl -X GET "https://mt5.mrpc.pro/GetId?user=YOUR_LOGIN&password=YOUR_PASSWORD" \
-     -H "APIKey: YOUR_API_KEY"
-```
-
-The resulting `id` must be provided as the `id` header alongside `APIKey` for all subsequent operations.
-
+MetaRPC endpoints route calls using a deterministic terminal GUID (`id`) derived from your login and password.
+The SDK automatically computes and attaches both your `id` and `APIKey` headers to all terminal calls — no manual `GetId` or curl steps required.
 
 # Connection & Authentication
 

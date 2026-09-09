@@ -2,22 +2,19 @@ use metarpc_mt5::{MT5Client, OrderRequest, TradeAction};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut client = MT5Client::new("mt5.mrpc.pro", 443);
+    let api_key = std::env::var("MRPC_API_KEY").unwrap_or_else(|_| "YOUR_API_KEY_HERE".to_string());
+    let mut client = MT5Client::with_api_key("mt5.mrpc.pro", 443, api_key);
 
-    println!("Step 1: Generating Account ID (GetId)...");
-    let account_id = client.get_id(2005432, "demo_password").await?;
-    println!("Generated Account ID: {}", account_id);
-
-    println!("\nStep 2: Connecting to MT5 (mt5.mrpc.pro:443)...");
+    println!("Connecting to MT5 (mt5.mrpc.pro:443)...");
     client.connect(2005432, "demo_password").await?;
-    println!("Connected successfully!");
+    println!("Connected successfully! Account ID: {}", client.id.as_deref().unwrap_or(""));
 
-    println!("\nStep 3: Querying Account Balance...");
+    println!("\nStep 1: Querying Account Balance...");
     let acc = client.get_account_info().await?;
     println!("Account: {} ({})", acc.login, acc.name);
     println!("Account Balance: {} {}", acc.balance, acc.currency);
 
-    println!("\nStep 4: Executing Market Order...");
+    println!("\nStep 2: Executing Market Order...");
     let req = OrderRequest {
         symbol: "EURUSD".to_string(),
         action: TradeAction::Buy,
