@@ -5337,6 +5337,202 @@ pub struct OpenTerminalChartWithEaData {
     #[prost(int64, tag = "1")]
     pub chart_id: i64,
 }
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AttachEaRequest {
+    #[prost(string, tag = "1")]
+    pub session_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub ea_file_name: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub symbol_name: ::prost::alloc::string::String,
+    #[prost(enumeration = "EnumOpenTerminalChartWithEaChatPeriod", tag = "4")]
+    pub chart_period: i32,
+    #[prost(message, repeated, tag = "5")]
+    pub ea_parameters: ::prost::alloc::vec::Vec<OpenTerminalChartWithEaParameter>,
+    #[prost(bytes = "vec", optional, tag = "6")]
+    pub ea_file_content: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
+    #[prost(double, optional, tag = "7")]
+    pub max_cpu_percent: ::core::option::Option<f64>,
+    #[prost(int64, optional, tag = "8")]
+    pub max_ram_bytes: ::core::option::Option<i64>,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AttachEaReply {
+    #[prost(oneof = "attach_ea_reply::Response", tags = "1, 2")]
+    pub response: ::core::option::Option<attach_ea_reply::Response>,
+}
+/// Nested message and enum types in `AttachEaReply`.
+pub mod attach_ea_reply {
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum Response {
+        #[prost(message, tag = "1")]
+        Data(super::AttachEaData),
+        #[prost(message, tag = "2")]
+        Error(super::Error),
+    }
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AttachEaData {
+    #[prost(string, tag = "1")]
+    pub ea_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub ea_terminal_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub parent_session_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "4")]
+    pub ea_name: ::prost::alloc::string::String,
+    #[prost(string, tag = "5")]
+    pub state: ::prost::alloc::string::String,
+    #[prost(int32, tag = "6")]
+    pub process_id: i32,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetRunningEasRequest {
+    #[prost(string, optional, tag = "1")]
+    pub session_id: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, optional, tag = "2")]
+    pub ea_id: ::core::option::Option<::prost::alloc::string::String>,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetRunningEasReply {
+    #[prost(oneof = "get_running_eas_reply::Response", tags = "1, 2")]
+    pub response: ::core::option::Option<get_running_eas_reply::Response>,
+}
+/// Nested message and enum types in `GetRunningEasReply`.
+pub mod get_running_eas_reply {
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum Response {
+        #[prost(message, tag = "1")]
+        Data(super::GetRunningEasData),
+        #[prost(message, tag = "2")]
+        Error(super::Error),
+    }
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetRunningEasData {
+    #[prost(message, repeated, tag = "1")]
+    pub eas: ::prost::alloc::vec::Vec<RunningEaInfo>,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct RunningEaInfo {
+    #[prost(string, tag = "1")]
+    pub ea_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub ea_name: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub parent_session_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "4")]
+    pub ea_terminal_id: ::prost::alloc::string::String,
+    #[prost(int32, tag = "5")]
+    pub process_id: i32,
+    #[prost(string, tag = "6")]
+    pub symbol: ::prost::alloc::string::String,
+    #[prost(string, tag = "7")]
+    pub period: ::prost::alloc::string::String,
+    #[prost(string, tag = "8")]
+    pub state: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "9")]
+    pub started_at: ::core::option::Option<::prost_types::Timestamp>,
+    #[prost(double, tag = "10")]
+    pub ea_cpu_percent: f64,
+    #[prost(double, tag = "11")]
+    pub ref_cpu_percent: f64,
+    #[prost(double, tag = "12")]
+    pub cpu_ratio: f64,
+    #[prost(int64, tag = "13")]
+    pub ea_ram_bytes: i64,
+    #[prost(int64, tag = "14")]
+    pub ref_ram_bytes: i64,
+    #[prost(double, tag = "15")]
+    pub ram_ratio: f64,
+    #[prost(double, tag = "16")]
+    pub resource_multiplier: f64,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetEaLogsRequest {
+    #[prost(string, tag = "1")]
+    pub ea_id: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "2")]
+    pub log_type: ::core::option::Option<::prost::alloc::string::String>,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetEaLogsReply {
+    #[prost(oneof = "get_ea_logs_reply::Response", tags = "1, 2")]
+    pub response: ::core::option::Option<get_ea_logs_reply::Response>,
+}
+/// Nested message and enum types in `GetEaLogsReply`.
+pub mod get_ea_logs_reply {
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum Response {
+        #[prost(message, tag = "1")]
+        Data(super::GetEaLogsData),
+        #[prost(message, tag = "2")]
+        Error(super::Error),
+    }
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetEaLogsData {
+    #[prost(message, repeated, tag = "1")]
+    pub rows: ::prost::alloc::vec::Vec<EaLogRow>,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct EaLogRow {
+    #[prost(message, optional, tag = "1")]
+    pub time: ::core::option::Option<::prost_types::Timestamp>,
+    #[prost(string, tag = "2")]
+    pub source: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub message: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StopEaRequest {
+    #[prost(string, tag = "1")]
+    pub ea_id: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "2")]
+    pub reason: ::core::option::Option<::prost::alloc::string::String>,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StopEaReply {
+    #[prost(oneof = "stop_ea_reply::Response", tags = "1, 2")]
+    pub response: ::core::option::Option<stop_ea_reply::Response>,
+}
+/// Nested message and enum types in `StopEaReply`.
+pub mod stop_ea_reply {
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum Response {
+        #[prost(message, tag = "1")]
+        Data(super::StopEaData),
+        #[prost(message, tag = "2")]
+        Error(super::Error),
+    }
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StopEaData {
+    #[prost(bool, tag = "1")]
+    pub success: bool,
+    #[prost(string, tag = "2")]
+    pub ea_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub message: ::prost::alloc::string::String,
+}
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum EaParamType {
@@ -5684,6 +5880,97 @@ pub mod charts_client {
                 .insert(GrpcMethod::new("mt5_term_api.Charts", "GetEaParams"));
             self.inner.unary(req, path, codec).await
         }
+        pub async fn attach_ea(
+            &mut self,
+            request: impl tonic::IntoRequest<super::AttachEaRequest>,
+        ) -> std::result::Result<tonic::Response<super::AttachEaReply>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/mt5_term_api.Charts/AttachEa",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("mt5_term_api.Charts", "AttachEa"));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn get_running_eas(
+            &mut self,
+            request: impl tonic::IntoRequest<super::GetRunningEasRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::GetRunningEasReply>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/mt5_term_api.Charts/GetRunningEas",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("mt5_term_api.Charts", "GetRunningEas"));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn get_ea_logs(
+            &mut self,
+            request: impl tonic::IntoRequest<super::GetEaLogsRequest>,
+        ) -> std::result::Result<tonic::Response<super::GetEaLogsReply>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/mt5_term_api.Charts/GetEaLogs",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("mt5_term_api.Charts", "GetEaLogs"));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn stop_ea(
+            &mut self,
+            request: impl tonic::IntoRequest<super::StopEaRequest>,
+        ) -> std::result::Result<tonic::Response<super::StopEaReply>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/mt5_term_api.Charts/StopEa",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("mt5_term_api.Charts", "StopEa"));
+            self.inner.unary(req, path, codec).await
+        }
     }
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -5814,9 +6101,6 @@ pub struct ConnectExRequest {
     /// MT cluster name. \[Required\]
     #[prost(string, tag = "3")]
     pub mt_cluster_name: ::prost::alloc::string::String,
-    /// Base chart symbol \[Optional\]
-    #[prost(string, optional, tag = "4")]
-    pub base_chart_symbol: ::core::option::Option<::prost::alloc::string::String>,
     /// EA files to add to terminal instance \[Optional\]
     #[prost(message, repeated, tag = "5")]
     pub experts_to_add: ::prost::alloc::vec::Vec<ExpertAdviser>,
@@ -5832,14 +6116,11 @@ pub struct ConnectExRequest {
 }
 /// Rebuild a terminal from token_details_mt5. All the credentials (User/Password/Server or
 /// Host+Port, proxy, servers.dat, PFX, HardwareId, Build) come from the DB row; the request
-/// carries only optional wait/base-chart overrides. The terminal id MUST be supplied in the
+/// carries only optional wait overrides. The terminal id MUST be supplied in the
 /// grpc 'id' header (same as every other Connect*/query call). \[DefaultValues\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ConnectByTokenRequest {
-    /// override the base chart symbol \[Optional\]
-    #[prost(string, optional, tag = "1")]
-    pub base_chart_symbol: ::core::option::Option<::prost::alloc::string::String>,
     /// override how long to wait for the terminal (default 120) \[Optional\]
     #[prost(uint32, optional, tag = "2")]
     pub timeout_seconds: ::core::option::Option<u32>,
