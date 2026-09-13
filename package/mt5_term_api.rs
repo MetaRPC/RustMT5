@@ -6546,7 +6546,7 @@ pub mod on_connect_state_reply {
 pub struct ConnectStateData {
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
-    /// "Queued", "Starting", "Authorizing", "Syncing", "Connected", "WrongPassword", "CannotConnect", "Stopped", "Expired"
+    /// "Queued", "Starting", "Authorizing", "Syncing", "Connected", "WrongPassword", "Unreachable", "Stopped", "Expired"
     #[prost(string, tag = "2")]
     pub state: ::prost::alloc::string::String,
     #[prost(bool, tag = "3")]
