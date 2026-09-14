@@ -5533,6 +5533,39 @@ pub struct StopEaData {
     #[prost(string, tag = "3")]
     pub message: ::prost::alloc::string::String,
 }
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StartEaRequest {
+    #[prost(string, tag = "1")]
+    pub ea_id: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StartEaReply {
+    #[prost(oneof = "start_ea_reply::Response", tags = "1, 2")]
+    pub response: ::core::option::Option<start_ea_reply::Response>,
+}
+/// Nested message and enum types in `StartEaReply`.
+pub mod start_ea_reply {
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum Response {
+        #[prost(message, tag = "1")]
+        Data(super::StartEaData),
+        #[prost(message, tag = "2")]
+        Error(super::Error),
+    }
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StartEaData {
+    #[prost(bool, tag = "1")]
+    pub success: bool,
+    #[prost(string, tag = "2")]
+    pub ea_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub message: ::prost::alloc::string::String,
+}
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum EaParamType {
@@ -5969,6 +6002,28 @@ pub mod charts_client {
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(GrpcMethod::new("mt5_term_api.Charts", "StopEa"));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn start_ea(
+            &mut self,
+            request: impl tonic::IntoRequest<super::StartEaRequest>,
+        ) -> std::result::Result<tonic::Response<super::StartEaReply>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/mt5_term_api.Charts/StartEa",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("mt5_term_api.Charts", "StartEa"));
             self.inner.unary(req, path, codec).await
         }
     }
