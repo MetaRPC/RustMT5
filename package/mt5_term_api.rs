@@ -5456,6 +5456,12 @@ pub struct RunningEaInfo {
     pub ram_ratio: f64,
     #[prost(double, tag = "16")]
     pub resource_multiplier: f64,
+    #[prost(double, tag = "17")]
+    pub metered_hours: f64,
+    #[prost(double, tag = "18")]
+    pub charged_amount: f64,
+    #[prost(message, optional, tag = "19")]
+    pub stopped_at: ::core::option::Option<::prost_types::Timestamp>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
