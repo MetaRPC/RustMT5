@@ -961,8 +961,8 @@
 
 
 <h2 id="automatic-account-id-authentication">🆔 Automatic Account ID &amp; Authentication<a class="headerlink" href="#automatic-account-id-authentication" title="Permanent link">¶</a></h2>
-<p>MetaRPC endpoints route calls using a deterministic terminal GUID (<code>id</code>) derived from your login and password.
-The SDK automatically computes and attaches both your <code>id</code> and <code>APIKey</code> headers to all terminal calls — no manual <code>GetId</code> or curl steps required.</p>
+<p>MetaRPC endpoints route calls using a terminal session GUID (<code>id</code>).
+When connecting via <code>Connect</code> / <code>ConnectEx</code>, the server automatically generates and returns your session GUID (<code>terminalInstanceGuid</code>). The SDK captures this ID and attaches both your <code>id</code> and <code>APIKey</code> headers to all subsequent terminal calls — no manual <code>GetId</code> or curl steps required.</p>
 <h1 id="connection-authentication">Connection &amp; Authentication<a class="headerlink" href="#connection-authentication" title="Permanent link">¶</a></h1>
 <p>Managing connections with <code>MT5Client</code>.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">use</span><span class="w"> </span><span class="n">metarpc_mt5</span><span class="p">::</span><span class="n">MT5Client</span><span class="p">;</span>

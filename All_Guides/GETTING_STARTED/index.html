@@ -1187,11 +1187,11 @@
 <hr />
 <hr />
 <h2 id="automatic-account-id-authentication">🆔 Automatic Account ID &amp; Authentication<a class="headerlink" href="#automatic-account-id-authentication" title="Permanent link">¶</a></h2>
-<p>MetaRPC endpoints require two credentials for all terminal operations:
+<p>MetaRPC endpoints require authentication and session management:
 1. <strong><code>APIKey</code></strong>: Your personal authentication token from <a href="https://mrpc.pro/my">https://mrpc.pro/my</a> (obtained by registering at <a href="https://mrpc.pro/signup">https://mrpc.pro/signup</a>). Sent in the <code>APIKey</code> header.
-2. <strong><code>id</code></strong>: A deterministic account GUID derived from your MetaTrader <code>user</code> (login number) and <code>password</code>.</p>
+2. <strong><code>id</code></strong>: A terminal session GUID returned by <code>Connect</code> / <code>ConnectEx</code> (<code>terminalInstanceGuid</code>).</p>
 <blockquote>
-<p>💡 <strong>Seamless Automation</strong>: You do not need to call <code>GetId</code> manually. The SDK automatically derives your deterministic account ID from your credentials upon initialization and attaches both the <code>id</code> and <code>APIKey</code> headers to all requests and streaming subscriptions.</p>
+<p>💡 <strong>Seamless Automation</strong>: You do not need to call <code>GetId</code> or provide an <code>id</code> header when connecting. The server automatically generates a session GUID upon connection and returns it to the caller. The SDK automatically captures this session ID and attaches it alongside your <code>APIKey</code> to all subsequent requests and streaming subscriptions.</p>
 </blockquote>
 <h2 id="minimal-connection-example">🔌 Minimal Connection Example<a class="headerlink" href="#minimal-connection-example" title="Permanent link">¶</a></h2>
 <p>Here is how easy it is to initialize <code>MT5Account</code>, connect to your MetaTrader terminal, and retrieve your account balance:</p>

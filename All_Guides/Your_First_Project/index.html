@@ -1125,7 +1125,7 @@
 <p>Create your main application file and paste the following snippet:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>use metarpc_mt5::MT5Account;
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>// Account ID generation (GetId) and authentication are handled automatically
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>// Session ID generation on Connect and authentication are handled automatically
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>let mut account = MT5Account::new(user, password, grpc_server, apiKey);
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>account.connect_by_server_name(server_name, "EURUSD", 30).await?;
 <a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>let summary = account.account_summary().await?;

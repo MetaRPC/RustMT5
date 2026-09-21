@@ -946,7 +946,7 @@
 
 <h1 id="rustmt5-sdk-documentation">RustMT5 SDK Documentation<a class="headerlink" href="#rustmt5-sdk-documentation" title="Permanent link">¶</a></h1>
 <blockquote>
-<p>ℹ️ <strong>Account ID Note (<code>GetId</code>)</strong>: MetaRPC requires generating a deterministic account GUID via <code>GetId</code> using your trading account login and password before connecting or streaming. Both <code>APIKey</code> and <code>id</code> headers are required on all terminal requests.</p>
+<p>ℹ️ <strong>Account ID / Session ID</strong>: When connecting via <code>Connect</code> / <code>ConnectEx</code>, MetaRPC automatically generates a terminal session GUID and returns it in <code>terminalInstanceGuid</code>. There is no need to call <code>GetId</code> or supply an <code>id</code> header prior to connecting. Subsequent calls (such as subscriptions or order requests) use this session ID automatically.</p>
 </blockquote>
 <p><strong>Complete Rust SDK for MetaTrader 5 trading automation via gRPC</strong></p>
 <div class="home-grid">
