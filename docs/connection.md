@@ -1,8 +1,8 @@
 
 ## 🆔 Automatic Account ID & Authentication
 
-MetaRPC endpoints route calls using a deterministic terminal GUID (`id`) derived from your login and password.
-The SDK automatically computes and attaches both your `id` and `APIKey` headers to all terminal calls — no manual `GetId` or curl steps required.
+MetaRPC endpoints route calls using a terminal session GUID (`id`).
+When connecting via `Connect` / `ConnectEx`, the server automatically generates and returns your session GUID (`terminalInstanceGuid`). The SDK captures this ID and attaches both your `id` and `APIKey` headers to all subsequent terminal calls — no manual `GetId` or curl steps required.
 
 # Connection & Authentication
 

@@ -37,7 +37,7 @@ Create your main application file and paste the following snippet:
 ```
 use metarpc_mt5::MT5Account;
 
-// Account ID generation (GetId) and authentication are handled automatically
+// Session ID generation on Connect and authentication are handled automatically
 let mut account = MT5Account::new(user, password, grpc_server, apiKey);
 account.connect_by_server_name(server_name, "EURUSD", 30).await?;
 let summary = account.account_summary().await?;
