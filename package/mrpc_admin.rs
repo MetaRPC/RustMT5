@@ -55,6 +55,18 @@ pub struct GetSessionRestoreStatusReply {
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+pub struct KillAllTrialTerminalsReply {
+    #[prost(int32, tag = "1")]
+    pub killed_count: i32,
+    #[prost(string, repeated, tag = "2")]
+    pub killed_terminal_ids: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    #[prost(string, tag = "3")]
+    pub message: ::prost::alloc::string::String,
+    #[prost(string, tag = "4")]
+    pub error: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetSessionRestoreLogsRequest {
     #[prost(string, tag = "1")]
     pub admin_key: ::prost::alloc::string::String,
@@ -931,6 +943,61 @@ pub mod admin_api_client {
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new("mrpc_admin.AdminApi", "GetSessionRestoreStatus"),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        /// Kills all active trial terminals across ALL pods of this StatefulSet/Deployment
+        /// and marks them stopped in database.
+        pub async fn kill_all_trial_terminals(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ActiveTerminalsRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::KillAllTrialTerminalsReply>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/mrpc_admin.AdminApi/KillAllTrialTerminals",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("mrpc_admin.AdminApi", "KillAllTrialTerminals"));
+            self.inner.unary(req, path, codec).await
+        }
+        /// Kills all active trial terminals on THIS pod.
+        pub async fn kill_all_trial_terminals_local(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ActiveTerminalsRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::KillAllTrialTerminalsReply>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/mrpc_admin.AdminApi/KillAllTrialTerminalsLocal",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("mrpc_admin.AdminApi", "KillAllTrialTerminalsLocal"),
                 );
             self.inner.unary(req, path, codec).await
         }
