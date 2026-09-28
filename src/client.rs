@@ -3,8 +3,8 @@ use crate::error::MT5Error;
 use tokio::sync::mpsc;
 
 pub struct MT5Client {
-    host: String,
-    port: u16,
+    pub host: String,
+    pub port: u16,
     pub api_key: Option<String>,
     pub id: Option<String>,
     connected: bool,
