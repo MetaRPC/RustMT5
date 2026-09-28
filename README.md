@@ -17,6 +17,27 @@ cargo add rustmt5
 
 ---
 
+## 🏃 How to Run Examples
+
+Clone the repository and run the quickstart example out-of-the-box:
+
+```bash
+git clone https://github.com/MetaRPC/RustMT5.git
+cd RustMT5
+
+# 1. Run with default TRIAL key:
+cargo run --example quickstart
+
+# 2. Or pass your MetaRPC API key directly as an argument:
+cargo run --example quickstart -- your_api_key_here
+
+# 3. Or use the MRPC_API_KEY environment variable:
+export MRPC_API_KEY="your_api_key_here"        # Windows CMD: set MRPC_API_KEY=your_api_key_here
+cargo run --example quickstart                 # Windows PowerShell: $env:MRPC_API_KEY="your_api_key_here"
+```
+
+---
+
 ## 🔑 API Key & Authentication
 
 Connecting to MetaRPC production endpoints (`mt5.mrpc.pro:443`) requires an API key:
@@ -24,9 +45,6 @@ Connecting to MetaRPC production endpoints (`mt5.mrpc.pro:443`) requires an API 
 1. **Sign Up**: Create an account for free at [https://mrpc.pro/signup](https://mrpc.pro/signup).
 2. **Generate API Key**: In your MetaRPC Portal dashboard at [https://mrpc.pro/my](https://mrpc.pro/my), go to **API Keys** to generate and copy your personal API token.
 3. **Configure Connection**: Pass your API key / token along with the server address (`mt5.mrpc.pro:443`) in your connection settings.
-
----
-
 
 ---
 
