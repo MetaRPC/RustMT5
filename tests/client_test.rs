@@ -32,7 +32,7 @@ async fn test_client_connection_lifecycle() {
     assert_eq!(acc.currency, "USD");
     assert!(acc.balance > 0.0);
 
-    client.disconnect().await;
+    client.disconnect(true).await;
     assert!(!client.is_connected());
 }
 

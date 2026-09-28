@@ -163,8 +163,13 @@ impl MT5Client {
         Ok(())
     }
 
-    pub async fn disconnect(&mut self) {
+    pub async fn disconnect(&mut self, delete: bool) {
         self.connected = false;
+        let _ = delete;
+    }
+
+    pub async fn disconnect_default(&mut self) {
+        self.disconnect(false).await;
     }
 
     pub fn is_connected(&self) -> bool {

@@ -6435,6 +6435,8 @@ pub struct TerminalHealthCheck {
 pub struct DisconnectRequest {
     #[prost(string, optional, tag = "1")]
     pub reason: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(bool, optional, tag = "2")]
+    pub delete: ::core::option::Option<bool>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
