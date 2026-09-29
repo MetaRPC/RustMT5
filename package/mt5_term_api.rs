@@ -13142,6 +13142,16 @@ pub struct MarketTradeCountData {
     pub market_name: ::prost::alloc::string::String,
     #[prost(int32, tag = "2")]
     pub count: i32,
+    #[prost(double, tag = "3")]
+    pub lots: f64,
+    #[prost(double, tag = "4")]
+    pub profit: f64,
+    #[prost(double, tag = "5")]
+    pub win_rate: f64,
+    #[prost(int32, tag = "6")]
+    pub won_count: i32,
+    #[prost(int32, tag = "7")]
+    pub lost_count: i32,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -13206,6 +13216,38 @@ pub struct StatsWithChartsData {
     pub stats: ::core::option::Option<StatsData>,
     #[prost(message, repeated, tag = "2")]
     pub charts: ::prost::alloc::vec::Vec<EquityPointData>,
+    #[prost(message, repeated, tag = "3")]
+    pub trades: ::prost::alloc::vec::Vec<TradeHistoryItemData>,
+    #[prost(message, repeated, tag = "4")]
+    pub open_trades: ::prost::alloc::vec::Vec<TradeHistoryItemData>,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct TradeHistoryItemData {
+    #[prost(int64, tag = "1")]
+    pub ticket: i64,
+    #[prost(string, tag = "2")]
+    pub symbol: ::prost::alloc::string::String,
+    #[prost(bool, tag = "3")]
+    pub is_buy: bool,
+    #[prost(double, tag = "4")]
+    pub lots: f64,
+    #[prost(double, tag = "5")]
+    pub open_price: f64,
+    #[prost(double, tag = "6")]
+    pub close_price: f64,
+    #[prost(message, optional, tag = "7")]
+    pub open_time: ::core::option::Option<::prost_types::Timestamp>,
+    #[prost(message, optional, tag = "8")]
+    pub close_time: ::core::option::Option<::prost_types::Timestamp>,
+    #[prost(double, tag = "9")]
+    pub profit: f64,
+    #[prost(double, tag = "10")]
+    pub commission: f64,
+    #[prost(double, tag = "11")]
+    pub swap: f64,
+    #[prost(string, tag = "12")]
+    pub comment: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
