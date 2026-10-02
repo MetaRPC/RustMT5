@@ -67,6 +67,76 @@ pub struct KillAllTrialTerminalsReply {
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DrainRequest {
+    #[prost(string, tag = "1")]
+    pub admin_key: ::prost::alloc::string::String,
+    /// why the pod drains (e.g. "preStop"); default "AdminDrain"
+    #[prost(string, tag = "2")]
+    pub reason: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DrainReply {
+    /// the pod is draining (always true on success)
+    #[prost(bool, tag = "1")]
+    pub draining: bool,
+    /// it was already draining before this call
+    #[prost(bool, tag = "2")]
+    pub already_draining: bool,
+    /// pod name
+    #[prost(string, tag = "3")]
+    pub pod: ::prost::alloc::string::String,
+    /// reason of the drain in effect (the first one)
+    #[prost(string, tag = "4")]
+    pub reason: ::prost::alloc::string::String,
+    /// ISO-8601 UTC when draining started
+    #[prost(string, tag = "5")]
+    pub started_at: ::prost::alloc::string::String,
+    #[prost(string, tag = "6")]
+    pub error: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StopTerminalLocalRequest {
+    #[prost(string, tag = "1")]
+    pub admin_key: ::prost::alloc::string::String,
+    /// terminal id (any GUID format)
+    #[prost(string, tag = "2")]
+    pub id: ::prost::alloc::string::String,
+    /// StopCause name, e.g. "UserPortal", "UserApi", "InternalReap"
+    #[prost(string, tag = "3")]
+    pub cause: ::prost::alloc::string::String,
+    /// reason recorded with the stop (e.g. "DuplicatePrune", "RebalanceMigrate")
+    #[prost(string, tag = "4")]
+    pub detail: ::prost::alloc::string::String,
+    /// optional ISO-8601 UTC time the stop intent was recorded: a local copy whose
+    #[prost(string, tag = "5")]
+    pub intent_utc: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StopTerminalLocalReply {
+    /// the local copy was stopped by this call
+    #[prost(bool, tag = "1")]
+    pub stopped: bool,
+    /// this pod had a copy of the terminal (a record owning a process)
+    #[prost(bool, tag = "2")]
+    pub present: bool,
+    /// pod that handled the call
+    #[prost(string, tag = "3")]
+    pub pod: ::prost::alloc::string::String,
+    /// non-empty when the request was invalid or the stop failed
+    #[prost(string, tag = "4")]
+    pub error: ::prost::alloc::string::String,
+    /// lifetime of the stopped copy (0 when nothing was stopped)
+    #[prost(int64, tag = "5")]
+    pub full_life_time_seconds: i64,
+    /// why a present copy was left running (e.g. it was started after the intent)
+    #[prost(string, tag = "6")]
+    pub skipped: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetSessionRestoreLogsRequest {
     #[prost(string, tag = "1")]
     pub admin_key: ::prost::alloc::string::String,
@@ -999,6 +1069,60 @@ pub mod admin_api_client {
                 .insert(
                     GrpcMethod::new("mrpc_admin.AdminApi", "KillAllTrialTerminalsLocal"),
                 );
+            self.inner.unary(req, path, codec).await
+        }
+        /// Puts THIS pod into the draining state ahead of shutdown (StatefulSet preStop hook). While draining the
+        /// pod stops renewing its terminal ownership leases, suppresses crash persistence for terminals ending with
+        /// the VM, and starts no new work; peers restore its terminals once the leases expire. One-way for the
+        /// lifetime of the process; calling it again reports already_draining.
+        pub async fn drain(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DrainRequest>,
+        ) -> std::result::Result<tonic::Response<super::DrainReply>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/mrpc_admin.AdminApi/Drain",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new("mrpc_admin.AdminApi", "Drain"));
+            self.inner.unary(req, path, codec).await
+        }
+        /// Stops THIS pod's local copy of one terminal (pod-to-pod: user-stop fan-out, duplicate prune, rebalance
+        /// migration). Local only: never forwarded to another pod and never persisted to UserTerminals (the caller
+        /// records any stop intent). cause is a StopCause name; only customer/API/admin/delete/test stops and
+        /// InternalReap are accepted. Callers must check reply.error.
+        pub async fn stop_terminal_local(
+            &mut self,
+            request: impl tonic::IntoRequest<super::StopTerminalLocalRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::StopTerminalLocalReply>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/mrpc_admin.AdminApi/StopTerminalLocal",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("mrpc_admin.AdminApi", "StopTerminalLocal"));
             self.inner.unary(req, path, codec).await
         }
     }
