@@ -6080,6 +6080,10 @@ pub struct GetTerminalJournalData {
     /// List of log rows from the terminal tab
     #[prost(message, repeated, tag = "1")]
     pub rows: ::prost::alloc::vec::Vec<TerminalJournalRow>,
+    /// Reader diagnostics for this capture: which Journal/Experts list it found, how the rows
+    /// were captured, counts and a short trace. Empty when the terminal API does not report it.
+    #[prost(string, tag = "2")]
+    pub diagnostics: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

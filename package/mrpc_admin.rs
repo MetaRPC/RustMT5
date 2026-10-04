@@ -244,6 +244,20 @@ pub struct VersionReply {
     /// MT4 / MT5 as this process resolved it
     #[prost(string, tag = "4")]
     pub mode: ::prost::alloc::string::String,
+    /// Windows session creation on this pod (SessionCreationHealth): "healthy", "unhealthy" (its last
+    /// consecutive creations all failed - restore placement skips it) or "disabled" (no on-demand sessions).
+    #[prost(string, tag = "5")]
+    pub session_creation: ::prost::alloc::string::String,
+    #[prost(uint32, tag = "6")]
+    pub session_creation_consecutive_failures: u32,
+    /// "MrpcTerminalUserN: <launcher error>"
+    #[prost(string, tag = "7")]
+    pub session_creation_last_error: ::prost::alloc::string::String,
+    /// ISO-8601, empty when none yet
+    #[prost(string, tag = "8")]
+    pub session_creation_last_success_utc: ::prost::alloc::string::String,
+    #[prost(string, tag = "9")]
+    pub session_creation_unhealthy_since_utc: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
