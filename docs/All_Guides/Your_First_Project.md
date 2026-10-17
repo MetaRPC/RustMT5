@@ -22,10 +22,10 @@ mkdir my_rustmt5_bot
 cd my_rustmt5_bot
 ```
 
-Install the package:
+Get the SDK (it is not on a package registry):
 
 ```bash
-cargo add metarpc-mt5
+git clone https://github.com/MetaRPC/RustMT5.git
 ```
 
 ---

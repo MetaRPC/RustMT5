@@ -12,7 +12,7 @@
 ## 📦 Installation
 
 ```bash
-cargo add rustmt5
+git clone https://github.com/MetaRPC/RustMT5.git
 ```
 
 ---
