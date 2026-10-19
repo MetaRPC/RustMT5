@@ -2,6 +2,8 @@
 
 > Asynchronous, memory-safe Rust SDK for MetaTrader 5 algorithmic trading automation.
 
+> **Preview: this SDK does not talk to the server yet.** `connect`, the account and order calls return simulated values (a fixed balance, made-up order tickets) and nothing is traded. For real MT5 accounts use the Python, Node.js, C#, Go or Java SDK, or the [REST API](https://mrpc.pro/docs-legacy/mt5-client-api).
+
 [![Docs](https://img.shields.io/badge/docs-RustMT5-blue.svg)](https://metarpc.github.io/RustMT5/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 

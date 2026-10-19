@@ -1,5 +1,7 @@
 # Getting Started with RustMT5
 
+> **Preview: this SDK does not talk to the server yet.** `connect`, the account and order calls return simulated values (a fixed balance, made-up order tickets) and nothing is traded. For real MT5 accounts use the Python, Node.js, C#, Go or Java SDK, or the [REST API](https://mrpc.pro/docs-legacy/mt5-client-api).
+
 > **Quick Setup & Overview** - Start automating your trading with RustMT5 (Rust for MetaTrader 5) in minutes.
 
 ---
