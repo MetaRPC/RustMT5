@@ -1,15 +1,26 @@
 [package]
 name = "metarpc-mt5"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 authors = ["MetaRPC <info@metarpc.pro>"]
-description = "Asynchronous, memory-safe Rust SDK for MetaTrader 5 algorithmic trading automation"
+description = "Asynchronous, memory-safe Rust SDK for MetaTrader 5 algorithmic trading automation (MetaRPC gRPC gateway)"
 license = "MIT"
 repository = "https://github.com/MetaRPC/RustMT5"
 
 [dependencies]
 tokio = { version = "1.38", features = ["full"] }
+tokio-stream = "0.1"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 thiserror = "1.0"
 async-trait = "0.1"
+# gRPC transport. The generated code in package/*.rs targets tonic 0.12 / prost 0.13
+# (tonic::body::BoxBody, GrpcMethod, max_decoding_message_size). Do not bump to tonic 0.13+
+# without regenerating package/*.rs.
+tonic = { version = "0.12", features = ["transport", "tls", "tls-webpki-roots"] }
+prost = "0.13"
+prost-types = "0.13"
+uuid = { version = "1", features = ["v4", "v5"] }
+
+[dev-dependencies]
+tokio = { version = "1.38", features = ["full", "test-util"] }

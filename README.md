@@ -1,76 +1,63 @@
 # RustMT5 SDK
 
-> Asynchronous, memory-safe Rust SDK for MetaTrader 5 algorithmic trading automation.
+> Asynchronous Rust SDK for MetaTrader 5 via the MetaRPC gRPC gateway (`mt5.mrpc.pro:443`, TLS).
 
-[![Docs](https://img.shields.io/badge/docs-RustMT5-blue.svg)](https://metarpc.github.io/RustMT5/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+Crate name: `metarpc-mt5`. Not on crates.io — use a path dependency on this folder:
 
-📄 **Full Documentation**: [https://metarpc.github.io/RustMT5/](https://metarpc.github.io/RustMT5/)
-
----
-
-## 📦 Installation
-
-```bash
-cargo add rustmt5
+```toml
+[dependencies]
+metarpc-mt5 = { path = "../lib/RustMT5" }
+tokio = { version = "1", features = ["full"] }
 ```
 
----
+The crate ships the prost/tonic generated types in `package/mt5_term_api.rs` (no `protoc` needed
+to build) and a high-level `MT5Client` in `src/client.rs`. Transport is tonic 0.12 / prost 0.13.
 
-## 🏃 How to Run Examples
+See **`FLEET_AUDIT.md`** in this folder for the complete, verified call reference (connect, account,
+quotes, bars, tick stream, OrderSend/Modify/Close, history), the enums, the gateway quirks and the
+Windows / Linux build commands.
 
-Clone the repository and run the quickstart example out-of-the-box:
+## Quick start
 
 ```bash
-git clone https://github.com/MetaRPC/RustMT5.git
-cd RustMT5
-
-# 1. Run with default TRIAL key:
-cargo run --example quickstart
-
-# 2. Or pass your MetaRPC API key directly as an argument:
-cargo run --example quickstart -- your_api_key_here
-
-# 3. Or use the MRPC_API_KEY environment variable:
-export MRPC_API_KEY="your_api_key_here"        # Windows CMD: set MRPC_API_KEY=your_api_key_here
-cargo run --example quickstart                 # Windows PowerShell: $env:MRPC_API_KEY="your_api_key_here"
+# Windows PowerShell:  $env:MRPC_API_KEY="..."; $env:MT5_LOGIN="..."; $env:MT5_PASSWORD="..."; $env:MT5_SERVER="FBS-Demo"
+MRPC_API_KEY=... MT5_LOGIN=... MT5_PASSWORD=... MT5_SERVER=FBS-Demo cargo run --example quickstart
 ```
 
----
+```rust
+use metarpc_mt5::{timeframe, MT5Client, OrderRequest, TradeAction};
+use std::time::Duration;
 
-## 🔑 API Key & Authentication
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let client = MT5Client::new("mt5.mrpc.pro", 443)                     // api key from MRPC_API_KEY
+        .with_id(MT5Client::stable_terminal_id("my-strategy-id"));      // stable terminal id!
+    client.connect_ex(106805114, "password", "FBS-Demo", Some("my-strategy-id"), 120).await?;
 
-Connecting to MetaRPC production endpoints (`mt5.mrpc.pro:443`) requires an API key:
+    let acc = client.get_account_info().await?;
+    assert!(acc.trade_mode.is_demo());
 
-1. **Sign Up**: Create an account for free at [https://mrpc.pro/signup](https://mrpc.pro/signup).
-2. **Generate API Key**: In your MetaRPC Portal dashboard at [https://mrpc.pro/my](https://mrpc.pro/my), go to **API Keys** to generate and copy your personal API token.
-3. **Configure Connection**: Pass your API key / token along with the server address (`mt5.mrpc.pro:443`) in your connection settings.
+    let q = client.ensure_symbol("EURUSD", Duration::from_secs(15)).await?;   // select + wait for a 2-sided quote
+    let bars = client.price_history("EURUSD", timeframe::M1, 50).await?;
+    let mut ticks = client.subscribe_quotes(vec!["EURUSD".into()]).await?;    // drop `ticks` to unsubscribe
 
----
+    let res = client.order_send(OrderRequest::market("EURUSD", TradeAction::Buy, 0.01).with_magic(600001).with_comment("S001")).await?;
+    client.order_modify(res.order, Some(q.bid * 0.995), Some(q.ask * 1.005)).await?;   // position ticket == order ticket
+    client.order_close(res.order, 0.01, 50).await?;
+    Ok(())
+}
+```
 
-## 🆔 Automatic Account ID & Authentication
+## Tests
 
-MetaRPC endpoints route calls using a terminal session identifier (`id`):
-- When connecting via `Connect` / `ConnectEx`, the server automatically generates and returns a session GUID (`terminalInstanceGuid`).
-- The SDK automatically captures this session ID and attaches both the `id` and `APIKey` headers on all subsequent calls (`AccountSummary`, `OrderSend`, streaming, etc.) — no manual `GetId` or `curl` calls required.
-- Pass your API key directly to the Account/Client constructor or via the `MRPC_API_KEY` environment variable.
+`cargo test` runs offline unit tests. The live test is `#[ignore]`d:
 
-## 🌐 Production Endpoints
+```bash
+MRPC_API_KEY=... MT5_LOGIN=... MT5_PASSWORD=... MT5_SERVER=FBS-Demo cargo test -- --ignored
+```
 
-| Environment | Host | Port | Protocol |
-| :--- | :--- | :--- | :--- |
-| **Production** | `mt5.mrpc.pro` | `443` | TLS / gRPC |
-| **Direct API UI (Swagger)** | `https://mt5.mrpc.pro/apiui` | `443` | HTTPS |
-| **Portal Dashboard** | `https://mrpc.pro/my` | `443` | HTTPS |
-| **Registration / API Key** | `https://mrpc.pro/signup` | `443` | HTTPS |
+## API key
 
----
-
-## 📄 Documentation & Guides
-
-Explore comprehensive documentation at [https://metarpc.github.io/RustMT5/](https://metarpc.github.io/RustMT5/):
-- 🚀 **Quick Start & First Project**
-- 🔑 **Authentication & API Keys**
-- 📡 **Live Market Data & gRPC Streaming**
-- 💼 **Account Management & Order Execution**
-- 📊 **Return Codes & Error Handling Reference**
+Production (`mt5.mrpc.pro:443`) needs an API key: register at <https://mrpc.pro/signup>, create a
+key under <https://mrpc.pro/my>, pass it as `MRPC_API_KEY` or `MT5Client::with_api_key(..)`. Every
+call carries the `apikey` and `id` (terminal instance) gRPC metadata headers automatically.
