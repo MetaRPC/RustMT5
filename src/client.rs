@@ -345,7 +345,15 @@ impl MT5Client {
 
     /// Run `op`, retrying transient transport errors with back-off and re-`ConnectEx`-ing once
     /// per attempt on `TERMINAL_INSTANCE_NOT_FOUND`. `InvalidLogin` is never retried.
-    pub async fn call<T>(&self, op: impl AsyncFn() -> Result<T, MT5Error>) -> Result<T, MT5Error> {
+    ///
+    /// `op` is a plain closure returning a future (`|| async { .. }`), not an `async ||`
+    /// closure: futures of `AsyncFn` closures that capture `&self` cannot be proven `Send`
+    /// by rustc ("implementation of `Send` is not general enough"), which made every SDK
+    /// method unusable inside `tokio::spawn` (fleet build fix, see FLEET_AUDIT.md).
+    pub async fn call<T, F>(&self, op: impl Fn() -> F) -> Result<T, MT5Error>
+    where
+        F: std::future::Future<Output = Result<T, MT5Error>>,
+    {
         let mut attempt: u32 = 0;
         loop {
             match op().await {
@@ -456,7 +464,7 @@ impl MT5Client {
 
     /// `AccountHelper/AccountSummary` — login, balance, equity, currency, leverage, trade mode.
     pub async fn account_summary(&self) -> Result<pb::AccountSummaryData, MT5Error> {
-        self.call(async || {
+        self.call(|| async {
             let mut c = AccountHelperClient::new(self.channel()?);
             let r = c.account_summary(self.req(pb::AccountSummaryRequest {})?).await?;
             let d: pb::AccountSummaryData = unwrap_reply!(r, account_summary_reply)?;
@@ -477,7 +485,7 @@ impl MT5Client {
 
     /// `MarketInfo/SymbolSelect` — add (`true`) / remove (`false`) a symbol in Market Watch.
     pub async fn symbol_select(&self, symbol: &str, select: bool) -> Result<bool, MT5Error> {
-        self.call(async || {
+        self.call(|| async {
             let mut c = MarketInfoClient::new(self.channel()?);
             let msg = pb::SymbolSelectRequest { symbol: symbol.to_string(), select };
             let r = c.symbol_select(self.req(msg)?).await?;
@@ -487,7 +495,7 @@ impl MT5Client {
     }
 
     pub async fn symbol_exist(&self, symbol: &str) -> Result<bool, MT5Error> {
-        self.call(async || {
+        self.call(|| async {
             let mut c = MarketInfoClient::new(self.channel()?);
             let msg = pb::SymbolExistRequest { name: symbol.to_string() };
             let r = c.symbol_exist(self.req(msg)?).await?;
@@ -497,7 +505,7 @@ impl MT5Client {
     }
 
     pub async fn symbol_is_synchronized(&self, symbol: &str) -> Result<bool, MT5Error> {
-        self.call(async || {
+        self.call(|| async {
             let mut c = MarketInfoClient::new(self.channel()?);
             let msg = pb::SymbolIsSynchronizedRequest { symbol: symbol.to_string() };
             let r = c.symbol_is_synchronized(self.req(msg)?).await?;
@@ -509,7 +517,7 @@ impl MT5Client {
     /// `MarketInfo/SymbolInfoTick` — the authoritative bid/ask. (Bulk `SymbolParamsMany` prices
     /// are intermittently stale.)
     pub async fn symbol_info_tick(&self, symbol: &str) -> Result<pb::MrpcMqlTick, MT5Error> {
-        self.call(async || {
+        self.call(|| async {
             let mut c = MarketInfoClient::new(self.channel()?);
             let msg = pb::SymbolInfoTickRequest { symbol: symbol.to_string() };
             let r = c.symbol_info_tick(self.req(msg)?).await?;
@@ -551,7 +559,7 @@ impl MT5Client {
     /// `AccountHelper/SymbolParamsMany`. `None` = every symbol in one page (paging on the gateway
     /// does not advance the window — use a single unfiltered call).
     pub async fn symbol_params_many(&self, name_filter: Option<&str>) -> Result<pb::SymbolParamsManyData, MT5Error> {
-        self.call(async || {
+        self.call(|| async {
             let mut c = AccountHelperClient::new(self.channel()?);
             let msg = pb::SymbolParamsManyRequest {
                 symbol_name: name_filter.map(|s| s.to_string()),
@@ -591,13 +599,15 @@ impl MT5Client {
         to_time: i64,
         max_bars: i32,
     ) -> Result<Vec<pb::PriceBar>, MT5Error> {
-        self.call(async || {
+        self.call(|| async {
             let mut c = MarketInfoClient::new(self.channel()?);
             let msg = pb::PriceHistoryRequest {
                 symbol: symbol.to_string(),
                 timeframe,
                 from_time,
+                from_time_utc: 0,
                 to_time,
+                to_time_utc: 0,
                 max_bars,
             };
             let r = c.price_history(self.req(msg)?).await?;
@@ -689,6 +699,7 @@ impl MT5Client {
             price: None,
             expiration_time_type: None,
             expiration_time: None,
+            expiration_time_utc: None,
             stop_limit: None,
         };
         self.order_modify_raw(msg).await
@@ -723,7 +734,7 @@ impl MT5Client {
 
     /// `AccountHelper/OpenedOrders` — pending orders **and** open positions in one reply.
     pub async fn opened_orders(&self) -> Result<pb::OpenedOrdersData, MT5Error> {
-        self.call(async || {
+        self.call(|| async {
             let mut c = AccountHelperClient::new(self.channel()?);
             let msg = pb::OpenedOrdersRequest { input_sort_mode: 0 };
             let r = c.opened_orders(self.req(msg)?).await?;
@@ -742,7 +753,7 @@ impl MT5Client {
     }
 
     pub async fn positions_total(&self) -> Result<i32, MT5Error> {
-        self.call(async || {
+        self.call(|| async {
             let mut c = TradeFunctionsClient::new(self.channel()?);
             // PositionsTotal takes google.protobuf.Empty, which prost maps to `()`.
             let r = c.positions_total(self.req(())?).await?;
@@ -766,14 +777,18 @@ impl MT5Client {
 
     /// `OrderHistory` with the window already in broker server time.
     pub async fn order_history_server_time(&self, from: SystemTime, to: SystemTime) -> Result<pb::OrdersHistoryData, MT5Error> {
-        self.call(async || {
+        self.call(|| async {
             let mut c = AccountHelperClient::new(self.channel()?);
             let msg = pb::OrderHistoryRequest {
                 input_from: Some(timestamp(from)),
+                input_from_utc: None,
                 input_to: Some(timestamp(to)),
+                input_to_utc: None,
                 input_sort_mode: pb::Bmt5EnumOrderHistorySortType::Bmt5SortByCloseTimeDesc as i32,
                 page_number: 0,
                 items_per_page: 1000,
+                page_token: String::new(),
+                page_size: 0,
             };
             let r = c.order_history(self.req(msg)?).await?;
             unwrap_reply!(r, order_history_reply)
@@ -791,14 +806,18 @@ impl MT5Client {
 
     /// `PositionsHistory` with the window already in broker server time.
     pub async fn positions_history_server_time(&self, from: SystemTime, to: SystemTime) -> Result<Vec<pb::PositionHistoryInfo>, MT5Error> {
-        self.call(async || {
+        self.call(|| async {
             let mut c = AccountHelperClient::new(self.channel()?);
             let msg = pb::PositionsHistoryRequest {
                 sort_type: pb::AhEnumPositionsHistorySortType::AhPositionOpenTimeDesc as i32,
                 position_open_time_from: Some(timestamp(from)),
+                position_open_time_from_utc: None,
                 position_open_time_to: Some(timestamp(to)),
+                position_open_time_to_utc: None,
                 page_number: None,
                 items_per_page: None,
+                page_token: String::new(),
+                page_size: 0,
             };
             let r = c.positions_history(self.req(msg)?).await?;
             unwrap_reply!(r, positions_history_reply).map(|d| d.history_positions)

@@ -338,3 +338,12 @@ the gateway).
     generated clients: build the request from `pb::*`, wrap with `client.request(msg, Some(timeout))`
     for the headers, and call e.g. `pb::market_info_client::MarketInfoClient::new(channel)`
     (the channel is private — add a thin method to `client.rs` next to the existing ones).
+
+---
+
+## 7. Fleet build fixes
+
+| Date | Change | Why |
+|---|---|---|
+| 2026-10-20 (fleet-rust host) | `MT5Client::call` now takes `impl Fn() -> F where F: Future<Output = Result<T, MT5Error>>` (callers pass `\|\| async { .. }`) instead of `impl AsyncFn() -> Result<T, MT5Error>` (callers passed `async \|\| { .. }`). Every SDK method body changed from `self.call(async \|\| {` to `self.call(\|\| async {`; public signatures and behaviour (retries, back-off, reconnect on `TERMINAL_INSTANCE_NOT_FOUND`) are unchanged. | Futures of `AsyncFn` closures capturing `&self` could not be proven `Send` by rustc ("implementation of `Send` is not general enough"), so no SDK call could be awaited inside a `tokio::spawn`ed task — i.e. the fleet host (one task per strategy) did not compile. The smoke crate (`fleet/runners/rust/smoke`) runs everything on the main task and never hit it. |
+| 2026-10-20 (merge with upstream `main`) | Upstream regenerated `package/mt5_term_api.rs` (new `*_utc` time fields on `PriceHistoryRequest`, `OrderSendRequest`, `OrderModifyRequest`, `OrderHistoryRequest`, `PositionsHistoryRequest`, plus `page_token`/`page_size` on the history requests). The SDK fills them with `0` / `None` / `""` and keeps sending the broker-server-time windows described in §2; the `connect` → `connect_endpoint` rename of the generated `ConnectionClient` constructor is re-applied. Smoke (`fleet/runners/rust/smoke`) re-run against the merged crate: all steps pass. | Keep upstream's generated code and the audit's verified behaviour at the same time. |

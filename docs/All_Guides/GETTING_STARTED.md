@@ -18,10 +18,10 @@
 
 ## 📦 Installation
 
-Install RustMT5 via your standard Rust package manager:
+RustMT5 is not published on a package registry; get it from the repository:
 
 ```bash
-cargo add metarpc-mt5
+git clone https://github.com/MetaRPC/RustMT5.git
 ```
 
 ---

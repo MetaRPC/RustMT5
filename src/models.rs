@@ -208,6 +208,7 @@ impl OrderRequest {
             stop_limit_price: self.stop_limit_price,
             expiration_time_type: None,
             expiration_time: None,
+            expiration_time_utc: None,
             quotes_wait_ms: None,
         }
     }

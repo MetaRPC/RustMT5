@@ -22,10 +22,10 @@ mkdir my_rustmt5_bot
 cd my_rustmt5_bot
 ```
 
-Install the package:
+Get the SDK (it is not on a package registry):
 
 ```bash
-cargo add metarpc-mt5
+git clone https://github.com/MetaRPC/RustMT5.git
 ```
 
 ---
@@ -34,14 +34,32 @@ cargo add metarpc-mt5
 
 Create your main application file and paste the following snippet:
 
-```
-use metarpc_mt5::MT5Account;
+```rust
+use metarpc_mt5::{MT5Client, OrderRequest, TradeAction};
 
-// Session ID generation on Connect and authentication are handled automatically
-let mut account = MT5Account::new(user, password, grpc_server, apiKey);
-account.connect_by_server_name(server_name, "EURUSD", 30).await?;
-let summary = account.account_summary().await?;
-println!("Balance: {}, Equity: {}", summary.account_balance, summary.account_equity);
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // API key from the MRPC_API_KEY environment variable; the terminal id is derived
+    // from a label so every run reuses the same server-side terminal.
+    let client = MT5Client::new("mt5.mrpc.pro", 443)
+        .with_id(MT5Client::stable_terminal_id("my-first-bot"));
+
+    // Login, password and the broker server name (as shown in the MT5 terminal).
+    client.connect_ex(2005432, "account_pass", "FBS-Demo", Some("my-first-bot"), 120).await?;
+    println!("Connected to MT5!");
+
+    let acc = client.get_account_info().await?;
+    println!("Account Balance: {} {}", acc.balance, acc.currency);
+
+    // Send 0.01 lot Buy at market
+    let req = OrderRequest::market("EURUSD", TradeAction::Buy, 0.01)
+        .with_comment("Rust Quickstart");
+
+    let result = client.order_send(req).await?;
+    println!("Order sent! Deal #{} Ticket #{}", result.deal, result.order);
+
+    Ok(())
+}
 ```
 
 ---
@@ -51,9 +69,10 @@ println!("Balance: {}, Equity: {}", summary.account_balance, summary.account_equ
 Run your application:
 
 ```bash
-# Verify connection output
-# Balance: 10000.00, Equity: 10000.00
+cargo run --example quickstart
 ```
+
+Run it from the cloned repository: its `examples/quickstart` does the same thing.
 
 ---
 
