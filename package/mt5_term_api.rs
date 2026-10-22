@@ -10859,6 +10859,262 @@ pub mod market_info_client {
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PublicAccountPublishRequest {
+    /// The public name shown on the leaderboard: 2-32 letters, digits, spaces, "." "_" "-" (spaces are collapsed). Left out or
+    /// empty: keep the current name; on a first publish, the terminal's name, else "MT5 " and the masked login.
+    #[prost(string, optional, tag = "1")]
+    pub nickname: ::core::option::Option<::prost::alloc::string::String>,
+    /// The profit share, in percent, 0-50 with one decimal. Left out: keep the current share; 0 on a first publish. A new share
+    /// applies to followers who start following after the change.
+    #[prost(double, optional, tag = "2")]
+    pub share_percent: ::core::option::Option<f64>,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PublicAccountUnpublishRequest {}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PublicAccountStatusRequest {}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PublicAccountReply {
+    #[prost(oneof = "public_account_reply::Response", tags = "1, 2")]
+    pub response: ::core::option::Option<public_account_reply::Response>,
+}
+/// Nested message and enum types in `PublicAccountReply`.
+pub mod public_account_reply {
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum Response {
+        #[prost(message, tag = "1")]
+        Data(super::PublicAccountData),
+        #[prost(message, tag = "2")]
+        Error(super::Error),
+    }
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PublicAccountData {
+    /// The terminal id, in the form the platform stores it.
+    #[prost(string, tag = "1")]
+    pub terminal_id: ::prost::alloc::string::String,
+    /// "MT5".
+    #[prost(string, tag = "2")]
+    pub platform: ::prost::alloc::string::String,
+    /// The account is published.
+    #[prost(bool, tag = "3")]
+    pub is_public: bool,
+    /// Published and its first figures have been read, so the leaderboard (mrpc.pro/copy-trading) shows it. Right after a first
+    /// Publish this is false for a few seconds, or until the terminal is connected.
+    #[prost(bool, tag = "4")]
+    pub listed: bool,
+    /// The account's public id; empty when it was never published. Kept when the account is unpublished.
+    #[prost(string, tag = "5")]
+    pub slug: ::prost::alloc::string::String,
+    /// The account's public page, <https://mrpc.pro/copy-trading/<slug>;> empty without a slug.
+    #[prost(string, tag = "6")]
+    pub public_url: ::prost::alloc::string::String,
+    /// The public name. For an account never published, the name a Publish without a nickname would give it.
+    #[prost(string, tag = "7")]
+    pub nickname: ::prost::alloc::string::String,
+    /// The profit share, in percent.
+    #[prost(double, tag = "8")]
+    pub share_percent: f64,
+    /// Accounts copying it now.
+    #[prost(int32, tag = "9")]
+    pub followers: i32,
+    /// Profit share earned from followers so far, in USD.
+    #[prost(double, tag = "10")]
+    pub earned_usd: f64,
+    /// When the leaderboard figures were last read (UTC; a platform time, not a broker time); unset before the first read.
+    #[prost(message, optional, tag = "11")]
+    pub refreshed_utc: ::core::option::Option<::prost_types::Timestamp>,
+    /// Why the figures could not be read the last time they were tried, if they could not; empty otherwise.
+    #[prost(string, tag = "12")]
+    pub figures_error: ::prost::alloc::string::String,
+}
+/// Generated client implementations.
+pub mod public_account_client {
+    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
+    /// ============================================================================
+    /// PublicAccount: publish the MT5 account in the "id" header as a public master account for copy trading on mrpc.pro,
+    /// change its public name and profit share, unpublish it, and read its public status.
+    ///
+    /// The call needs only the "APIKey" header (your mrpc_live_ key) and the "id" header (the terminal), like every other
+    /// terminal call: no user key, no session, no admin key. The account must belong to the API key's user and be an MT5
+    /// account (mt5.mrpc.pro); any other id - another user's account, a deleted one, an MT4 one, an unknown one - is answered
+    /// PUBLIC_ACCOUNT_TERMINAL_NOT_FOUND. The rules are the control panel's (mrpc.pro/my, "Public profile"): a public name of
+    /// 2-32 letters, digits, spaces, "." "_" "-", and a profit share of 0-50 % (one decimal) charged to followers on winning
+    /// copied trades. The terminal does not have to be running; the leaderboard lists the account once its first figures have
+    /// been read from it (listed), which needs it connected.
+    /// ============================================================================
+    #[derive(Debug, Clone)]
+    pub struct PublicAccountClient<T> {
+        inner: tonic::client::Grpc<T>,
+    }
+    impl PublicAccountClient<tonic::transport::Channel> {
+        /// Attempt to create a new client by connecting to a given endpoint.
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
+    }
+    impl<T> PublicAccountClient<T>
+    where
+        T: tonic::client::GrpcService<tonic::body::BoxBody>,
+        T::Error: Into<StdError>,
+        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
+        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
+    {
+        pub fn new(inner: T) -> Self {
+            let inner = tonic::client::Grpc::new(inner);
+            Self { inner }
+        }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> PublicAccountClient<InterceptedService<T, F>>
+        where
+            F: tonic::service::Interceptor,
+            T::ResponseBody: Default,
+            T: tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+                Response = http::Response<
+                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
+                >,
+            >,
+            <T as tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+            >>::Error: Into<StdError> + Send + Sync,
+        {
+            PublicAccountClient::new(InterceptedService::new(inner, interceptor))
+        }
+        /// Compress requests with the given encoding.
+        ///
+        /// This requires the server to support it otherwise it might respond with an
+        /// error.
+        #[must_use]
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
+            self
+        }
+        /// Enable decompressing responses.
+        #[must_use]
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
+            self
+        }
+        /// Limits the maximum size of a decoded message.
+        ///
+        /// Default: `4MB`
+        #[must_use]
+        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_decoding_message_size(limit);
+            self
+        }
+        /// Limits the maximum size of an encoded message.
+        ///
+        /// Default: `usize::MAX`
+        #[must_use]
+        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_encoding_message_size(limit);
+            self
+        }
+        /// Publishes the account, or changes the name or share of an account already public. A field left out keeps its current
+        /// value; on a first publish the name defaults to the terminal's name (else "MT5 " and the masked login) and the share to 0.
+        pub async fn publish(
+            &mut self,
+            request: impl tonic::IntoRequest<super::PublicAccountPublishRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::PublicAccountReply>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/mt5_term_api.PublicAccount/Publish",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("mt5_term_api.PublicAccount", "Publish"));
+            self.inner.unary(req, path, codec).await
+        }
+        /// Unpublishes the account: it leaves the leaderboard and its page at once, and nobody can start following it. Copiers
+        /// already following it are not stopped by this call. The public id (slug), name and share are kept for a later Publish.
+        /// Unpublishing an account that is not public changes nothing.
+        pub async fn unpublish(
+            &mut self,
+            request: impl tonic::IntoRequest<super::PublicAccountUnpublishRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::PublicAccountReply>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/mt5_term_api.PublicAccount/Unpublish",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("mt5_term_api.PublicAccount", "Unpublish"));
+            self.inner.unary(req, path, codec).await
+        }
+        /// The account's public status. Changes nothing.
+        pub async fn status(
+            &mut self,
+            request: impl tonic::IntoRequest<super::PublicAccountStatusRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::PublicAccountReply>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/mt5_term_api.PublicAccount/Status",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("mt5_term_api.PublicAccount", "Status"));
+            self.inner.unary(req, path, codec).await
+        }
+    }
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuoteHistoryBarsRequest {
     /// Required. Broker symbol name, e.g. "EURUSD".
     #[prost(string, tag = "1")]
