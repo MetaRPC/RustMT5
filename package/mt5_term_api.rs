@@ -14128,8 +14128,18 @@ pub struct StatsData {
     pub expectancy: ::core::option::Option<ExpectancyData>,
     #[prost(double, tag = "25")]
     pub ghpr: f64,
+    /// Closed trades (deposits, withdrawals and other balance operations are not trades)
     #[prost(int64, tag = "26")]
     pub trades: i64,
+    /// Time-weighted growth of the equity in percent: deposits and withdrawals are neither growth nor loss
+    #[prost(double, tag = "27")]
+    pub growth_percent: f64,
+    /// Money deposited in the range (deposits and bonuses)
+    #[prost(double, tag = "28")]
+    pub deposits: f64,
+    /// Money withdrawn in the range, as a positive amount
+    #[prost(double, tag = "29")]
+    pub withdrawals: f64,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -14300,6 +14310,9 @@ pub struct EquityPointData {
     pub realized_pl: f64,
     #[prost(double, tag = "9")]
     pub unrealized_pl: f64,
+    /// Deposits minus withdrawals since the previous point (in balance and equity; drawdowns leave them out)
+    #[prost(double, tag = "11")]
+    pub cash_flow: f64,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
