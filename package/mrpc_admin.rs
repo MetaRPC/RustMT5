@@ -475,6 +475,18 @@ pub struct TerminalInfo {
     /// formatted startup duration e.g. "14.2s" or "8s (starting)"
     #[prost(string, optional, tag = "15")]
     pub startup_time: ::core::option::Option<::prost::alloc::string::String>,
+    /// the terminal answers but is not connected to its broker since then
+    #[prost(message, optional, tag = "16")]
+    pub broker_disconnected_since_utc: ::core::option::Option<::prost_types::Timestamp>,
+    /// trades that failed for the connection/worker reasons within the last 5 minutes
+    #[prost(uint32, tag = "17")]
+    pub trade_failures_recent: u32,
+    /// the same since this copy started
+    #[prost(uint64, tag = "18")]
+    pub trade_failures_total: u64,
+    /// the last one: "<code> <method> <utc>"
+    #[prost(string, tag = "19")]
+    pub last_trade_failure: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

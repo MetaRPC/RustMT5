@@ -2043,6 +2043,15 @@ pub struct AccountSummaryData {
     /// Automated (Expert Advisor / API) trading is allowed for the account (ACCOUNT_TRADE_EXPERT).
     #[prost(bool, tag = "19")]
     pub account_trade_expert: bool,
+    /// The terminal's live connection. MT5 keeps the account data (account_leverage too) after the broker connection drops, so only
+    /// terminal_connected tells a disconnected terminal from a connected one. Unset from a terminal that does not report it yet.
+    ///
+    /// Connected to the broker's trade server now (TERMINAL_CONNECTED).
+    #[prost(bool, optional, tag = "20")]
+    pub terminal_connected: ::core::option::Option<bool>,
+    /// Algo trading is on in the terminal (TERMINAL_TRADE_ALLOWED and MQL_TRADE_ALLOWED).
+    #[prost(bool, optional, tag = "21")]
+    pub terminal_trade_allowed: ::core::option::Option<bool>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -5673,6 +5682,10 @@ pub struct AccountsListItem {
     /// account, which is the case for every account today.
     #[prost(message, optional, tag = "13")]
     pub expires_utc: ::core::option::Option<::prost_types::Timestamp>,
+    /// The dedicated (reserved) egress IP assigned to this terminal (the dedicated-IP add-on), to whitelist with the broker;
+    /// empty when the terminal has no dedicated IP.
+    #[prost(string, tag = "14")]
+    pub dedicated_ip: ::prost::alloc::string::String,
 }
 /// Generated client implementations.
 pub mod accounts_client {
@@ -8375,6 +8388,33 @@ pub struct HealthCheckReply {
     /// server_time_seconds in UTC (the same moment; server_time_seconds is in the broker server's time zone).
     #[prost(int64, tag = "3")]
     pub server_time_seconds_utc: i64,
+    /// the terminal's MQL workers that ever asked for a command (0 = the API script, 1 = the API worker EA)
+    #[prost(message, repeated, tag = "4")]
+    pub workers: ::prost::alloc::vec::Vec<MqlWorkerState>,
+}
+/// One MQL worker of the terminal as its command dispatcher sees it.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MqlWorkerState {
+    #[prost(int32, tag = "1")]
+    pub worker: i32,
+    /// its last poll said it may trade
+    #[prost(bool, tag = "2")]
+    pub can_trade: bool,
+    /// waiting for a command now
+    #[prost(bool, tag = "3")]
+    pub waiting: bool,
+    /// since it last asked for a command
+    #[prost(int64, tag = "4")]
+    pub ms_since_last_poll: i64,
+    /// the command it is executing (empty while it waits)
+    #[prost(string, tag = "5")]
+    pub running_command: ::prost::alloc::string::String,
+    #[prost(int64, tag = "6")]
+    pub running_command_id: i64,
+    /// how long it has been executing running_command
+    #[prost(int64, tag = "7")]
+    pub running_ms: i64,
 }
 /// Generated client implementations.
 pub mod health_client {
