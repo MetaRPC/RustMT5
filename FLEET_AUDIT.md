@@ -37,16 +37,14 @@ tokio = { version = "1", features = ["full"] }
 
 ```bash
 # Windows (git bash or PowerShell) — offline unit tests of the SDK + smoke build + live run
-cd C:/git/trading-bots/lib/RustMT5 && cargo test
-cd C:/git/trading-bots/fleet/runners/rust/smoke && cargo build --release
+cd lib/RustMT5 && cargo test
+cd fleet/runners/rust/smoke && cargo build --release
 MRPC_API_KEY=... MT5_LOGIN=106805114 MT5_PASSWORD=... MT5_SERVER=FBS-Demo ./target/release/fleet-smoke-rust.exe
 #  (PowerShell: $env:MRPC_API_KEY="..."; $env:MT5_LOGIN="..."; ...; .\target\release\fleet-smoke-rust.exe)
 
-# VPS (Debian 12, /opt/fleet-audit/RustMT5 or /opt/fleet)
-tar -C C:/git/trading-bots --exclude='*/target' -cf - lib/RustMT5 fleet/runners/rust \
-  | ssh -i ~/.ssh/mrpc_diag_key -p 31683 root@back.mrpc.pro 'mkdir -p /opt/fleet-audit/RustMT5 && tar -C /opt/fleet-audit/RustMT5 -xf -'
-ssh -p 31683 root@back.mrpc.pro 'cd /opt/fleet-audit/RustMT5/fleet/runners/rust/smoke && nice -n 10 cargo build --release -j 2 \
-  && MRPC_API_KEY=... MT5_LOGIN=106805114 MT5_PASSWORD=... MT5_SERVER=FBS-Demo ./target/release/fleet-smoke-rust'
+# Linux VPS (Debian 12): copy lib/RustMT5 and fleet/runners/rust there (without target/), then
+cd fleet/runners/rust/smoke && nice -n 10 cargo build --release -j 2 \
+  && MRPC_API_KEY=... MT5_LOGIN=106805114 MT5_PASSWORD=... MT5_SERVER=FBS-Demo ./target/release/fleet-smoke-rust
 ```
 
 Optional smoke env: `SMOKE_LABEL` (terminal-id label, default `fleet-audit-RustMT5`),
@@ -269,7 +267,7 @@ Magic: `OrderRequest.magic` → `expert_id` → `PositionInfo.magic_number` / `O
 The VPS sits much closer to the gateway: every unary call is 2–3× faster than from the Windows box.
 A Rust runner hosting the 7 planned strategies will stay well under 50 MB RSS.
 
-### 4b. VPS run (2026-10-20 00:37 UTC, `/opt/fleet-audit/RustMT5/build.log`)
+### 4b. VPS run (2026-10-20 00:37 UTC)
 
 ```
 PASS a.connect: ConnectEx ok in 0.02s, terminalInstanceGuid=mt5_live_0072b5c0f74f5079ab8a1c03f16e12b1 type=1
@@ -293,7 +291,7 @@ connected on prod on purpose.
 
 ---
 
-## 5. Bugs found and fixed (all in `lib/RustMT5`, mirrored to `C:/git/setup_RustMT5` and committed there)
+## 5. Bugs found and fixed (all in `lib/RustMT5`, committed to this repository)
 
 | # | Bug | Fix |
 |---|---|---|

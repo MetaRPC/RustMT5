@@ -6532,7 +6532,9 @@ pub mod connection_client {
     }
     impl ConnectionClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
-        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        /// (Renamed from `connect` by the fleet audit: the generated constructor collided with
+        /// the `Connect` RPC method of the same name and the module did not compile.)
+        pub async fn connect_endpoint<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
             D: TryInto<tonic::transport::Endpoint>,
             D::Error: Into<StdError>,
