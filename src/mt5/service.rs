@@ -162,6 +162,7 @@ impl MT5Service {
                 input_sort_mode: sort_mode as i32,
                 page_number,
                 items_per_page,
+                ..Default::default()
             })
             .await
     }
@@ -181,6 +182,7 @@ impl MT5Service {
                 position_open_time_to: to,
                 page_number,
                 items_per_page,
+                ..Default::default()
             })
             .await
     }

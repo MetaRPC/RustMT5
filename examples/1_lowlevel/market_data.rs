@@ -73,6 +73,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             position_open_time_to: None,
             page_number: Some(0),
             items_per_page: Some(100),
+            ..Default::default()
         })
         .await?;
     println!("history positions: {}", hist.history_positions.len());
