@@ -784,15 +784,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#navigation-by-category-58-methods" class="md-nav__link">
+  <a href="#navigation-by-category-63-methods" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Navigation by category (58 methods)
+        Navigation by category (63 methods)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Navigation by category (58 methods)">
+    <nav class="md-nav" aria-label="Navigation by category (63 methods)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1182,15 +1182,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#navigation-by-category-58-methods" class="md-nav__link">
+  <a href="#navigation-by-category-63-methods" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Navigation by category (58 methods)
+        Navigation by category (63 methods)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Navigation by category (58 methods)">
+    <nav class="md-nav" aria-label="Navigation by category (63 methods)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1392,13 +1392,18 @@
 <td><code>deals</code>, <code>profit</code>, <code>wins</code>, <code>losses</code></td>
 </tr>
 <tr>
+<td><code>Quote</code></td>
+<td><code>symbol</code>, <code>bid</code>, <code>ask</code>, <code>last</code>, <code>volume</code>, <code>time</code>, <code>time_msc</code>, <code>flags</code> + <code>is_usable()</code> / <code>spread()</code> / <code>mid()</code></td>
+</tr>
+<tr>
 <td><code>Period</code> (enum)</td>
 <td><code>Today</code>, <code>Yesterday</code>, <code>ThisWeek</code>, <code>ThisMonth</code></td>
 </tr>
 </tbody>
 </table>
+<p>Free functions (<code>metarpc_mt5::sugar</code>): <code>unix_secs(ts)</code>, <code>to_utc_secs(server_ts, shift_secs)</code>.</p>
 <hr />
-<h2 id="navigation-by-category-58-methods">Navigation by category (58 methods)<a class="headerlink" href="#navigation-by-category-58-methods" title="Permanent link">¶</a></h2>
+<h2 id="navigation-by-category-63-methods">Navigation by category (63 methods)<a class="headerlink" href="#navigation-by-category-63-methods" title="Permanent link">¶</a></h2>
 <h3 id="1-connection">🔌 [1] Connection<a class="headerlink" href="#1-connection" title="Permanent link">¶</a></h3>
 <table>
 <thead>
@@ -1476,6 +1481,11 @@
 <td>Compact <code>AccountInfo</code> snapshot</td>
 <td><a href="../2.%20Account_Properties/get_account_info/">Docs</a></td>
 </tr>
+<tr>
+<td><code>server_utc_shift_secs()</code></td>
+<td>Server→UTC offset for timestamp conversion</td>
+<td><a href="../2.%20Account_Properties/server_utc_shift_secs/">Docs</a></td>
+</tr>
 </tbody>
 </table>
 <h3 id="3-prices-quotes">💹 [3] Prices &amp; Quotes<a class="headerlink" href="#3-prices-quotes" title="Permanent link">¶</a></h3>
@@ -1502,6 +1512,21 @@
 <td><code>spread(symbol)</code></td>
 <td>Spread (<code>ask − bid</code>)</td>
 <td><a href="../3.%20Prices_Quotes/spread/">Docs</a></td>
+</tr>
+<tr>
+<td><code>quote(symbol)</code></td>
+<td>Compact <code>Quote</code> snapshot (bid/ask/mid/usable)</td>
+<td><a href="../3.%20Prices_Quotes/quote/">Docs</a></td>
+</tr>
+<tr>
+<td><code>ensure_symbol(symbol, wait)</code></td>
+<td>Select + wait for a usable quote</td>
+<td><a href="../3.%20Prices_Quotes/ensure_symbol/">Docs</a></td>
+</tr>
+<tr>
+<td><code>subscribe_quotes(symbols)</code></td>
+<td>Live <code>Quote</code>s on an mpsc channel</td>
+<td><a href="../3.%20Prices_Quotes/subscribe_quotes/">Docs</a></td>
 </tr>
 </tbody>
 </table>
@@ -1665,6 +1690,11 @@
 <td><code>get_profit_by_symbol(symbol)</code></td>
 <td>Floating P/L on a symbol</td>
 <td><a href="../7.%20Position_Information/get_profit_by_symbol/">Docs</a></td>
+</tr>
+<tr>
+<td><code>positions_by_magic(magic)</code></td>
+<td>Positions tagged with a magic number</td>
+<td><a href="../7.%20Position_Information/positions_by_magic/">Docs</a></td>
 </tr>
 </tbody>
 </table>

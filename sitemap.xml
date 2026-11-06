@@ -321,6 +321,10 @@
          <lastmod>2026-11-06</lastmod>
     </url>
     <url>
+         <loc>https://metarpc.github.io/RustMT5/MT5Sugar/2.%20Account_Properties/server_utc_shift_secs/</loc>
+         <lastmod>2026-11-06</lastmod>
+    </url>
+    <url>
          <loc>https://metarpc.github.io/RustMT5/MT5Sugar/3.%20Prices_Quotes/ask/</loc>
          <lastmod>2026-11-06</lastmod>
     </url>
@@ -329,7 +333,19 @@
          <lastmod>2026-11-06</lastmod>
     </url>
     <url>
+         <loc>https://metarpc.github.io/RustMT5/MT5Sugar/3.%20Prices_Quotes/ensure_symbol/</loc>
+         <lastmod>2026-11-06</lastmod>
+    </url>
+    <url>
+         <loc>https://metarpc.github.io/RustMT5/MT5Sugar/3.%20Prices_Quotes/quote/</loc>
+         <lastmod>2026-11-06</lastmod>
+    </url>
+    <url>
          <loc>https://metarpc.github.io/RustMT5/MT5Sugar/3.%20Prices_Quotes/spread/</loc>
+         <lastmod>2026-11-06</lastmod>
+    </url>
+    <url>
+         <loc>https://metarpc.github.io/RustMT5/MT5Sugar/3.%20Prices_Quotes/subscribe_quotes/</loc>
          <lastmod>2026-11-06</lastmod>
     </url>
     <url>
@@ -422,6 +438,10 @@
     </url>
     <url>
          <loc>https://metarpc.github.io/RustMT5/MT5Sugar/7.%20Position_Information/has_open_position/</loc>
+         <lastmod>2026-11-06</lastmod>
+    </url>
+    <url>
+         <loc>https://metarpc.github.io/RustMT5/MT5Sugar/7.%20Position_Information/positions_by_magic/</loc>
          <lastmod>2026-11-06</lastmod>
     </url>
     <url>
