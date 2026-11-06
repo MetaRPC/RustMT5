@@ -38,6 +38,10 @@ pub enum MT5Error {
     /// Invalid argument supplied to a method (e.g. a non-ASCII header value).
     #[error("invalid argument: {0}")]
     InvalidArgument(String),
+
+    /// An operation did not complete within its deadline.
+    #[error("timeout: {0}")]
+    Timeout(String),
 }
 
 impl From<pb::Error> for MT5Error {

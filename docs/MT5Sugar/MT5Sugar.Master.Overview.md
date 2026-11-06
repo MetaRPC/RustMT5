@@ -41,11 +41,14 @@ MT5Account (LOW)                     gRPC → MT5 terminal gateway
 | `SymbolInfo` | `name`, `bid`, `ask`, `spread`, `digits`, `point`, `volume_min`, `volume_max`, `volume_step`, `contract_size` |
 | `AccountInfo` | `login`, `name`, `company`, `currency`, `leverage`, `balance`, `equity` |
 | `DailyStats` | `deals`, `profit`, `wins`, `losses` |
+| `Quote` | `symbol`, `bid`, `ask`, `last`, `volume`, `time`, `time_msc`, `flags` + `is_usable()` / `spread()` / `mid()` |
 | `Period` (enum) | `Today`, `Yesterday`, `ThisWeek`, `ThisMonth` |
+
+Free functions (`metarpc_mt5::sugar`): `unix_secs(ts)`, `to_utc_secs(server_ts, shift_secs)`.
 
 ---
 
-## Navigation by category (58 methods)
+## Navigation by category (63 methods)
 
 ### 🔌 [1] Connection
 
@@ -67,6 +70,7 @@ MT5Account (LOW)                     gRPC → MT5 terminal gateway
 | `margin_level()` | Margin level % | [Docs](2.%20Account_Properties/margin_level.md) |
 | `floating_profit()` | Floating P/L of open positions | [Docs](2.%20Account_Properties/floating_profit.md) |
 | `get_account_info()` | Compact `AccountInfo` snapshot | [Docs](2.%20Account_Properties/get_account_info.md) |
+| `server_utc_shift_secs()` | Server→UTC offset for timestamp conversion | [Docs](2.%20Account_Properties/server_utc_shift_secs.md) |
 
 ### 💹 [3] Prices & Quotes
 
@@ -75,6 +79,9 @@ MT5Account (LOW)                     gRPC → MT5 terminal gateway
 | `bid(symbol)` | Current bid | [Docs](3.%20Prices_Quotes/bid.md) |
 | `ask(symbol)` | Current ask | [Docs](3.%20Prices_Quotes/ask.md) |
 | `spread(symbol)` | Spread (`ask − bid`) | [Docs](3.%20Prices_Quotes/spread.md) |
+| `quote(symbol)` | Compact `Quote` snapshot (bid/ask/mid/usable) | [Docs](3.%20Prices_Quotes/quote.md) |
+| `ensure_symbol(symbol, wait)` | Select + wait for a usable quote | [Docs](3.%20Prices_Quotes/ensure_symbol.md) |
+| `subscribe_quotes(symbols)` | Live `Quote`s on an mpsc channel | [Docs](3.%20Prices_Quotes/subscribe_quotes.md) |
 
 ### 🟢 [4] Simple Trading
 
@@ -118,6 +125,7 @@ MT5Account (LOW)                     gRPC → MT5 terminal gateway
 | `count_open_positions(symbol)` | Count open | [Docs](7.%20Position_Information/count_open_positions.md) |
 | `get_total_profit()` | Floating P/L total | [Docs](7.%20Position_Information/get_total_profit.md) |
 | `get_profit_by_symbol(symbol)` | Floating P/L on a symbol | [Docs](7.%20Position_Information/get_profit_by_symbol.md) |
+| `positions_by_magic(magic)` | Positions tagged with a magic number | [Docs](7.%20Position_Information/positions_by_magic.md) |
 
 ### 📈 [8] History & Statistics
 

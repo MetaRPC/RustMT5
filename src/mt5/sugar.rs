@@ -63,6 +63,73 @@ pub struct DailyStats {
     pub losses: usize,
 }
 
+/// A simplified, one-sided-filtered price snapshot (bid/ask/last) for a symbol.
+#[derive(Debug, Clone)]
+pub struct Quote {
+    pub symbol: String,
+    pub bid: f64,
+    pub ask: f64,
+    pub last: f64,
+    pub volume: f64,
+    /// Unix seconds of the last update.
+    pub time: i64,
+    /// Unix milliseconds of the last update.
+    pub time_msc: i64,
+    pub flags: u32,
+}
+
+impl Quote {
+    /// Build from a unary tick ([`pb::MrpcMqlTick`]).
+    pub fn from_tick(symbol: &str, t: &pb::MrpcMqlTick) -> Self {
+        Quote {
+            symbol: symbol.to_string(),
+            bid: t.bid,
+            ask: t.ask,
+            last: t.last,
+            volume: t.volume_real,
+            time: t.time,
+            time_msc: t.time_msc,
+            flags: t.flags,
+        }
+    }
+    /// Build from a streaming tick ([`pb::MrpcSubscriptionMqlTick`]).
+    pub fn from_subscription_tick(t: &pb::MrpcSubscriptionMqlTick) -> Self {
+        Quote {
+            symbol: t.symbol.clone(),
+            bid: t.bid,
+            ask: t.ask,
+            last: t.last,
+            volume: t.volume_real,
+            time: t.time.as_ref().map(|x| x.seconds).unwrap_or(t.time_msc / 1000),
+            time_msc: t.time_msc,
+            flags: t.flags,
+        }
+    }
+    /// Demo feeds intermittently publish `bid == ask` or zeros; such quotes are unusable.
+    pub fn is_usable(&self) -> bool {
+        self.bid > 0.0 && self.ask > 0.0 && self.ask > self.bid
+    }
+    /// `ask - bid` in price units.
+    pub fn spread(&self) -> f64 {
+        self.ask - self.bid
+    }
+    /// Mid price `(bid + ask) / 2`.
+    pub fn mid(&self) -> f64 {
+        (self.bid + self.ask) / 2.0
+    }
+}
+
+/// Unix seconds of an optional protobuf timestamp (`0` when absent).
+pub fn unix_secs(ts: &Option<prost_types::Timestamp>) -> i64 {
+    ts.as_ref().map(|t| t.seconds).unwrap_or(0)
+}
+
+/// Convert a gateway timestamp (broker **server** time) to Unix **UTC** seconds, given the
+/// server-to-UTC shift in seconds (see [`MT5Sugar::server_utc_shift_secs`]).
+pub fn to_utc_secs(server_ts: &Option<prost_types::Timestamp>, server_utc_shift_secs: i64) -> i64 {
+    unix_secs(server_ts) - server_utc_shift_secs
+}
+
 fn to_ts(dt: chrono::DateTime<chrono::Utc>) -> prost_types::Timestamp {
     prost_types::Timestamp { seconds: dt.timestamp(), nanos: 0 }
 }
@@ -590,5 +657,74 @@ impl MT5Sugar {
         let wins = deals.iter().filter(|d| d.profit > 0.0).count();
         let losses = deals.iter().filter(|d| d.profit < 0.0).count();
         Ok(DailyStats { deals: deals.len(), profit, wins, losses })
+    }
+
+    // ===== Quotes & convenience =====
+
+    /// Current [`Quote`] for a symbol (defaults to the default symbol).
+    pub async fn quote(&self, symbol: Option<&str>) -> Result<Quote, MT5Error> {
+        let s = self.resolve_symbol(symbol)?;
+        let t = self.svc.symbol_tick(s).await?;
+        Ok(Quote::from_tick(s, &t))
+    }
+
+    /// Select a symbol, then poll until it is synchronized **and** publishes a usable two-sided
+    /// quote, or fail with [`MT5Error::Timeout`] after `wait`.
+    pub async fn ensure_symbol(&self, symbol: Option<&str>, wait: std::time::Duration) -> Result<Quote, MT5Error> {
+        let s = self.resolve_symbol(symbol)?.to_string();
+        self.svc.symbol_select(&s, true).await?;
+        let deadline = std::time::Instant::now() + wait;
+        let mut last: Option<Quote> = None;
+        loop {
+            if self.svc.symbol_is_synchronized(&s).await.unwrap_or(false) {
+                if let Ok(q) = self.quote(Some(&s)).await {
+                    if q.is_usable() {
+                        return Ok(q);
+                    }
+                    last = Some(q);
+                }
+            }
+            if std::time::Instant::now() >= deadline {
+                return Err(MT5Error::Timeout(format!(
+                    "{s}: no usable two-sided quote within {wait:?} (last={last:?})"
+                )));
+            }
+            tokio::time::sleep(std::time::Duration::from_millis(500)).await;
+        }
+    }
+
+    /// Open positions whose `magic_number == magic` — the per-strategy filter.
+    pub async fn positions_by_magic(&self, magic: i64) -> Result<Vec<pb::PositionInfo>, MT5Error> {
+        Ok(self.get_open_positions().await?.into_iter().filter(|p| p.magic_number == magic).collect())
+    }
+
+    /// Subscribe to live ticks for `symbols`, delivered as [`Quote`]s on an mpsc channel. A
+    /// background task feeds the channel and ends on the first stream error or when the receiver
+    /// is dropped.
+    pub async fn subscribe_quotes(&self, symbols: Vec<String>) -> Result<tokio::sync::mpsc::Receiver<Quote>, MT5Error> {
+        use tokio_stream::StreamExt;
+        let mut stream = self.svc.stream_ticks(symbols).await?;
+        let (tx, rx) = tokio::sync::mpsc::channel(1024);
+        tokio::spawn(async move {
+            while let Some(item) = stream.next().await {
+                match item {
+                    Ok(d) => {
+                        if let Some(t) = d.symbol_tick {
+                            if tx.send(Quote::from_subscription_tick(&t)).await.is_err() {
+                                break;
+                            }
+                        }
+                    }
+                    Err(_) => break,
+                }
+            }
+        });
+        Ok(rx)
+    }
+
+    /// Broker **server** time minus **UTC**, in seconds (from the account summary). Pass this to
+    /// [`to_utc_secs`] to convert gateway timestamps to UTC.
+    pub async fn server_utc_shift_secs(&self) -> Result<i64, MT5Error> {
+        Ok(self.svc.account_summary().await?.utc_timezone_server_time_shift_minutes * 60)
     }
 }
