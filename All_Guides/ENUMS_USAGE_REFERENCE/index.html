@@ -16,7 +16,7 @@
         <link rel="prev" href="../RETURN_CODES_REFERENCE/">
       
       
-        <link rel="next" href="../PROTOBUF_INSPECTOR_GUIDE/">
+        <link rel="next" href="../SYNC_VS_ASYNC/">
       
       
         
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#enums-usage-reference-mt5account-python" class="md-skip">
+        <a href="#enums-usage-reference" class="md-skip">
           Skip to content
         </a>
       
@@ -394,6 +394,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../MT5_For_Beginners/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MT5 for Beginners
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../PROJECT_MAP/" class="md-nav__link">
         
   
@@ -430,34 +458,6 @@
     
   
     Glossary
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../MT5_For_Beginners/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    MT5 for Beginners
   
 
     
@@ -594,33 +594,44 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#summary-statistics" class="md-nav__link">
+  <a href="#the-three-rules" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ✅ Summary Statistics
+        The three rules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The three rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-low-level-mt5account-cast-the-enum-to-i32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Low-level (MT5Account): cast the enum to i32
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#1-account-information-4-methods" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#2-midhigh-level-mt5service-mt5sugar-pass-the-typed-enum" class="md-nav__link">
     <span class="md-ellipsis">
       
-        👤 1. Account Information (4 methods)
+        2. Mid/high-level (MT5Service / MT5Sugar): pass the typed enum
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="👤 1. Account Information (4 methods)">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
-  <a href="#44-methods-use-enums-100" class="md-nav__link">
+  <a href="#3-decoding-an-enum-you-received-try_from" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4/4 methods use ENUMs (100%)
+        3. Decoding an enum you received: try_from
       
     </span>
   </a>
@@ -633,22 +644,77 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-symbol-information-13-methods" class="md-nav__link">
+  <a href="#the-rtype-field" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📊 2. Symbol Information (13 methods)
+        ⚠️ The r#type field
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="📊 2. Symbol Information (13 methods)">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enum-catalog-by-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enum catalog by group
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Enum catalog by group">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#713-methods-use-enums-54" class="md-nav__link">
+  <a href="#account-information" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7/13 methods use ENUMs (54%)
+        Account Information
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#symbol-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Symbol Information
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#positions-orders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Positions &amp; Orders
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#market-depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Market Depth
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trading-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trading Operations
       
     </span>
   </a>
@@ -661,134 +727,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-positions-orders-information-6-methods" class="md-nav__link">
+  <a href="#patterns" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📋 3. Positions &amp; Orders Information (6 methods)
+        Patterns
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="📋 3. Positions &amp; Orders Information (6 methods)">
+    <nav class="md-nav" aria-label="Patterns">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#36-methods-use-enums-50" class="md-nav__link">
+  <a href="#a-tiny-decode-helper" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3/6 methods use ENUMs (50%)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-market-depth-dom-3-methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📚 4. Market Depth / DOM (3 methods)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="📚 4. Market Depth / DOM (3 methods)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#13-methods-use-enums-33" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1/3 methods use ENUMs (33%)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-trading-operations-6-methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        💰 5. Trading Operations (6 methods)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="💰 5. Trading Operations (6 methods)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#66-methods-use-enums-100" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6/6 methods use ENUMs (100%)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-streaming-methods-5-methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📡 6. Streaming Methods (5 methods)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="📡 6. Streaming Methods (5 methods)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#35-methods-use-enums-60" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3/5 methods use ENUMs (60%)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#important-notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Important Notes
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Important Notes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#python-enum-access" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Python ENUM Access
+        A tiny decode helper
       
     </span>
   </a>
@@ -796,10 +750,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#special-cases" class="md-nav__link">
+  <a href="#dont-hardcode-magic-integers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Special Cases
+        Don't hardcode magic integers
       
     </span>
   </a>
@@ -815,27 +769,10 @@
   <a href="#see-also" class="md-nav__link">
     <span class="md-ellipsis">
       
-        See Also
+        📚 See also
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="See Also">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#documentation-by-group" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Documentation by Group:
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -855,62 +792,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../PROTOBUF_INSPECTOR_GUIDE/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Protobuf Inspector
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../USERCODE_SANDBOX_GUIDE/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    UserCode Sandbox
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../SYNC_VS_ASYNC/" class="md-nav__link">
         
   
@@ -918,7 +799,7 @@
   <span class="md-ellipsis">
     
   
-    Sync vs Async
+    Async Model
   
 
     
@@ -995,14 +876,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API_Reference/MT5Account/" class="md-nav__link">
+      <a href="../../MT5Account/MT5Account.Master.Overview/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    MT5Account API
+    MT5Account
   
 
     
@@ -1023,14 +904,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API_Reference/MT5Service/" class="md-nav__link">
+      <a href="../../MT5Service/MT5Service.Overview/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    MT5Service API
+    MT5Service
   
 
     
@@ -1051,14 +932,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API_Reference/MT5Sugar/" class="md-nav__link">
+      <a href="../../MT5Sugar/MT5Sugar.Master.Overview/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    MT5Sugar API
+    MT5Sugar
   
 
     
@@ -1163,7 +1044,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Strategies/Presets/AdaptiveMarketModePreset/" class="md-nav__link">
+      <a href="../../Strategies/Presets/" class="md-nav__link">
         
   
   
@@ -1171,6 +1052,90 @@
     
   
     Presets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Strategies/Orchestrators/MarketOneShot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Market One-Shot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Strategies/Orchestrators/BracketTrailing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bracket + Trailing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Strategies/Orchestrators/PendingBracket/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pending Bracket
   
 
     
@@ -1218,33 +1183,44 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#summary-statistics" class="md-nav__link">
+  <a href="#the-three-rules" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ✅ Summary Statistics
+        The three rules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The three rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-low-level-mt5account-cast-the-enum-to-i32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Low-level (MT5Account): cast the enum to i32
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#1-account-information-4-methods" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#2-midhigh-level-mt5service-mt5sugar-pass-the-typed-enum" class="md-nav__link">
     <span class="md-ellipsis">
       
-        👤 1. Account Information (4 methods)
+        2. Mid/high-level (MT5Service / MT5Sugar): pass the typed enum
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="👤 1. Account Information (4 methods)">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
-  <a href="#44-methods-use-enums-100" class="md-nav__link">
+  <a href="#3-decoding-an-enum-you-received-try_from" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4/4 methods use ENUMs (100%)
+        3. Decoding an enum you received: try_from
       
     </span>
   </a>
@@ -1257,22 +1233,77 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-symbol-information-13-methods" class="md-nav__link">
+  <a href="#the-rtype-field" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📊 2. Symbol Information (13 methods)
+        ⚠️ The r#type field
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="📊 2. Symbol Information (13 methods)">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enum-catalog-by-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enum catalog by group
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Enum catalog by group">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#713-methods-use-enums-54" class="md-nav__link">
+  <a href="#account-information" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7/13 methods use ENUMs (54%)
+        Account Information
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#symbol-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Symbol Information
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#positions-orders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Positions &amp; Orders
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#market-depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Market Depth
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trading-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trading Operations
       
     </span>
   </a>
@@ -1285,134 +1316,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-positions-orders-information-6-methods" class="md-nav__link">
+  <a href="#patterns" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📋 3. Positions &amp; Orders Information (6 methods)
+        Patterns
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="📋 3. Positions &amp; Orders Information (6 methods)">
+    <nav class="md-nav" aria-label="Patterns">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#36-methods-use-enums-50" class="md-nav__link">
+  <a href="#a-tiny-decode-helper" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3/6 methods use ENUMs (50%)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-market-depth-dom-3-methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📚 4. Market Depth / DOM (3 methods)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="📚 4. Market Depth / DOM (3 methods)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#13-methods-use-enums-33" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1/3 methods use ENUMs (33%)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-trading-operations-6-methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        💰 5. Trading Operations (6 methods)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="💰 5. Trading Operations (6 methods)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#66-methods-use-enums-100" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6/6 methods use ENUMs (100%)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-streaming-methods-5-methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📡 6. Streaming Methods (5 methods)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="📡 6. Streaming Methods (5 methods)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#35-methods-use-enums-60" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3/5 methods use ENUMs (60%)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#important-notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Important Notes
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Important Notes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#python-enum-access" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Python ENUM Access
+        A tiny decode helper
       
     </span>
   </a>
@@ -1420,10 +1339,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#special-cases" class="md-nav__link">
+  <a href="#dont-hardcode-magic-integers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Special Cases
+        Don't hardcode magic integers
       
     </span>
   </a>
@@ -1439,27 +1358,10 @@
   <a href="#see-also" class="md-nav__link">
     <span class="md-ellipsis">
       
-        See Also
+        📚 See also
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="See Also">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#documentation-by-group" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Documentation by Group:
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1483,475 +1385,231 @@
   
 
 
-<h1 id="enums-usage-reference-mt5account-python">ENUMs Usage Reference - MT5Account (Python)<a class="headerlink" href="#enums-usage-reference-mt5account-python" title="Permanent link">¶</a></h1>
+<h1 id="enums-usage-reference">ENUMs Usage Reference<a class="headerlink" href="#enums-usage-reference" title="Permanent link">¶</a></h1>
 <blockquote>
-<p>ENUM presence lookup table for all MT5Account low-level methods</p>
+<p>How protobuf enums work across the RustMT5 layers — passing them in, the <code>r#type</code> fields, decoding them back, and a catalog of the ones you'll actually use.</p>
+</blockquote>
+<p>All enums live under <code>metarpc_mt5::proto::mt5_term_api</code> (aliased <code>pb</code> throughout the docs).</p>
+<hr />
+<h2 id="the-three-rules">The three rules<a class="headerlink" href="#the-three-rules" title="Permanent link">¶</a></h2>
+<h3 id="1-low-level-mt5account-cast-the-enum-to-i32">1. Low-level (<code>MT5Account</code>): cast the enum to <code>i32</code><a class="headerlink" href="#1-low-level-mt5account-cast-the-enum-to-i32" title="Permanent link">¶</a></h3>
+<p>The generated request structs store enum fields as <code>i32</code>. Pass <code>Enum::Variant as i32</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">use</span><span class="w"> </span><span class="n">metarpc_mt5</span><span class="p">::</span><span class="n">proto</span><span class="p">::</span><span class="n">mt5_term_api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">pb</span><span class="p">;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">use</span><span class="w"> </span><span class="n">pb</span><span class="p">::</span><span class="n">SymbolInfoDoubleProperty</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">D</span><span class="p">;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kd">let</span><span class="w"> </span><span class="n">point</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">account</span><span class="p">.</span><span class="n">symbol_info_double</span><span class="p">(</span><span class="n">pb</span><span class="p">::</span><span class="n">SymbolInfoDoubleRequest</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="n">symbol</span><span class="p">:</span><span class="w"> </span><span class="s">"EURUSD"</span><span class="p">.</span><span class="n">into</span><span class="p">(),</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="n">r</span><span class="p">#</span><span class="k">type</span><span class="p">:</span><span class="w"> </span><span class="nc">D</span><span class="p">::</span><span class="n">SymbolPoint</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">i32</span><span class="p">,</span><span class="w">   </span><span class="c1">// ← cast</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">}).</span><span class="k">await</span><span class="o">?</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="2-midhigh-level-mt5service-mt5sugar-pass-the-typed-enum">2. Mid/high-level (<code>MT5Service</code> / <code>MT5Sugar</code>): pass the typed enum<a class="headerlink" href="#2-midhigh-level-mt5service-mt5sugar-pass-the-typed-enum" title="Permanent link">¶</a></h3>
+<p>The facade takes the enum directly and casts for you:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">use</span><span class="w"> </span><span class="n">metarpc_mt5</span><span class="p">::</span><span class="n">proto</span><span class="p">::</span><span class="n">mt5_term_api</span><span class="p">::</span><span class="n">SymbolInfoDoubleProperty</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">D</span><span class="p">;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kd">let</span><span class="w"> </span><span class="n">point</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="n">symbol_double</span><span class="p">(</span><span class="s">"EURUSD"</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="p">::</span><span class="n">SymbolPoint</span><span class="p">).</span><span class="k">await</span><span class="o">?</span><span class="p">;</span><span class="w">  </span><span class="c1">// ← typed, no `as i32`</span>
+</code></pre></div>
+<h3 id="3-decoding-an-enum-you-received-try_from">3. Decoding an enum you received: <code>try_from</code><a class="headerlink" href="#3-decoding-an-enum-you-received-try_from" title="Permanent link">¶</a></h3>
+<p>Reply fields are also <code>i32</code>. Convert back with <code>Enum::try_from(value)</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">use</span><span class="w"> </span><span class="n">metarpc_mt5</span><span class="p">::</span><span class="n">proto</span><span class="p">::</span><span class="n">mt5_term_api</span><span class="p">::</span><span class="n">MrpcEnumAccountTradeMode</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">Mode</span><span class="p">;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">account</span><span class="p">.</span><span class="n">account_summary</span><span class="p">().</span><span class="k">await</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">match</span><span class="w"> </span><span class="n">Mode</span><span class="p">::</span><span class="n">try_from</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">account_trade_mode</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">Mode</span><span class="p">::</span><span class="n">MrpcAccountTradeModeReal</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">"REAL"</span><span class="p">),</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">Mode</span><span class="p">::</span><span class="n">MrpcAccountTradeModeContest</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">"CONTEST"</span><span class="p">),</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">"DEMO"</span><span class="p">),</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="the-rtype-field">⚠️ The <code>r#type</code> field<a class="headerlink" href="#the-rtype-field" title="Permanent link">¶</a></h2>
+<p>Several request/reply structs have a field literally named <code>type</code> — a Rust keyword — so prost emits it as the raw identifier <strong><code>r#type</code></strong>. Write it as-is in struct literals and field access:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">pb</span><span class="p">::</span><span class="n">SymbolInfoDoubleRequest</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">symbol</span><span class="p">:</span><span class="w"> </span><span class="s">"EURUSD"</span><span class="p">.</span><span class="n">into</span><span class="p">(),</span><span class="w"> </span><span class="n">r</span><span class="p">#</span><span class="k">type</span><span class="p">:</span><span class="w"> </span><span class="nc">D</span><span class="p">::</span><span class="n">SymbolPoint</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">i32</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1">//                                                      ^^^^^^</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kd">let</span><span class="w"> </span><span class="n">side</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">position</span><span class="p">.</span><span class="n">r</span><span class="p">#</span><span class="k">type</span><span class="p">;</span><span class="w">  </span><span class="c1">// Bmt5EnumPositionType: 0 Buy, 1 Sell</span>
+</code></pre></div>
+<p>Structs with <code>r#type</code>: <code>SymbolInfoDoubleRequest</code> / <code>…IntegerRequest</code> / <code>…StringRequest</code>, <code>PositionInfo</code>, <code>OpenedOrderInfo</code>, <code>OrderHistoryData</code>, <code>DealHistoryData</code>, <code>MrpcMqlBookInfo</code>, and the streaming <code>On*Data</code> event structs.</p>
+<blockquote>
+<p><code>account_info_*</code> requests use <code>property_id</code> (not <code>r#type</code>); <code>symbol_info_margin_rate</code> uses <code>order_type</code>.</p>
 </blockquote>
 <hr />
-<h2 id="summary-statistics">✅ Summary Statistics<a class="headerlink" href="#summary-statistics" title="Permanent link">¶</a></h2>
+<h2 id="enum-catalog-by-group">Enum catalog by group<a class="headerlink" href="#enum-catalog-by-group" title="Permanent link">¶</a></h2>
+<h3 id="account-information">Account Information<a class="headerlink" href="#account-information" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
-<th>Method Group</th>
-<th>With ENUMs</th>
-<th>Total</th>
-<th>Percentage</th>
+<th>Enum</th>
+<th>Used by</th>
+<th>Key variants (value)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Account Information</strong></td>
-<td>4</td>
-<td>4</td>
-<td>100%</td>
+<td><code>AccountInfoDoublePropertyType</code></td>
+<td><code>account_info_double</code> / <code>account_double</code></td>
+<td><code>AccountBalance</code>(0), <code>AccountProfit</code>(2), <code>AccountEquity</code>(3), <code>AccountMargin</code>(4), <code>AccountMarginFree</code>(5), <code>AccountMarginLevel</code>(6)</td>
 </tr>
 <tr>
-<td><strong>Symbol Information</strong></td>
-<td>7</td>
-<td>13</td>
-<td>54%</td>
+<td><code>AccountInfoIntegerPropertyType</code></td>
+<td><code>account_info_integer</code> / <code>account_integer</code></td>
+<td><code>AccountLogin</code>(0), <code>AccountTradeMode</code>(1), <code>AccountLeverage</code>(2), <code>AccountTradeAllowed</code>(5), <code>AccountTradeExpert</code>(6)</td>
 </tr>
 <tr>
-<td><strong>Positions &amp; Orders</strong></td>
-<td>3</td>
-<td>6</td>
-<td>50%</td>
+<td><code>AccountInfoStringPropertyType</code></td>
+<td><code>account_info_string</code> / <code>account_string</code></td>
+<td><code>AccountName</code>(0), <code>AccountServer</code>(1), <code>AccountCurrency</code>(2), <code>AccountCompany</code>(3)</td>
 </tr>
 <tr>
-<td><strong>Market Depth/DOM</strong></td>
-<td>1</td>
-<td>3</td>
-<td>33%</td>
-</tr>
-<tr>
-<td><strong>Trading Operations</strong></td>
-<td>6</td>
-<td>6</td>
-<td>100%</td>
-</tr>
-<tr>
-<td><strong>Streaming Methods</strong></td>
-<td>3</td>
-<td>5</td>
-<td>60%</td>
-</tr>
-<tr>
-<td><strong>TOTAL</strong></td>
-<td><strong>24</strong></td>
-<td><strong>37</strong></td>
-<td><strong>65%</strong></td>
+<td><code>MrpcEnumAccountTradeMode</code></td>
+<td>decode <code>account_trade_mode</code></td>
+<td><code>…Demo</code>(0), <code>…Contest</code>(1), <code>…Real</code>(2)</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="1-account-information-4-methods">👤 1. Account Information (4 methods)<a class="headerlink" href="#1-account-information-4-methods" title="Permanent link">¶</a></h2>
-<h3 id="44-methods-use-enums-100">4/4 methods use ENUMs (100%)<a class="headerlink" href="#44-methods-use-enums-100" title="Permanent link">¶</a></h3>
+<h3 id="symbol-information">Symbol Information<a class="headerlink" href="#symbol-information" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
-<th>Method</th>
-<th>ENUMs Count</th>
-<th>Description</th>
-<th>Input ENUMs</th>
-<th>Output ENUMs</th>
+<th>Enum</th>
+<th>Used by</th>
+<th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>account_summary</strong></td>
-<td><strong>[In: 0, Out: 1]</strong><br>Total: 1 ENUM (3 values)</td>
-<td>Get all account data in one call (RECOMMENDED)</td>
-<td>-</td>
-<td><code>MrpcEnumAccountTradeMode</code> (3 values) - Account type: DEMO, CONTEST, REAL</td>
+<td><code>SymbolInfoDoubleProperty</code></td>
+<td><code>symbol_info_double</code> / <code>symbol_double</code></td>
+<td>~40 variants: <code>SymbolBid</code>(0), <code>SymbolAsk</code>(3), <code>SymbolPoint</code>(13), <code>SymbolTradeTickValue</code>(14), <code>SymbolTradeTickSize</code>(17), <code>SymbolVolumeMin/Max/Step</code>(22/23/24), …</td>
 </tr>
 <tr>
-<td><strong>account_info_double</strong></td>
-<td><strong>[In: 1, Out: 0]</strong><br>Total: 1 ENUM (14 values)</td>
-<td>Get double properties (Balance, Equity, Margin, etc.)</td>
-<td><code>AccountInfoDoublePropertyType</code> (14 values): ACCOUNT_BALANCE, ACCOUNT_CREDIT, ACCOUNT_PROFIT, ACCOUNT_EQUITY, ACCOUNT_MARGIN, ACCOUNT_MARGIN_FREE, ACCOUNT_MARGIN_LEVEL, ACCOUNT_MARGIN_SO_CALL, ACCOUNT_MARGIN_SO_SO, ACCOUNT_MARGIN_INITIAL, ACCOUNT_MARGIN_MAINTENANCE, ACCOUNT_ASSETS, ACCOUNT_LIABILITIES, ACCOUNT_COMMISSION_BLOCKED</td>
-<td>-</td>
+<td><code>SymbolInfoIntegerProperty</code></td>
+<td><code>symbol_info_integer</code> / <code>symbol_integer</code></td>
+<td><code>SymbolDigits</code>(17), <code>SymbolSpread</code>(19), <code>SymbolTradeStopsLevel</code>(25), <code>SymbolTradeMode</code>(22), …</td>
 </tr>
 <tr>
-<td><strong>account_info_integer</strong></td>
-<td><strong>[In: 1, Out: 0]</strong><br>Total: 1 ENUM (11 values)</td>
-<td>Get integer properties (Login, Leverage, etc.)</td>
-<td><code>AccountInfoIntegerPropertyType</code> (11 values): ACCOUNT_LOGIN, ACCOUNT_TRADE_MODE, ACCOUNT_LEVERAGE, ACCOUNT_LIMIT_ORDERS, ACCOUNT_MARGIN_SO_MODE, ACCOUNT_TRADE_ALLOWED, ACCOUNT_TRADE_EXPERT, ACCOUNT_MARGIN_MODE, ACCOUNT_CURRENCY_DIGITS, ACCOUNT_FIFO_CLOSE, ACCOUNT_HEDGE_ALLOWED</td>
-<td>-</td>
+<td><code>SymbolInfoStringProperty</code></td>
+<td><code>symbol_info_string</code> / <code>symbol_string</code></td>
+<td><code>SymbolCurrencyBase</code>(5), <code>SymbolCurrencyProfit</code>(6), <code>SymbolDescription</code>(9), <code>SymbolPath</code>(14)</td>
 </tr>
 <tr>
-<td><strong>account_info_string</strong></td>
-<td><strong>[In: 1, Out: 0]</strong><br>Total: 1 ENUM (4 values)</td>
-<td>Get string properties (Currency, Company, etc.)</td>
-<td><code>AccountInfoStringPropertyType</code> (4 values): ACCOUNT_NAME, ACCOUNT_SERVER, ACCOUNT_CURRENCY, ACCOUNT_COMPANY</td>
-<td>-</td>
+<td><code>EnumOrderType</code></td>
+<td><code>symbol_info_margin_rate</code> / <code>symbol_margin_rate</code></td>
+<td><code>OrderTypeBuy</code>(0), <code>OrderTypeSell</code>(1), …</td>
+</tr>
+<tr>
+<td><code>DayOfWeek</code></td>
+<td>session methods</td>
+<td><code>Sunday</code>(0) … <code>Saturday</code>(6)</td>
+</tr>
+<tr>
+<td><code>AhSymbolParamsManySortType</code></td>
+<td><code>symbol_params_many</code> (sort)</td>
+<td>name/MQL-index × asc/desc (0–3)</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="2-symbol-information-13-methods">📊 2. Symbol Information (13 methods)<a class="headerlink" href="#2-symbol-information-13-methods" title="Permanent link">¶</a></h2>
-<h3 id="713-methods-use-enums-54">7/13 methods use ENUMs (54%)<a class="headerlink" href="#713-methods-use-enums-54" title="Permanent link">¶</a></h3>
+<h3 id="positions-orders">Positions &amp; Orders<a class="headerlink" href="#positions-orders" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
-<th>Method</th>
-<th>ENUMs Count</th>
-<th>Description</th>
-<th>Input ENUMs</th>
-<th>Output ENUMs</th>
+<th>Enum</th>
+<th>Used by</th>
+<th>Key variants</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>symbols_total</strong></td>
-<td><strong>[In: 0, Out: 0]</strong><br>Total: 0 ENUMs</td>
-<td>Count total/selected symbols</td>
-<td>-</td>
-<td>-</td>
+<td><code>Bmt5EnumOpenedOrderSortType</code></td>
+<td><code>opened_orders</code></td>
+<td>open-time / ticket × asc/desc (0–3)</td>
 </tr>
 <tr>
-<td><strong>symbol_exist</strong></td>
-<td><strong>[In: 0, Out: 0]</strong><br>Total: 0 ENUMs</td>
-<td>Check if symbol exists</td>
-<td>-</td>
-<td>-</td>
+<td><code>Bmt5EnumOrderHistorySortType</code></td>
+<td><code>order_history</code></td>
+<td>open/close/ticket × asc/desc (0–5)</td>
 </tr>
 <tr>
-<td><strong>symbol_name</strong></td>
-<td><strong>[In: 0, Out: 0]</strong><br>Total: 0 ENUMs</td>
-<td>Get symbol name by index</td>
-<td>-</td>
-<td>-</td>
+<td><code>AhEnumPositionsHistorySortType</code></td>
+<td><code>positions_history</code></td>
+<td>open-time / ticket × asc/desc (0–3)</td>
 </tr>
 <tr>
-<td><strong>symbol_select</strong></td>
-<td><strong>[In: 0, Out: 0]</strong><br>Total: 0 ENUMs</td>
-<td>Add/remove symbol from Market Watch</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td><strong>symbol_is_synchronized</strong></td>
-<td><strong>[In: 0, Out: 0]</strong><br>Total: 0 ENUMs</td>
-<td>Check sync status with server</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td><strong>symbol_info_double</strong></td>
-<td><strong>[In: 1, Out: 0]</strong><br>Total: 1 ENUM (60 values)</td>
-<td>Get double properties (Bid, Ask, Point, etc.)</td>
-<td><code>SymbolInfoDoubleProperty</code> (60 values) - Property selector</td>
-<td>-</td>
-</tr>
-<tr>
-<td><strong>symbol_info_integer</strong></td>
-<td><strong>[In: 1, Out: 0]</strong><br>Total: 1 ENUM (37 values)</td>
-<td>Get integer properties (Digits, Spread, etc.)</td>
-<td><code>SymbolInfoIntegerProperty</code> (37 values) - Property selector</td>
-<td>-</td>
-</tr>
-<tr>
-<td><strong>symbol_info_string</strong></td>
-<td><strong>[In: 1, Out: 0]</strong><br>Total: 1 ENUM (15 values)</td>
-<td>Get string properties (Description, etc.)</td>
-<td><code>SymbolInfoStringProperty</code> (15 values) - Property selector</td>
-<td>-</td>
-</tr>
-<tr>
-<td><strong>symbol_info_margin_rate</strong></td>
-<td><strong>[In: 1, Out: 0]</strong><br>Total: 1 ENUM (9 values)</td>
-<td>Get margin requirements for order types</td>
-<td><code>ENUM_ORDER_TYPE</code> (9 values) - Order type</td>
-<td>-</td>
-</tr>
-<tr>
-<td><strong>symbol_info_tick</strong></td>
-<td><strong>[In: 0, Out: 0]</strong><br>Total: 0 ENUMs</td>
-<td>Get last tick data with timestamp</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td><strong>symbol_info_session_quote</strong></td>
-<td><strong>[In: 1, Out: 0]</strong><br>Total: 1 ENUM (7 values)</td>
-<td>Get quote session times</td>
-<td><code>BMT5_ENUM_DAY_OF_WEEK</code> (7 values) - Day of week</td>
-<td>-</td>
-</tr>
-<tr>
-<td><strong>symbol_info_session_trade</strong></td>
-<td><strong>[In: 1, Out: 0]</strong><br>Total: 1 ENUM (7 values)</td>
-<td>Get trade session times</td>
-<td><code>BMT5_ENUM_DAY_OF_WEEK</code> (7 values) - Day of week</td>
-<td>-</td>
-</tr>
-<tr>
-<td><strong>symbol_params_many</strong></td>
-<td><strong>[In: 1, Out: 13]</strong><br>Total: 14 ENUMs</td>
-<td>Get detailed parameters for multiple symbols</td>
-<td><code>AH_SYMBOL_PARAMS_MANY_SORT_TYPE</code> (4 values) - Sort mode</td>
-<td><strong>13 ENUMs in SymbolParameters:</strong> BMT5_ENUM_SYMBOL_SECTOR, BMT5_ENUM_SYMBOL_INDUSTRY, BMT5_ENUM_SYMBOL_CHART_MODE, BMT5_ENUM_SYMBOL_CALC_MODE, BMT5_ENUM_SYMBOL_TRADE_MODE, BMT5_ENUM_SYMBOL_TRADE_EXECUTION, BMT5_ENUM_SYMBOL_SWAP_MODE, BMT5_ENUM_DAY_OF_WEEK, BMT5_ENUM_ORDER_TYPE_FILLING, BMT5_ENUM_ORDER_TYPE, BMT5_ENUM_SYMBOL_ORDER_GTC_MODE, BMT5_ENUM_SYMBOL_OPTION_MODE, BMT5_ENUM_SYMBOL_OPTION_RIGHT</td>
+<td><code>Bmt5EnumPositionType</code></td>
+<td>decode <code>PositionInfo.r#type</code></td>
+<td><code>…Buy</code>(0), <code>…Sell</code>(1)</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="3-positions-orders-information-6-methods">📋 3. Positions &amp; Orders Information (6 methods)<a class="headerlink" href="#3-positions-orders-information-6-methods" title="Permanent link">¶</a></h2>
-<h3 id="36-methods-use-enums-50">3/6 methods use ENUMs (50%)<a class="headerlink" href="#36-methods-use-enums-50" title="Permanent link">¶</a></h3>
+<h3 id="market-depth">Market Depth<a class="headerlink" href="#market-depth" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
-<th>Method</th>
-<th>ENUMs Count</th>
-<th>Description</th>
-<th>Input ENUMs</th>
-<th>Output ENUMs</th>
+<th>Enum</th>
+<th>Used by</th>
+<th>Variants</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>positions_total</strong></td>
-<td><strong>[In: 0, Out: 0]</strong><br>Total: 0 ENUMs</td>
-<td>Count open positions</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td><strong>opened_orders</strong></td>
-<td><strong>[In: 1, Out: 6]</strong><br>Total: 7 ENUMs</td>
-<td>Get all opened orders &amp; positions</td>
-<td><code>BMT5_ENUM_OPENED_ORDER_SORT_TYPE</code> (4 values) - Sort mode</td>
-<td><strong>6 ENUMs:</strong><br><strong>In PositionInfo:</strong> BMT5_ENUM_POSITION_TYPE, BMT5_ENUM_POSITION_REASON<br><strong>In OpenedOrderInfo:</strong> BMT5_ENUM_ORDER_TYPE, BMT5_ENUM_ORDER_STATE, BMT5_ENUM_ORDER_TYPE_FILLING, BMT5_ENUM_ORDER_TYPE_TIME</td>
-</tr>
-<tr>
-<td><strong>opened_orders_tickets</strong></td>
-<td><strong>[In: 0, Out: 0]</strong><br>Total: 0 ENUMs</td>
-<td>Get only ticket numbers (lightweight)</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td><strong>order_history</strong></td>
-<td><strong>[In: 1, Out: 7]</strong><br>Total: 8 ENUMs</td>
-<td>Get historical orders with pagination</td>
-<td><code>BMT5_ENUM_ORDER_HISTORY_SORT_TYPE</code> (6 values) - Sort mode</td>
-<td><strong>7 ENUMs:</strong><br><strong>In OrderHistoryData:</strong> BMT5_ENUM_ORDER_STATE, BMT5_ENUM_ORDER_TYPE, BMT5_ENUM_ORDER_TYPE_FILLING, BMT5_ENUM_ORDER_TYPE_TIME<br><strong>In DealHistoryData:</strong> BMT5_ENUM_DEAL_ENTRY_TYPE, BMT5_ENUM_DEAL_TYPE, BMT5_ENUM_DEAL_REASON</td>
-</tr>
-<tr>
-<td><strong>positions_history</strong></td>
-<td><strong>[In: 1, Out: 1]</strong><br>Total: 2 ENUMs</td>
-<td>Get historical positions with P&amp;L</td>
-<td><code>AH_ENUM_POSITIONS_HISTORY_SORT_TYPE</code> (4 values) - Sort mode</td>
-<td><code>AH_ENUM_POSITIONS_HISTORY_ORDER_TYPE</code> (9 values) - Order type</td>
-</tr>
-<tr>
-<td><strong>tick_value_with_size</strong></td>
-<td><strong>[In: 0, Out: 0]</strong><br>Total: 0 ENUMs</td>
-<td>Get tick value and size for symbols</td>
-<td>-</td>
-<td>-</td>
+<td><code>BookType</code></td>
+<td>decode <code>MrpcMqlBookInfo.r#type</code></td>
+<td><code>Sell</code>(0), <code>Buy</code>(1), <code>SellMarket</code>(2), <code>BuyMarket</code>(3)</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="4-market-depth-dom-3-methods">📚 4. Market Depth / DOM (3 methods)<a class="headerlink" href="#4-market-depth-dom-3-methods" title="Permanent link">¶</a></h2>
-<h3 id="13-methods-use-enums-33">1/3 methods use ENUMs (33%)<a class="headerlink" href="#13-methods-use-enums-33" title="Permanent link">¶</a></h3>
+<h3 id="trading-operations">Trading Operations<a class="headerlink" href="#trading-operations" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
-<th>Method</th>
-<th>ENUMs Count</th>
-<th>Description</th>
-<th>Input ENUMs</th>
-<th>Output ENUMs</th>
+<th>Enum</th>
+<th>Used by</th>
+<th>Variants</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>market_book_add</strong></td>
-<td><strong>[In: 0, Out: 0]</strong><br>Total: 0 ENUMs</td>
-<td>Subscribe to Depth of Market updates</td>
-<td>-</td>
-<td>-</td>
+<td><code>Tmt5EnumOrderType</code></td>
+<td><code>order_send.operation</code></td>
+<td><code>…Buy</code>(0), <code>…Sell</code>(1), <code>…BuyLimit</code>(2), <code>…SellLimit</code>(3), <code>…BuyStop</code>(4), <code>…SellStop</code>(5), <code>…BuyStopLimit</code>(6), <code>…SellStopLimit</code>(7)</td>
 </tr>
 <tr>
-<td><strong>market_book_release</strong></td>
-<td><strong>[In: 0, Out: 0]</strong><br>Total: 0 ENUMs</td>
-<td>Unsubscribe from DOM</td>
-<td>-</td>
-<td>-</td>
+<td><code>EnumOrderTypeTf</code></td>
+<td><code>order_calc_margin/profit</code>, <code>calculate_margin/profit</code></td>
+<td><code>OrderTypeTfBuy</code>(0), <code>OrderTypeTfSell</code>(1), …</td>
 </tr>
 <tr>
-<td><strong>market_book_get</strong></td>
-<td><strong>[In: 0, Out: 1]</strong><br>Total: 1 ENUM (4 values)</td>
-<td>Get current market depth snapshot</td>
-<td>-</td>
-<td><code>BookType</code> (4 values) - Order type in book: BOOK_TYPE_SELL, BOOK_TYPE_BUY, BOOK_TYPE_SELL_MARKET, BOOK_TYPE_BUY_MARKET</td>
+<td><code>Tmt5EnumOrderTypeTime</code></td>
+<td><code>order_send</code>/<code>order_modify</code> expiration</td>
+<td>GTC / DAY / SPECIFIED / SPECIFIED_DAY</td>
+</tr>
+<tr>
+<td><code>MrpcEnumTradeRequestActions</code></td>
+<td><code>order_check</code> request</td>
+<td><code>TradeActionDeal</code>, …</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="5-trading-operations-6-methods">💰 5. Trading Operations (6 methods)<a class="headerlink" href="#5-trading-operations-6-methods" title="Permanent link">¶</a></h2>
-<h3 id="66-methods-use-enums-100">6/6 methods use ENUMs (100%)<a class="headerlink" href="#66-methods-use-enums-100" title="Permanent link">¶</a></h3>
-<table>
-<thead>
-<tr>
-<th>Method</th>
-<th>ENUMs Count</th>
-<th>Description</th>
-<th>Input ENUMs</th>
-<th>Output ENUMs</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>order_send</strong></td>
-<td><strong>[In: 2, Out: 0]</strong><br>Total: 2 ENUMs (13 values)</td>
-<td>Send market or pending order</td>
-<td><strong>2 ENUMs:</strong><br><code>TMT5_ENUM_ORDER_TYPE</code> (9 values) - Order type<br><code>TMT5_ENUM_ORDER_TYPE_TIME</code> (4 values) - Order lifetime</td>
-<td>-</td>
-</tr>
-<tr>
-<td><strong>order_modify</strong></td>
-<td><strong>[In: 1, Out: 0]</strong><br>Total: 1 ENUM (4 values)</td>
-<td>Modify existing order parameters</td>
-<td><code>TMT5_ENUM_ORDER_TYPE_TIME</code> (4 values) - Order lifetime</td>
-<td>-</td>
-</tr>
-<tr>
-<td><strong>order_close</strong></td>
-<td><strong>[In: 0, Out: 1]</strong><br>Total: 1 ENUM (3 values)</td>
-<td>Close market or pending order</td>
-<td>-</td>
-<td><code>MRPC_ORDER_CLOSE_MODE</code> (3 values): MRPC_MARKET_ORDER_CLOSE, MRPC_MARKET_ORDER_PARTIAL_CLOSE, MRPC_PENDING_ORDER_REMOVE</td>
-</tr>
-<tr>
-<td><strong>order_check</strong></td>
-<td><strong>[In: 4, Out: 0]</strong><br>Total: 4 ENUMs (23 values)</td>
-<td>Validate order before sending</td>
-<td><strong>4 ENUMs in MrpcMqlTradeRequest:</strong><br><code>MRPC_ENUM_TRADE_REQUEST_ACTIONS</code> (6 values) - Trade action type<br><code>ENUM_ORDER_TYPE_TF</code> (9 values) - Order type<br><code>MRPC_ENUM_ORDER_TYPE_FILLING</code> (4 values) - Order filling policy<br><code>MRPC_ENUM_ORDER_TYPE_TIME</code> (4 values) - Order lifetime</td>
-<td>-</td>
-</tr>
-<tr>
-<td><strong>order_calc_margin</strong></td>
-<td><strong>[In: 1, Out: 0]</strong><br>Total: 1 ENUM (9 values)</td>
-<td>Calculate required margin</td>
-<td><code>ENUM_ORDER_TYPE_TF</code> (9 values) - Order type</td>
-<td>-</td>
-</tr>
-<tr>
-<td><strong>order_calc_profit</strong></td>
-<td><strong>[In: 1, Out: 0]</strong><br>Total: 1 ENUM (9 values)</td>
-<td>Calculate potential profit/loss</td>
-<td><code>ENUM_ORDER_TYPE_TF</code> (9 values) - Order type</td>
-<td>-</td>
-</tr>
-</tbody>
-</table>
+<h2 id="patterns">Patterns<a class="headerlink" href="#patterns" title="Permanent link">¶</a></h2>
+<h3 id="a-tiny-decode-helper">A tiny decode helper<a class="headerlink" href="#a-tiny-decode-helper" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">use</span><span class="w"> </span><span class="n">metarpc_mt5</span><span class="p">::</span><span class="n">proto</span><span class="p">::</span><span class="n">mt5_term_api</span><span class="p">::</span><span class="n">Bmt5EnumPositionType</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">Side</span><span class="p">;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">fn</span><span class="w"> </span><span class="nf">side_str</span><span class="p">(</span><span class="n">p</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">metarpc_mt5</span><span class="p">::</span><span class="n">proto</span><span class="p">::</span><span class="n">mt5_term_api</span><span class="p">::</span><span class="n">PositionInfo</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">'</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="k">match</span><span class="w"> </span><span class="n">Side</span><span class="p">::</span><span class="n">try_from</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">r</span><span class="p">#</span><span class="k">type</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">        </span><span class="nb">Ok</span><span class="p">(</span><span class="n">Side</span><span class="p">::</span><span class="n">Bmt5PositionTypeSell</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">"SELL"</span><span class="p">,</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">        </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">"BUY"</span><span class="p">,</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="dont-hardcode-magic-integers">Don't hardcode magic integers<a class="headerlink" href="#dont-hardcode-magic-integers" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">// ✗ brittle</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">r</span><span class="p">#</span><span class="k">type</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1">// ✓ self-documenting</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">r</span><span class="p">#</span><span class="k">type</span><span class="p">:</span><span class="w"> </span><span class="nc">pb</span><span class="p">::</span><span class="n">SymbolInfoDoubleProperty</span><span class="p">::</span><span class="n">SymbolPoint</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">i32</span><span class="p">,</span>
+</code></pre></div>
 <hr />
-<h2 id="6-streaming-methods-5-methods">📡 6. Streaming Methods (5 methods)<a class="headerlink" href="#6-streaming-methods-5-methods" title="Permanent link">¶</a></h2>
-<h3 id="35-methods-use-enums-60">3/5 methods use ENUMs (60%)<a class="headerlink" href="#35-methods-use-enums-60" title="Permanent link">¶</a></h3>
-<table>
-<thead>
-<tr>
-<th>Method</th>
-<th>ENUMs Count</th>
-<th>Description</th>
-<th>Input ENUMs</th>
-<th>Output ENUMs</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>on_symbol_tick</strong></td>
-<td><strong>[In: 0, Out: 0]</strong><br>Total: 0 ENUMs</td>
-<td>Stream tick data (Bid/Ask updates)</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td><strong>on_trade</strong></td>
-<td><strong>[In: 0, Out: 1]</strong><br>Total: 11 ENUMs (68 values)</td>
-<td>Stream trade events</td>
-<td>-</td>
-<td><strong>1 direct + 10 in nested structures:</strong><br>1. <code>MT5_SUB_ENUM_EVENT_GROUP_TYPE</code> (2 values) - OnTradeData.type<br>2-11. <strong>In event_data nested structures:</strong> SUB_ENUM_POSITION_TYPE (2), SUB_ENUM_POSITION_REASON (7), SUB_ENUM_ORDER_TYPE (9), SUB_ENUM_ORDER_STATE (10), SUB_ENUM_DEAL_TYPE (8), SUB_ENUM_ORDER_TYPE_TIME (4), SUB_ENUM_ORDER_TYPE_FILLING (4), SUB_ENUM_ORDER_REASON (7), SUB_ENUM_DEAL_ENTRY (4), SUB_ENUM_DEAL_REASON (11)</td>
-</tr>
-<tr>
-<td><strong>on_position_profit</strong></td>
-<td><strong>[In: 0, Out: 1]</strong><br>Total: 1 ENUM (2 values)</td>
-<td>Stream position P&amp;L updates</td>
-<td>-</td>
-<td><code>MT5_SUB_ENUM_EVENT_GROUP_TYPE</code> (2 values) - Event type in OnPositionProfitData.type field</td>
-</tr>
-<tr>
-<td><strong>on_positions_and_pending_orders_tickets</strong></td>
-<td><strong>[In: 0, Out: 0]</strong><br>Total: 0 ENUMs</td>
-<td>Stream ticket changes</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td><strong>on_trade_transaction</strong></td>
-<td><strong>[In: 0, Out: 9]</strong><br>Total: 9 ENUMs (107 values)</td>
-<td>Stream trade transaction events</td>
-<td>-</td>
-<td><strong>11 ENUM fields from 9 unique types:</strong><br>1. <code>MT5_SUB_ENUM_EVENT_GROUP_TYPE</code> (2 values) - OnTradeTransactionData.type<br>2-6. <strong>In MqlTradeTransaction:</strong> SUB_ENUM_TRADE_TRANSACTION_TYPE (11 values), SUB_ENUM_ORDER_TYPE (9 values), SUB_ENUM_ORDER_STATE (10 values), SUB_ENUM_DEAL_TYPE (18 values), SUB_ENUM_ORDER_TYPE_TIME (4 values)<br>7-10. <strong>In MqlTradeRequest:</strong> SUB_ENUM_TRADE_REQUEST_ACTIONS (7 values), SUB_ENUM_ORDER_TYPE (9 values), SUB_ENUM_ORDER_TYPE_FILLING (4 values), SUB_ENUM_ORDER_TYPE_TIME (4 values)<br>11. <strong>In MqlTradeResult:</strong> MqlErrorTradeCode (42 values)</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="important-notes">Important Notes<a class="headerlink" href="#important-notes" title="Permanent link">¶</a></h2>
-<h3 id="python-enum-access">Python ENUM Access<a class="headerlink" href="#python-enum-access" title="Permanent link">¶</a></h3>
-<p>Python accesses ENUMs through protobuf modules:</p>
-<p><strong>Correct:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">MetaRpcMT5</span><span class="w"> </span><span class="kn">import</span> <span class="n">mt5_term_api_account_information_pb2</span> <span class="k">as</span> <span class="n">account_info_pb2</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># Using ENUM</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">property_id</span> <span class="o">=</span> <span class="n">account_info_pb2</span><span class="o">.</span><span class="n">AccountInfoDoublePropertyType</span><span class="o">.</span><span class="n">ACCOUNT_BALANCE</span>
-</code></pre></div></p>
-<p><strong>Incorrect:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">ACCOUNT_BALANCE</span>  <span class="c1"># NameError: name 'ACCOUNT_BALANCE' is not defined</span>
-</code></pre></div></p>
-<h3 id="special-cases">Special Cases<a class="headerlink" href="#special-cases" title="Permanent link">¶</a></h3>
-<p><strong>1. AccountInfoInteger and SymbolInfoInteger:</strong></p>
+<h2 id="see-also">📚 See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
 <ul>
-<li>
-<p>Some properties return values that <strong>represent ENUMs</strong>, but are returned as <code>int64</code></p>
-</li>
-<li>
-<p>These are <strong>NOT typed ENUMs</strong>, just numbers!</p>
-</li>
-</ul>
-<p><strong>2. ReturnedCode:</strong></p>
-<ul>
-<li>
-<p>ReturnedCode field in trading operations is <strong>NOT an ENUM</strong></p>
-</li>
-<li>
-<p>It's a plain uint32 operation return code</p>
-</li>
-</ul>
-<hr />
-<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
-<h3 id="documentation-by-group">Documentation by Group:<a class="headerlink" href="#documentation-by-group" title="Permanent link">¶</a></h3>
-<ul>
-<li>
-<p><a href="../../API_Reference/MT5Account/">Account Information Overview</a></p>
-</li>
-<li>
-<p><a href="../../API_Reference/MT5Account/">Symbol Information Overview</a></p>
-</li>
-<li>
-<p><a href="../../API_Reference/MT5Account/">Positions &amp; Orders Overview</a></p>
-</li>
-<li>
-<p><a href="../../API_Reference/MT5Account/">Market Depth Overview</a></p>
-</li>
-<li>
-<p><a href="../../API_Reference/MT5Account/">Trading Operations Overview</a></p>
-</li>
-<li>
-<p><a href="../../API_Reference/MT5Account/">Streaming Methods Overview</a></p>
-</li>
+<li><a href="../GETTING_STARTED/">Getting Started</a> · <a href="../RETURN_CODES_REFERENCE/">Return Codes</a></li>
+<li>Low-level pages list each enum's full variant table — e.g. <a href="../../MT5Account/2.%20Symbol_Information/symbol_info_double/">symbol_info_double</a>, <a href="../../MT5Account/5.%20Trading_Operations/order_send/">order_send</a>.</li>
 </ul>
 
 
@@ -2005,13 +1663,13 @@
         
         
           
-          <a href="../PROTOBUF_INSPECTOR_GUIDE/" class="md-footer__link md-footer__link--next" aria-label="Next: Protobuf Inspector">
+          <a href="../SYNC_VS_ASYNC/" class="md-footer__link md-footer__link--next" aria-label="Next: Async Model">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Protobuf Inspector
+                Async Model
               </div>
             </div>
             <div class="md-footer__button md-icon">
