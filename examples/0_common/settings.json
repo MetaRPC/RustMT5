@@ -1,0 +1,9 @@
+{
+  "_comment": "Template connection settings. Fill in your demo credentials, or override any field with environment variables (MT5_LOGIN, MT5_PASSWORD, MT5_SERVER, MT5_SYMBOL, MRPC_API_KEY). Do not commit real credentials.",
+  "user": 0,
+  "password": "YOUR_PASSWORD",
+  "grpc_server": null,
+  "server_name": "MetaQuotes-Demo",
+  "api_key": null,
+  "test_symbol": "EURUSD"
+}

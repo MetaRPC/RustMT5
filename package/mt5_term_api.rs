@@ -6743,17 +6743,9 @@ pub mod connection_client {
     pub struct ConnectionClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl ConnectionClient<tonic::transport::Channel> {
-        /// Attempt to create a new client by connecting to a given endpoint.
-        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
-        where
-            D: TryInto<tonic::transport::Endpoint>,
-            D::Error: Into<StdError>,
-        {
-            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
-            Ok(Self::new(conn))
-        }
-    }
+    // NOTE: the generated `connect(dst)` constructor on ConnectionClient<Channel> was removed
+    // because the Connection service also has a `Connect` RPC, and the two `connect` methods
+    // collide (E0592). Build this client from a shared Channel via `ConnectionClient::new(channel)`.
     impl<T> ConnectionClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,

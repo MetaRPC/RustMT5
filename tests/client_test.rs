@@ -1,87 +1,16 @@
-use metarpc_mt5::{MT5Client, OrderRequest, TradeAction, AccountInfo};
+//! Smoke tests that need no network: construction and default state.
 
-#[tokio::test]
-async fn test_deterministic_id() {
-    let id = MT5Client::compute_deterministic_id(12345678, "demo_password");
-    assert_eq!(id, "6ce74465-7aa9-3a79-2bd8-e40241b50c43");
-}
+use metarpc_mt5::MT5Account;
 
-#[tokio::test]
-async fn test_get_id_generation() {
-    let mut client = MT5Client::new("mt5.mrpc.pro", 443);
-    let id_res = client.get_id(2005432, "demo_pass").await;
-    assert!(id_res.is_ok());
-    let id = id_res.unwrap();
-    assert!(!id.is_empty());
-    assert_eq!(client.id.as_deref(), Some(id.as_str()));
-}
-
-#[tokio::test]
-async fn test_client_connection_lifecycle() {
-    let mut client = MT5Client::new("mt5.mrpc.pro", 443);
-    assert!(!client.is_connected());
-
-    let conn_res = client.connect(1001, "demo_pass").await;
-    assert!(conn_res.is_ok());
-    assert!(client.is_connected());
-    assert!(client.id.is_some());
-
-    let acc_res = client.get_account_info().await;
-    assert!(acc_res.is_ok());
-    let acc = acc_res.unwrap();
-    assert_eq!(acc.currency, "USD");
-    assert!(acc.balance > 0.0);
-
-    client.disconnect(true).await;
-    assert!(!client.is_connected());
-}
-
-#[tokio::test]
-async fn test_order_lifecycle() {
-    let mut client = MT5Client::new("mt5.mrpc.pro", 443);
-    client.connect(1001, "demo_pass").await.unwrap();
-
-    let req = OrderRequest {
-        symbol: "EURUSD".to_string(),
-        action: TradeAction::Buy,
-        volume: 0.1,
-        price: Some(1.0850),
-        stop_loss: Some(1.0800),
-        take_profit: Some(1.0900),
-        slippage: Some(5),
-        comment: Some("Test order".to_string()),
-    };
-
-    let res = client.order_send(req).await;
-    assert!(res.is_ok());
-    let order = res.unwrap();
-    assert_eq!(order.volume, 0.1);
-    assert_eq!(order.retcode, 0);
-
-    let mod_res = client.order_modify(order.ticket, 1.0790, 1.0910).await;
-    assert!(mod_res.is_ok());
-
-    let close_res = client.order_close(order.ticket, 0.1).await;
-    assert!(close_res.is_ok());
+#[test]
+fn account_constructs_unconnected() {
+    let acc = MT5Account::new(12_345_678, "password", None);
+    assert!(acc.id().is_none(), "no terminal id before connect");
+    assert!(acc.server_name().is_none(), "no server name before connect");
 }
 
 #[test]
-fn test_serialization() {
-    let acc = AccountInfo {
-        login: 12345,
-        currency: "EUR".to_string(),
-        balance: 10000.0,
-        equity: 10000.0,
-        margin: 0.0,
-        free_margin: 10000.0,
-        margin_level: 0.0,
-        leverage: 100,
-        name: "Test User".to_string(),
-        server: "demo".to_string(),
-    };
-
-    let json = serde_json::to_string(&acc).expect("Failed to serialize");
-    let deserialized: AccountInfo = serde_json::from_str(&json).expect("Failed to deserialize");
-    assert_eq!(deserialized.login, 12345);
-    assert_eq!(deserialized.currency, "EUR");
+fn account_accepts_custom_gateway() {
+    let acc = MT5Account::new(1, "p", Some("localhost:50051".to_string()));
+    assert!(acc.id().is_none());
 }

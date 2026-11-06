@@ -1,37 +1,38 @@
-use metarpc_mt5::{MT5Client, OrderRequest, TradeAction};
+//! Quickstart: connect to MT5 via the gateway and read the account.
+//!
+//! Run with your demo credentials in the environment:
+//!   MT5_LOGIN=12345678 MT5_PASSWORD=yourpass MT5_SERVER=MetaQuotes-Demo \
+//!     MRPC_API_KEY=TRIAL cargo run --example quickstart
+
+use metarpc_mt5::{MT5Account, MT5Service, MT5Sugar};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let api_key = std::env::args().nth(1)
-        .or_else(|| std::env::var("MRPC_API_KEY").ok())
-        .unwrap_or_else(|| "TRIAL".to_string());
-    let mut client = MT5Client::with_api_key("mt5.mrpc.pro", 443, api_key);
+    let cfg = metarpc_mt5::Settings::load()?;
 
-    println!("Connecting to MT5 (mt5.mrpc.pro:443)...");
-    client.connect(2005432, "demo_password").await?;
-    println!("Connected successfully! Account ID: {}", client.id.as_deref().unwrap_or(""));
+    // Build the three layers: Account (low-level) -> Service (facade) -> Sugar (high-level).
+    let account = MT5Account::new(cfg.user, cfg.password.clone(), cfg.grpc_server.clone()); // None -> mt5.mrpc.pro:443
+    let service = MT5Service::new(account);
+    let mut sugar = MT5Sugar::new(service).with_default_symbol("EURUSD");
 
-    println!("\nStep 1: Querying Account Balance...");
-    let acc = client.get_account_info().await?;
-    println!("Account: {} ({})", acc.login, acc.name);
-    println!("Account Balance: {} {}", acc.balance, acc.currency);
+    // Connect by broker server name; the gateway assigns the terminal id.
+    sugar.connect_by_server_name(&cfg.server_name, 30).await?;
 
-    println!("\nStep 2: Executing Market Order...");
-    let req = OrderRequest {
-        symbol: "EURUSD".to_string(),
-        action: TradeAction::Buy,
-        volume: 0.1,
-        price: Some(1.0850),
-        stop_loss: Some(1.0800),
-        take_profit: Some(1.0900),
-        slippage: Some(5),
-        comment: Some("Rust MT5 Bot".to_string()),
-    };
+    let info = sugar.get_account_info().await?;
+    println!(
+        "Login {} | {} {} | balance {:.2} | equity {:.2}",
+        info.login, info.company, info.currency, info.balance, info.equity
+    );
 
-    let res = client.order_send(req).await?;
-    println!("Order executed! Deal: #{} Ticket: #{}", res.deal, res.ticket);
+    println!(
+        "EURUSD  bid/ask: {:.5} / {:.5}  (spread {:.5})",
+        sugar.bid(None).await?,
+        sugar.ask(None).await?,
+        sugar.spread(None).await?
+    );
 
-    client.disconnect(true).await;
-    println!("\nDisconnected.");
+    println!("open positions: {}", sugar.count_open_positions(None).await?);
+
+    sugar.disconnect(false).await?;
     Ok(())
 }

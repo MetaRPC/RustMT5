@@ -75,25 +75,23 @@ copyright: >
 
 nav:
   - Home: index.md
-
   - Guides:
-    - Getting Started: All_Guides/GETTING_STARTED.md
-    - Your First Project: All_Guides/Your_First_Project.md
-    - Project Map: All_Guides/PROJECT_MAP.md
-    - Glossary: All_Guides/GLOSSARY.md
-    - MT5 for Beginners: All_Guides/MT5_For_Beginners.md
-    - gRPC Streaming: All_Guides/GRPC_STREAM_MANAGEMENT.md
-    - Return Codes: All_Guides/RETURN_CODES_REFERENCE.md
-    - ENUMs Reference: All_Guides/ENUMS_USAGE_REFERENCE.md
-    - Protobuf Inspector: All_Guides/PROTOBUF_INSPECTOR_GUIDE.md
-    - UserCode Sandbox: All_Guides/USERCODE_SANDBOX_GUIDE.md
-    - Sync vs Async: All_Guides/SYNC_VS_ASYNC.md
-
+      - Getting Started: All_Guides/GETTING_STARTED.md
+      - Your First Project: All_Guides/Your_First_Project.md
+      - MT5 for Beginners: All_Guides/MT5_For_Beginners.md
+      - Project Map: All_Guides/PROJECT_MAP.md
+      - Glossary: All_Guides/GLOSSARY.md
+      - gRPC Streaming: All_Guides/GRPC_STREAM_MANAGEMENT.md
+      - Return Codes: All_Guides/RETURN_CODES_REFERENCE.md
+      - ENUMs Reference: All_Guides/ENUMS_USAGE_REFERENCE.md
+      - Async Model: All_Guides/SYNC_VS_ASYNC.md
   - API Reference:
-    - MT5Account API: API_Reference/MT5Account.md
-    - MT5Service API: API_Reference/MT5Service.md
-    - MT5Sugar API: API_Reference/MT5Sugar.md
-
+      - MT5Account: MT5Account/MT5Account.Master.Overview.md
+      - MT5Service: MT5Service/MT5Service.Overview.md
+      - MT5Sugar: MT5Sugar/MT5Sugar.Master.Overview.md
   - Strategies:
-    - Master Overview: Strategies/Strategies.Master.Overview.md
-    - Presets: Strategies/Presets/AdaptiveMarketModePreset.md
+      - Master Overview: Strategies/Strategies.Master.Overview.md
+      - Presets: Strategies/Presets.md
+      - Market One-Shot: Strategies/Orchestrators/MarketOneShot.md
+      - Bracket + Trailing: Strategies/Orchestrators/BracketTrailing.md
+      - Pending Bracket: Strategies/Orchestrators/PendingBracket.md

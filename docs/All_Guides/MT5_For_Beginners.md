@@ -1,19 +1,19 @@
 # MT5 for Beginners: Your First Steps in Trading
 
-Welcome! This guide is designed for complete beginners who have never worked with MetaTrader 5 or trading. We'll walk you through everything you need to know to get started.
+Welcome! This guide is for complete beginners who have never worked with MetaTrader 5 or trading. We'll get you from zero to a working demo account you can automate with RustMT5.
 
 ---
 
 ## What is MetaTrader 5 (MT5)?
 
-**MetaTrader 5** is a powerful trading platform used by millions of traders worldwide. It allows you to:
+**MetaTrader 5** is a trading platform used by millions of traders worldwide. It lets you:
 
 - Trade forex, stocks, commodities, and cryptocurrencies
 - Analyze markets with charts and indicators
 - Execute automated trading strategies
 - Monitor your positions in real-time
 
-Think of MT5 as your "cockpit" for accessing financial markets. PyMT5 allows you to programmatically control this cockpit using Python.
+Think of MT5 as the "cockpit" for the markets. **RustMT5** lets you control that cockpit programmatically from Rust, over gRPC.
 
 ---
 
@@ -21,380 +21,184 @@ Think of MT5 as your "cockpit" for accessing financial markets. PyMT5 allows you
 
 ### Why start with a demo account?
 
-A **demo account** is a risk-free practice account with virtual money. We **strongly recommend** starting with demo for several reasons:
+A **demo account** is a risk-free practice account with virtual money. We **strongly recommend** demo first:
 
-- ✅ **Zero risk** - practice with virtual funds (typically $10,000 - $100,000)
-- ✅ **Real market conditions** - live prices and market behavior
-- ✅ **Learn the platform** - understand how MT5 works before risking real money
-- ✅ **Test your code** - perfect for developing and testing your PyMT5 applications
+- ✅ **Zero risk** — virtual funds (typically $10,000 – $100,000)
+- ✅ **Real market conditions** — live prices and behavior
+- ✅ **Learn the platform** — before risking real money
+- ✅ **Test your code** — perfect for developing RustMT5 apps
 
 ### Live Account
 
-A **live account** uses your real money. Only move to live trading when you:
-
-- Understand how MT5 works
-- Have thoroughly tested your strategies on demo
-- Are aware of the risks involved
+A **live account** uses real money. Only go live once you understand MT5, have tested thoroughly on demo, and understand the risks.
 
 ---
 
 ## Quick Start: Creating a Demo Account
 
-The fastest way to get started is to create a demo account directly through the MT5 terminal application.
+The fastest way is to create a demo account directly in the MT5 terminal.
 
-### Step 1️⃣: Download and Install MT5 Terminal
+### Step 1️⃣: Download and install the MT5 terminal
 
-1. Visit the official MetaTrader website: [https://www.metatrader5.com/en/download](https://www.metatrader5.com/en/download)
-
-2. Download the version for your operating system (Windows/Mac/Linux)
-
+1. Visit [https://www.metatrader5.com/en/download](https://www.metatrader5.com/en/download)
+2. Download the version for your OS (Windows/Mac/Linux)
 3. Install the application
 
----
+### Step 2️⃣: Launch MT5 and find the Navigator panel
 
-### Step 2️⃣: Launch MT5 and Locate the Navigator Panel
-
-When you open the MetaTrader 5 application, you'll typically see a popup window offering to:
-
-- Register for the MQL community
-
-- Open a new account or log into an existing one
-
-If this popup doesn't appear automatically, you need to find the **Navigator** panel.
+On first launch a popup usually offers to open a new account. If not, find the **Navigator** panel (left side, below **Market Watch**).
 
 ![Navigator Panel Location](../Guide_Images/1.%20NAV.png)
 
+Inside Navigator you'll see **Accounts**, Subscriptions, Indicators, Expert Advisors, and more.
 
-**Finding the Navigator Panel:**
+### Step 3️⃣: Open a new demo account
 
-The **Navigator** panel is usually located on the **left side** of the screen, below the **Market Watch** panel.
+1. In **Navigator**, find **Accounts**
+2. **Right-click** "Accounts"
+3. Select **"Open an account"**
 
-**Inside the Navigator panel** you'll see several sections:
-- Accounts
-- Subscriptions
-- Indicators
-- Expert Advisors
-- And others
+### Step 4️⃣: Select the MetaQuotes demo server
 
----
-
-### Step 3️⃣: Opening a New Demo Account
-
-1. In the **Navigator** panel, find the **Accounts** section
-2. **Right-click** on "Accounts"
-3. Select **"Open an account"** from the context menu
-
-This will open the broker server search panel.
-
----
-
-### Step 4️⃣: Select MetaQuotes Demo Server
-
-In the broker search window, you'll see a list of available MT5 servers.
-
-**For your first demo account, we'll use the simplest option:**
-
-- Look for **"MetaQuotes-Demo"** or **"MetaQuotes Ltd"** in the list
-- This is the standard demo server provided by MetaTrader developers
-- If you don't see it immediately, use the search field at the top to find it
-
-**Select the MetaQuotes server** and click **Next**.
+In the broker search window, look for **"MetaQuotes-Demo"** (the standard demo server). Use the search field if needed, select it, and click **Next**.
 
 ![MetaQuotes Server Selection](../Guide_Images/2.%20META.png)
 
----
+### Step 5️⃣: Account type
 
-### Step 5️⃣: Account Type Selection
-
-On the next screen, you'll have options:
-
-- **Open a new demo account** (top option)
-- Log into an existing account (demo or live)
-
-**Select "Open a new demo account"** and click **Next**.
+Choose **"Open a new demo account"** and click **Next**.
 
 ![Open New Demo Account](../Guide_Images/3.%20OPEN.png)
 
+### Step 6️⃣: Fill in your details
 
----
-
-### Step 6️⃣: Fill in Your Personal Information
-
-Now you'll see a form requesting your details:
-
-- **Name**: Your first name
-- **Last Name**: Your last name
-- **Email**: Your email address
-- **Phone**: Optional (can skip for demo)
-- **Account Type**: Choose your preferred account settings
-- **Deposit**: Virtual amount (e.g., $10,000)
-- **Leverage**: 1:100 is a good starting point
-- **Currency**: USD, EUR, etc.
-
-**Check the box** to agree to the terms and conditions, then click **Next**.
+Name, email, account type, virtual deposit (e.g. $10,000), leverage (1:100 is fine to start), currency. Agree to the terms and click **Next**.
 
 ![Personal Information Form](../Guide_Images/4.%20creator.png)
 
----
+### Step 7️⃣: Save your credentials
 
-### Step 7️⃣: Save Your Account Credentials
+MT5 creates the account and shows:
 
-MT5 will now create your demo account and display your credentials:
+- **Login** — your account number (e.g. 591129415)
+- **Password** — your master (trading) password
+- **Investor Password** — read-only password
+- **Server** — e.g. "MetaQuotes-Demo"
 
-**Important credentials displayed:**
-
-- **Login**: Your account number (e.g., 591129415)
-- **Password**: Your master password for trading
-- **Investor Password**: Read-only password (for monitoring)
-- **Server**: Server name (e.g., "MetaQuotes-Demo")
-
-**⚠️ CRITICALLY IMPORTANT**: **Save these credentials immediately!** You'll need them for:
-- Logging back into MT5
-- Configuring PyMT5 in `examples/0_common/settings.json`
-
-Click **Finish** to complete account creation.
+**⚠️ Save these now** — you need **Login**, **Password**, and **Server** to connect from RustMT5. Click **Finish**.
 
 ![Account Credentials](../Guide_Images/5.%20OKK.png)
 
 ---
 
-### Step 8️⃣: Configure PyMT5 with Your Credentials
+### Step 8️⃣: Connect from RustMT5
 
-Now that you have an MT5 demo account, you need to configure PyMT5 to connect to it.
+There's no config file to edit — you pass the credentials straight to `MT5Account::new` and `connect_by_server_name`, and provide your MetaRPC key via the `MRPC_API_KEY` environment variable.
 
-1. Open your PyMT5 project
-2. Navigate to **`examples/0_common/settings.json`**
-3. Fill in the credentials you just saved:
+```bash
+export MRPC_API_KEY=your_mrpc_token    # from https://mrpc.pro/my
+```
 
+```rust
+use metarpc_mt5::MT5Account;
 
-```json
-{
-  "user": 591129415,
-  "password": "YourPasswordHere",
-  "host": "mt5.mrpc.pro",
-  "port": 443,
-  "grpc_server": "mt5.mrpc.pro:443",
-  "mt_cluster": "MetaQuotes-Demo",
-  "test_symbol": "EURUSD",
-  "test_volume": 0.01
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Login, password, grpc_server (None → mt5.mrpc.pro:443)
+    let mut account = MT5Account::new(591_129_415, "YourPasswordHere", None);
+    account.connect_by_server_name("MetaQuotes-Demo", 30).await?;  // exact server name
+    let s = account.account_summary().await?;
+    println!("balance {:.2} {}", s.account_balance, s.account_currency);
+    account.disconnect().await?;
+    Ok(())
 }
 ```
 
-**Important notes:**
+- **Login / password** — exactly what MT5 showed you.
+- **Server name** — the exact string (e.g. `"MetaQuotes-Demo"`).
+- **grpc_server / API key** — `None` uses the default endpoint; the key comes from `MRPC_API_KEY`.
 
-- **user**: Replace with your login number
-- **password**: Replace with your password
-- **mt_cluster**: Use the exact server name from MT5 (e.g., "MetaQuotes-Demo")
-- **host, port, grpc_server**: Provided by MetaRPC team (leave as is)
+### Step 9️⃣: Verify the MT5 connection
 
----
+In the MT5 terminal, the **bottom-right corner** should show a green connection indicator and your balance (e.g. $10,000).
 
-### Step 9️⃣: Verify MT5 Connection
-
-Back in the MT5 terminal:
-
-1. MT5 should automatically log you into your new demo account
-2. Check the **bottom right corner** of the terminal window - you should see:
-   - **Green connection indicator** (means connected to server)
-   - **Your account balance** (e.g., $10,000)
-
-**You're now ready to test!**
-
----
-
-### Step 🔟: Start Testing PyMT5
-
-With your MT5 demo account created and `settings.json` configured, you can start running examples:
+### Step 🔟: Run it
 
 ```bash
-# Navigate to the examples folder
-cd examples
-
-# Run your first example
-python main.py 1
-
-# Or run interactively
-python main.py
+cargo run
 ```
 
-When trading operations occur, your demo account balance will increase or decrease accordingly. **Experiment freely** - it's virtual money, so there's no risk!
-
-All trades executed by PyMT5 will appear in your MT5 terminal in real-time.
+Trades your program makes appear in the MT5 terminal in real time. It's virtual money — experiment freely. See [Your First Project](Your_First_Project.md) for a fuller walkthrough.
 
 ---
 
-## 🧩 Understanding MT5 Password Types
+## 🧩 MT5 password types
 
-MT5 uses **two types of passwords** for security and flexibility:
+### Master password
+Full access — open/close trades, change settings. **This is the one RustMT5 uses to trade.**
 
-### Master Password (Main Password)
-
-- **Full access** to your trading account
-- Can open/close trades, deposit/withdraw funds, change settings
-- **This is the password you created** during account registration
-- Use this password for:
-  - Trading (including PyMT5 applications)
-  - Changing account settings
-  - Withdrawing funds (live accounts)
-
-### Investor Password (Read-Only Password)
-
-- **View-only access** to your account
-- Can see trades, balance, history - **but cannot trade**
-- Useful for:
-  - Sharing your trading performance with others (investors, friends)
-  - Monitoring your account without risk
-  - Audit and analytics tools
-
-**How to get your investor password:**
-
-1. In MT5, go to **Tools → Options**
-2. Select the **Server** tab
-3. Click **Change** next to "Investor Password"
-4. Set a new investor password
+### Investor password
+View-only — see trades/balance/history but cannot trade. Good for sharing performance or monitoring. Set it via **Tools → Options → Server → Change** (Investor Password).
 
 ---
 
-## Choosing a Broker (Optional)
+## Choosing a Broker (optional)
 
-While you can use the MetaQuotes demo server for practice, you may want to choose a specific broker for:
+The MetaQuotes demo server is fine for practice. For live trading later you may pick a specific broker for better conditions or regional support.
 
-- Live trading later
-- Better demo conditions (spreads, instruments)
-- Specific regional support
+**Not financial advice — do your own research.** Popular MT5 brokers include IC Markets, Pepperstone, OANDA, XM, RoboForex, FxPro.
 
-### Popular MT5 Brokers:
-
-**Note**: This is not financial advice. Always do your own research before choosing a broker.
-
-- **IC Markets** - Popular for forex and low spreads
-- **Pepperstone** - Well-regulated, beginner-friendly
-- **OANDA** - Strong reputation, accepts US clients
-- **XM** - Easy account opening, many account types
-- **RoboForex** - Good for automated trading
-- **FxPro** - Excellent demo trading conditions (used in PyMT5 examples)
-
-### What to look for:
-
-- ✅ **Regulation** - Check if regulated by FCA, ASIC, CySEC, etc.
-
-- ✅ **MT5 Support** - Make sure they offer MT5 (not just MT4).
-
-- ✅ **Demo Account** - Free demo without expiration (though demo accounts typically last 30 days, then become inactive).
-
-- ✅ **Good Spreads** - Lower spreads = lower trading costs.
-
-- ✅ **Customer Support** - Responsive support in your language.
-
----
-
+**What to look for:** regulation (FCA/ASIC/CySEC/…), genuine MT5 support (not just MT4), a free demo, tight spreads, responsive support.
 
 ---
 
 ## What's Next?
 
-Now that you have a demo account and understand the basics, you're ready for:
-
-### 1. Setting Up PyMT5
-
-Follow our main getting started guide to connect PyMT5 to your MT5 account:
-
-👉 **[Getting Started with PyMT5](GETTING_STARTED.md)**
-
-### 2. Understanding API Architecture
-
-PyMT5 is built in **three levels**, from low-level to high-level. You can choose where to start depending on your needs:
-
-#### Level 1: MT5Account (Low-Level gRPC Foundation)
-👉 **[MT5Account Overview](../API_Reference/MT5Account.md)**
-
-- **Direct gRPC calls** to MT5 terminal
-- **Foundation of everything** - all other levels use this internally
-- Maximum control and flexibility
-- Best for: Advanced users who need fine-grained control
-
-#### Level 2: MT5Service (Convenient Wrappers)
-👉 **[MT5Service Overview](../API_Reference/MT5Service.md)**
-
-- **Wrapper methods** over MT5Account gRPC calls
-- Simplified error handling and response parsing
-- Easier to work with than raw gRPC
-- Best for: Most common trading scenarios
-
-#### Level 3: MT5Sugar (High-Level Helpers)
-👉 **[MT5Sugar API Overview](../API_Reference/MT5Sugar.md)**
-
-- **Syntactic sugar** and convenience methods
-- Chainable operations, smart defaults
-- Most intuitive and beginner-friendly
-- Best for: Rapid prototyping and simple strategies
+1. **[Getting Started](GETTING_STARTED.md)** — install the crate and make your first calls.
+2. **Understand the layers:**
+   - [MT5Account](../MT5Account/MT5Account.Master.Overview.md) — low-level gRPC foundation.
+   - [MT5Service](../MT5Service/MT5Service.Overview.md) — typed, friendlier wrappers.
+   - [MT5Sugar](../MT5Sugar/MT5Sugar.Master.Overview.md) — high-level one-liners (most beginner-friendly).
+3. **[Strategies](../Strategies/Strategies.Master.Overview.md)** — ready orchestrators and presets.
 
 ---
 
-## Important Reminders
+## Important reminders
 
 ### 🛡️ Security
+- Never share your **master password**; use the investor password for monitoring tools.
+- Keep credentials safe (a password manager helps). Don't commit them to a repo.
 
-- **Never share your master password** with anyone
-- Use investor password for monitoring/analytics tools
-- Keep your credentials safe (use password managers)
-
-### 📊 Risk Management
-
-- Demo accounts are **risk-free**, but form good habits:
-  - Always use Stop Loss
-  - Don't risk more than 1-2% per trade
-  - Understand position sizing calculations
+### 📊 Risk management
+- Even on demo, build good habits: always use a stop-loss, risk ≤ 1–2% per trade, understand position sizing (`MT5Sugar::calculate_position_size`).
 
 ### 🧪 Testing
-
-- Test all your PyMT5 code **on demo first**
-- Verify strategies over weeks/months, not days
-- Paper trading (demo) doesn't guarantee live results
+- Test on **demo first**; verify strategies over weeks/months, not days. Demo results don't guarantee live results.
 
 ### 📚 Education
-
-- Trading has a steep learning curve
-- Focus on learning, not earning
-- Consider courses, books, and communities
+- Trading has a steep learning curve — focus on learning, not earning.
 
 ---
 
-## Useful Python Commands
-
-### Installation
+## Useful commands (Rust)
 
 ```bash
-# Install PyMT5 package with all dependencies
-pip install MetaRpcMT5
-```
+# add the SDK to a project
+cargo add metarpc-mt5
+cargo add tokio --features full
 
-### Running Examples
+# build / run / test
+cargo build
+cargo run
+cargo test
 
-```bash
-# Navigate to examples folder first
-cd examples
+# run a bundled example (see examples/)
+cargo run --example strategies_demo
 
-# Option 1: Run specific example by number
-python main.py 1
-
-# Option 2: Interactive menu
-python main.py
-
-# Option 3: Run example file directly
-python 1_lowlevel/01_general_operations.py
-python 3_sugar/06_sugar_basics.py
-```
-
-### Checking Environment
-
-```bash
-# Verify Python version (requires 3.8+)
-python --version
+# check your Rust toolchain
+rustc --version
 ```
 
 ---
 
-**Ready to start coding?** Head over to [Getting Started](GETTING_STARTED.md) to connect PyMT5 to your MT5 account!
-
-**Good luck with your trading journey! 🚀**
+**Ready to code?** Head to [Getting Started](GETTING_STARTED.md).  Good luck on your trading journey! 🚀

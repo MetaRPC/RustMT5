@@ -6,10 +6,61 @@ authors = ["MetaRPC <info@metarpc.pro>"]
 description = "Asynchronous, memory-safe Rust SDK for MetaTrader 5 algorithmic trading automation"
 license = "MIT"
 repository = "https://github.com/MetaRPC/RustMT5"
+# Examples live in grouped subfolders, so they are declared explicitly below.
+autoexamples = false
 
 [dependencies]
 tokio = { version = "1.38", features = ["full"] }
+tokio-stream = "0.1"
+tonic = { version = "0.11", features = ["tls", "tls-roots"] }
+prost = "0.12"
+prost-types = "0.12"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 thiserror = "1.0"
 async-trait = "0.1"
+chrono = "0.4"
+
+[[example]]
+name = "menu"
+path = "examples/menu.rs"
+
+[[example]]
+name = "quickstart"
+path = "examples/quickstart.rs"
+
+[[example]]
+name = "lowlevel_market_data"
+path = "examples/1_lowlevel/market_data.rs"
+
+[[example]]
+name = "lowlevel_trading"
+path = "examples/1_lowlevel/trading.rs"
+
+[[example]]
+name = "lowlevel_streaming"
+path = "examples/1_lowlevel/streaming.rs"
+
+[[example]]
+name = "service_demo"
+path = "examples/2_service/service_demo.rs"
+
+[[example]]
+name = "sugar_basics"
+path = "examples/3_sugar/basics.rs"
+
+[[example]]
+name = "sugar_trading"
+path = "examples/3_sugar/trading.rs"
+
+[[example]]
+name = "sugar_positions"
+path = "examples/3_sugar/positions.rs"
+
+[[example]]
+name = "sugar_history"
+path = "examples/3_sugar/history.rs"
+
+[[example]]
+name = "strategies_demo"
+path = "examples/4_strategies/strategies_demo.rs"

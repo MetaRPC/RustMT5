@@ -1,84 +1,72 @@
-# RustMT5 Project Map
+# 🗺️ RustMT5 Project Map
 
-> Complete architecture guide. Shows the three-tier system, component interactions, and file organization.
-
----
-
-## 🗺️ Project Architecture Overview
-
-RustMT5 is structured into three clean, decoupled layers designed to satisfy both low-level quantitative control and high-level strategy convenience:
-
-```
-RustMT5/
-├── 📦 Layer 1: MT5Account (Low-level gRPC)
-├── 🔧 Layer 2: MT5Service (Typed wrapper methods)
-└── ⭐ Layer 3: MT5Sugar (High-level convenience API)
-```
+> The whole project as one annotated tree, with links. **Links point to section *overviews*, never to individual method pages** — open an overview to drill down into its methods.
 
 ---
 
-## 📊 Component Interaction Diagram
+## 🧱 The three layers
 
+RustMT5 is built in three decoupled layers (composition, not inheritance). Your code can enter at any level.
+
+| Layer | Source | What it does | Overview |
+| ----- | ------ | ------------ | -------- |
+| **3 · MT5Sugar** | `src/mt5/sugar.rs` | Convenience on top of Service: risk-based sizing, pip-based SL/TP, price/volume helpers, batch close, position queries, history. | [MT5Sugar overview](../MT5Sugar/MT5Sugar.Master.Overview.md) |
+| **2 · MT5Service** | `src/mt5/service.rs` | Typed facade: `&str` symbols and typed-enum args; simple getters return clean scalars. What most code uses. | [MT5Service overview](../MT5Service/MT5Service.Overview.md) |
+| **1 · MT5Account** | `src/mt5/account.rs` | Low-level gRPC: builds each proto `…Request`, attaches auth metadata, unwraps replies to `Result<…Data, MT5Error>`; connection & streaming. Everything builds on it. | [MT5Account overview](../MT5Account/MT5Account.Master.Overview.md) |
+
+```text
+Your code → MT5Sugar → MT5Service → MT5Account → gRPC → MetaRPC gateway → MT5 terminal
 ```
-YOUR CODE (User-facing)
-  ├─ Orchestrators (strategy implementations)
-  ├─ Presets (multi-strategy combinations)
-  └─ Examples (learning materials)
-                  │
-                  │ uses
-                  ↓
-MT5Sugar (Layer 3 - Convenience)
-  ├─ Auto-normalization (volumes, prices)
-  ├─ Risk management (CalculateVolume, BuyByRisk)
-  ├─ Points-based methods (BuyLimitPoints, etc.)
-  └─ Batch operations (CloseAll, CancelAll)
-                  │
-                  │ uses
-                  ↓
-MT5Service (Layer 2 - Wrappers)
-  ├─ Direct data returns
-  ├─ Type conversions (proto → native primitives)
-  └─ Simplified signatures (no raw proto required)
-                  │
-                  │ uses
-                  ↓
-MT5Account (Layer 1 - Low-level)
-  ├─ Proto Request/Response handling
-  ├─ gRPC communication & channel management
-  ├─ Auto-reconnection on transient faults
-  └─ Real-time streaming subscriptions
-                  │
-                  │ gRPC
-                  ↓
-MT5 Gateway (mt5term) or MT5 Terminal
-  └─ MetaTrader 5 with gRPC server
-```
+
+Mix freely: `sugar.service()` borrows the Service, `service.account()` borrows the Account.
 
 ---
 
-## 🔍 Layer Breakdown
+## 🌳 Repository tree
 
-### Layer 1: `MT5Account` (Low-Level gRPC)
-- Direct gRPC stubs communicating with the terminal.
-- Handles protobuf message serialization/deserialization.
-- Responsible for connection recovery, channel state monitoring, and raw streaming calls.
-- Ideal when you need complete control over protobuf payload fields.
-
-### Layer 2: `MT5Service` (Wrappers)
-- Translates protobuf messages into native Rust primitives and data models.
-- Removes boilerplate request/response wrapper instantiation.
-- Simplifies method signatures for common terminal actions (Positions, Orders, and Deals).
-
-### Layer 3: `MT5Sugar` (Convenience Layer)
-- Automates lot size calculation and margin checks based on risk percentages.
-- Automatically normalizes prices and volumes to broker specifications (step size, digits, minimum lot).
-- Provides one-line batch operations: close all profitable positions, cancel pending orders.
-- Point-offset helpers (`BuyLimitPoints`, `SellStopPoints`).
+- **`RustMT5/`** — crate root (`metarpc-mt5`)
+  - **`src/`** — the library
+    - `lib.rs` — crate root; re-exports `MT5Account` / `MT5Service` / `MT5Sugar` / `MT5Error` and the `strategies` module
+    - `proto.rs` — `include!`s the vendored stubs into `mt5_term_api`
+    - **`mt5/`** — the three SDK layers
+      - `account.rs` — **Layer 1** source → [MT5Account overview](../MT5Account/MT5Account.Master.Overview.md)
+      - `service.rs` — **Layer 2** source → [MT5Service overview](../MT5Service/MT5Service.Overview.md)
+      - `sugar.rs` — **Layer 3** source → [MT5Sugar overview](../MT5Sugar/MT5Sugar.Master.Overview.md)
+      - `mod.rs` — `pub mod account; service; sugar;`
+    - **`helpers/`** — auxiliary (non-MT-layer) code
+      - `error.rs` — the `MT5Error` enum + `From` impls → [Return Codes](RETURN_CODES_REFERENCE.md)
+      - **`strategies/`** — orchestrators + presets → [Strategies overview](../Strategies/Strategies.Master.Overview.md)
+        - `mod.rs` — `StrategyPreset`, `RiskPreset`, `manage_position`, presets catalog
+        - `market_one_shot.rs` · `bracket_trailing.rs` · `pending_bracket.rs`
+  - **`package/`** — the raw gRPC contract
+    - `mt5_term_api.rs` — vendored prost/tonic generated stubs (no `build.rs`)
+  - **`examples/`** — runnable demos (`cargo run --example …`), numbered by layer
+    - **`1_lowlevel/`** → [MT5Account overview](../MT5Account/MT5Account.Master.Overview.md)
+    - **`2_service/`** → [MT5Service overview](../MT5Service/MT5Service.Overview.md)
+    - **`3_sugar/`** → [MT5Sugar overview](../MT5Sugar/MT5Sugar.Master.Overview.md)
+    - **`4_strategies/`** → [Strategies overview](../Strategies/Strategies.Master.Overview.md)
+  - **`tests/`** — smoke tests (construction, no network)
+  - `Cargo.toml` — crate manifest · `mkdocs.yml` — docs site config
 
 ---
 
-## 🎯 Which Layer Should You Use?
+## 📚 Documentation tree
 
-- **90% of trading applications**: Start with **`MT5Sugar`**. It protects you from off-quote rejections and invalid volume errors.
-- **Custom algorithmic execution**: Use **`MT5Service`** when you manage your own volume normalization logic.
-- **Protocol engineering**: Drop to **`MT5Account`** when you need raw protobuf structures.
+- **`docs/`**
+  - [Home](../index.md) — landing page
+  - **`All_Guides/`** — the guides ([Getting Started](GETTING_STARTED.md), [Your First Project](Your_First_Project.md), [Glossary](GLOSSARY.md), [Async Model](SYNC_VS_ASYNC.md), [gRPC Streaming](GRPC_STREAM_MANAGEMENT.md), [ENUMs](ENUMS_USAGE_REFERENCE.md), [Return Codes](RETURN_CODES_REFERENCE.md))
+  - **`MT5Account/`** — low-level gRPC docs → [overview](../MT5Account/MT5Account.Master.Overview.md) *(per-method pages inside)*
+  - **`MT5Service/`** — typed facade docs → [overview](../MT5Service/MT5Service.Overview.md) *(per-group pages inside)*
+  - **`MT5Sugar/`** — convenience API docs → [overview](../MT5Sugar/MT5Sugar.Master.Overview.md) *(per-method pages inside)*
+  - **`Strategies/`** — orchestrators + presets → [overview](../Strategies/Strategies.Master.Overview.md) *(per-strategy pages inside)*
+  - `styles/` · `javascripts/` · `includes/` · `Guide_Images/` — assets & theme
+
+> The `MT5Account/`, `MT5Service/`, `MT5Sugar/` and `Strategies/` folders hold per-method / per-strategy pages. By design this map links only their **overviews** — each overview is the index into its own detail pages.
+
+---
+
+## 🎯 Which layer should you use?
+
+- **Most trading apps → [MT5Sugar](../MT5Sugar/MT5Sugar.Master.Overview.md).** Risk sizing, pip math and bulk ops out of the box.
+- **Custom execution → [MT5Service](../MT5Service/MT5Service.Overview.md).** Typed calls when you manage your own request shapes.
+- **Protocol-level control → [MT5Account](../MT5Account/MT5Account.Master.Overview.md).** Raw proto structures and streams.
