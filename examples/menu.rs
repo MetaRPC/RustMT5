@@ -23,6 +23,7 @@ const ITEMS: &[(&str, &str)] = &[
     ("Sugar · positions", "sugar_positions"),
     ("Sugar · history & statistics", "sugar_history"),
     ("Strategies · orchestrators demo", "strategies_demo"),
+    ("Tools · Protobuf Inspector (explore proto types — offline)", "protobuf_inspector"),
 ];
 
 fn main() {

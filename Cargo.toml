@@ -70,3 +70,7 @@ path = "examples/3_sugar/history.rs"
 [[example]]
 name = "strategies_demo"
 path = "examples/4_strategies/strategies_demo.rs"
+
+[[example]]
+name = "protobuf_inspector"
+path = "examples/tools/protobuf_inspector.rs"

@@ -85,6 +85,7 @@ nav:
       - Return Codes: All_Guides/RETURN_CODES_REFERENCE.md
       - ENUMs Reference: All_Guides/ENUMS_USAGE_REFERENCE.md
       - Async Model: All_Guides/SYNC_VS_ASYNC.md
+      - Protobuf Inspector: All_Guides/PROTOBUF_INSPECTOR_GUIDE.md
   - API Reference:
       - MT5Account: MT5Account/MT5Account.Master.Overview.md
       - MT5Service: MT5Service/MT5Service.Overview.md
