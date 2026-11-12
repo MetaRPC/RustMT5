@@ -1,32 +1,44 @@
-//! Interactive Protobuf Inspector for the MT4 gRPC API (offline).
-//!
-//! Explore the `mt5_term_api` protobuf messages, fields and enums without a terminal connection.
-//! Use it to answer "what is the exact field name?", "what proto type is it?", "which enum value
-//! do I pass?" — straight from the generated code.
-//!
-//! Unlike the C#/Go/Java inspectors, `prost` keeps **no** runtime descriptors and this crate ships
-//! no `.proto` files — only the pre-generated `package/mt5_term_api.rs`. So instead of reflecting,
-//! this tool parses that generated file (embedded at compile time with `include_str!`). Every field
-//! carries its `#[prost(..)]` attribute, so the output includes the proto wire type and field tag —
-//! a little more than reflection alone would give.
-//!
-//! Run:  `cargo run --example protobuf_inspector`   (or pick it from `cargo run --example menu`)
-//!
-//! ```text
-//!   COMMAND            DESCRIPTION
-//!   ─────────────────────────────────────────────────────────────
-//!   list, ls           list all message types
-//!   <TypeName>         inspect a message — its fields and types
-//!   search <text>      find types whose name contains text (alias: find)
-//!   field <name>       find messages that contain a field matching name
-//!   enum <name>        show every value of an enum
-//!   enums              list all enum types
-//!   help, ?            command reference
-//!   exit, quit, q      leave
-//! ```
+/*══════════════════════════════════════════════════════════════════════════════
+ FILE: examples/tools/protobuf_inspector.rs - INTERACTIVE PROTOBUF INSPECTOR (offline)
+ PURPOSE:
+   Explore the `mt5_term_api` protobuf messages, fields and enums without a
+   terminal connection. Answers "what is the exact field name?", "what proto
+   type is it?", "which enum value do I pass?" - straight from the generated code.
+
+   Unlike the C#/Go/Java inspectors, `prost` keeps NO runtime descriptors and this
+   crate ships no `.proto` files - only the pre-generated `package/mt5_term_api.rs`.
+   So this tool parses that generated file (embedded at compile time via
+   `include_str!`). Each field carries its `#[prost(..)]` attribute, so the output
+   includes the proto wire type and field tag.
+
+ 🎯 WHO SHOULD USE THIS:
+   • Anyone wiring up requests and unsure of a field / enum name
+   • Discovering message shapes without a live connection
+   • Cross-checking proto types against the generated Rust
+
+ 📚 WHAT THIS DEMO COVERS (interactive REPL commands):
+      list, ls           list all message types
+      <TypeName>         inspect a message - its fields and types
+      search <text>      find types whose name contains text (alias: find)
+      field <name>       find messages that contain a field matching name
+      enum <name>        show every value of an enum
+      enums              list all enum types
+      help, ?            command reference
+      exit, quit, q      leave
+
+ ℹ️  SAFE: offline, no connection - parses the generated code only.
+
+ USAGE:
+   cargo run --example protobuf_inspector   (or pick it from `cargo run --example menu`)
+══════════════════════════════════════════════════════════════════════════════*/
 
 use std::collections::BTreeMap;
 use std::io::{self, Write};
+
+// region: MODEL
+// ══════════════════════════════════════════════════════════════════
+// MODEL - the parsed in-memory view of the generated proto code
+// ══════════════════════════════════════════════════════════════════
 
 /// The generated prost code, embedded verbatim. Path is relative to THIS source file.
 const GEN: &str = include_str!("../../package/mt5_term_api.rs");
@@ -55,7 +67,18 @@ struct Model {
     messages: BTreeMap<String, Message>, // keyed by lowercase name
     enums: BTreeMap<String, EnumDef>,    // keyed by lowercase name
 }
+// endregion: MODEL
 
+// region: REPL
+// ══════════════════════════════════════════════════════════════════
+// REPL - read a command, dispatch, repeat
+// ══════════════════════════════════════════════════════════════════
+
+// ──────────────────────────────────────────────────────────────────
+// main()
+//   Parse the generated code once, then loop: read a line, split it
+//   into command + argument, and dispatch to the matching handler.
+// ──────────────────────────────────────────────────────────────────
 fn main() {
     let model = parse(GEN);
     print_header(&model);
@@ -108,10 +131,17 @@ fn main() {
     }
 }
 
-// ──────────────────────────────────────────────────────────────────
-// Commands
-// ──────────────────────────────────────────────────────────────────
+// endregion: REPL
 
+// region: COMMANDS
+// ══════════════════════════════════════════════════════════════════
+// COMMANDS - one handler per REPL command
+// ══════════════════════════════════════════════════════════════════
+
+// ──────────────────────────────────────────────────────────────────
+// list_types() / list_enums()
+//   Print every message type (tagged Data/Request/Reply) or every enum.
+// ──────────────────────────────────────────────────────────────────
 fn list_types(m: &Model) {
     println!("\n📦 {} message types:\n", m.messages.len());
     for msg in m.messages.values() {
@@ -137,6 +167,11 @@ fn list_enums(m: &Model) {
     println!("\n💡 'enum <Name>' shows every value.");
 }
 
+// ──────────────────────────────────────────────────────────────────
+// search_types() / find_field()
+//   Find message/enum types by name substring, or find messages that
+//   declare a field whose name matches.
+// ──────────────────────────────────────────────────────────────────
 fn search_types(m: &Model, term: &str) {
     let needle = term.to_lowercase();
     println!("\n🔍 Types containing '{term}':\n");
@@ -185,6 +220,11 @@ fn find_field(m: &Model, field: &str) {
     }
 }
 
+// ──────────────────────────────────────────────────────────────────
+// inspect_enum() / inspect_type()
+//   Dump every value of an enum, or every field of a message (falling
+//   back to enum lookup, then a "not found" hint).
+// ──────────────────────────────────────────────────────────────────
 fn inspect_enum(m: &Model, name: &str) {
     match m.enums.get(&name.to_lowercase()) {
         None => println!("\n❌ Enum '{name}' not found.  💡 Try: enum MrpcEnumAccountTradeMode"),
@@ -218,10 +258,18 @@ fn inspect_type(m: &Model, name: &str) {
     }
 }
 
-// ──────────────────────────────────────────────────────────────────
-// Parser — reads the prost-generated source
-// ──────────────────────────────────────────────────────────────────
+// endregion: COMMANDS
 
+// region: PARSER
+// ══════════════════════════════════════════════════════════════════
+// PARSER - reads the prost-generated source into the Model
+// ══════════════════════════════════════════════════════════════════
+
+// ──────────────────────────────────────────────────────────────────
+// parse()
+//   Scan the generated file line by line, collecting `::prost::Message`
+//   structs and `::prost::Enumeration` enums into the Model.
+// ──────────────────────────────────────────────────────────────────
 fn parse(src: &str) -> Model {
     let lines: Vec<&str> = src.lines().collect();
     let mut messages = BTreeMap::new();
@@ -427,9 +475,12 @@ fn leaf_type(rust_type: &str) -> String {
     leaf.trim_end_matches('>').to_string()
 }
 
-// ──────────────────────────────────────────────────────────────────
-// Small helpers
-// ──────────────────────────────────────────────────────────────────
+// endregion: PARSER
+
+// region: HELPERS
+// ══════════════════════════════════════════════════════════════════
+// HELPERS - small string / identifier utilities
+// ══════════════════════════════════════════════════════════════════
 
 fn split_once_ws(s: &str) -> (&str, &str) {
     match s.find(char::is_whitespace) {
@@ -453,9 +504,12 @@ fn is_ident(s: &str) -> bool {
         && s.chars().next().map(|c| !c.is_ascii_digit()).unwrap_or(false)
 }
 
-// ──────────────────────────────────────────────────────────────────
-// UI text
-// ──────────────────────────────────────────────────────────────────
+// endregion: HELPERS
+
+// region: UI TEXT
+// ══════════════════════════════════════════════════════════════════
+// UI TEXT - banner, quick-start card and full help
+// ══════════════════════════════════════════════════════════════════
 
 fn print_header(m: &Model) {
     println!("╔══════════════════════════════════════════════════════╗");
@@ -500,3 +554,4 @@ fn print_help() {
     println!("  > field ticket");
     println!("  > enum Bmt5EnumOrderType");
 }
+// endregion: UI TEXT

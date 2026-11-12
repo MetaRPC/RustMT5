@@ -1,15 +1,36 @@
-//! Interactive example launcher — a small menu over the other examples.
-//!
-//! Run:
-//!   cargo run --example menu
-//!
-//! Pick a number to launch that demo (each runs via `cargo run --example <name>`),
-//! or enter `0` / `q` to quit. Connection settings come from `examples/0_common/settings.json`
-//! and/or the `MT5_LOGIN` / `MT5_PASSWORD` / `MT5_SERVER` / `MRPC_API_KEY` environment variables
-//! (environment overrides the file).
+/*══════════════════════════════════════════════════════════════════════════════
+ FILE: examples/menu.rs - INTERACTIVE EXAMPLE LAUNCHER
+ PURPOSE:
+   A small menu over the other examples. Pick a number and it shells out to
+   `cargo run --example <name>` for that demo; `0` / `q` quits.
+
+ 🎯 WHO SHOULD USE THIS:
+   • Anyone browsing the examples without memorising the --example names
+   • A quick entry point to run any demo from one place
+
+ 📚 WHAT THIS DEMO COVERS (dispatches to):
+      quickstart                            - connect, read account, one trade
+      lowlevel_market_data / _trading / _streaming (MT5Account)
+      service_demo                          - typed facade (MT5Service)
+      sugar_basics / _trading / _positions / _history (MT5Sugar)
+      strategies_demo                       - orchestrators
+      protobuf_inspector                    - explore proto types (offline)
+
+ ℹ️  SAFE: launcher only - it runs no trades itself; the demo it launches may.
+     Connection settings come from examples/0_common/settings.json and/or the
+     MT5_LOGIN / MT5_PASSWORD / MT5_SERVER / MRPC_API_KEY env vars (env wins).
+
+ USAGE:
+   cargo run --example menu
+══════════════════════════════════════════════════════════════════════════════*/
 
 use std::io::{self, Write};
 use std::process::Command;
+
+// region: EXAMPLE CATALOG
+// ══════════════════════════════════════════════════════════════════
+// EXAMPLE CATALOG - menu label -> cargo --example name
+// ══════════════════════════════════════════════════════════════════
 
 /// (menu label, `--example` name), grouped by layer via the labels.
 const ITEMS: &[(&str, &str)] = &[
@@ -25,7 +46,18 @@ const ITEMS: &[(&str, &str)] = &[
     ("Strategies · orchestrators demo", "strategies_demo"),
     ("Tools · Protobuf Inspector (explore proto types — offline)", "protobuf_inspector"),
 ];
+// endregion: EXAMPLE CATALOG
 
+// region: MENU LOOP
+// ══════════════════════════════════════════════════════════════════
+// MENU LOOP - print the list, read a choice, launch the example
+// ══════════════════════════════════════════════════════════════════
+
+// ──────────────────────────────────────────────────────────────────
+// main()
+//   Loop: print the numbered catalog, read a selection, and spawn
+//   `cargo run --example <name>` for the chosen demo until 0/q/EOF.
+// ──────────────────────────────────────────────────────────────────
 fn main() {
     loop {
         println!("\n╔══════════════════════════════════════════════╗");
@@ -68,3 +100,4 @@ fn main() {
         }
     }
 }
+// endregion: MENU LOOP
