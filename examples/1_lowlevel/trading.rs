@@ -114,7 +114,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 volume,
                 price: tick.ask,
                 order_type: pb::EnumOrderTypeTf::OrderTypeTfBuy as i32,
-                type_filling: pb::MrpcEnumOrderTypeFilling::OrderFillingIoc as i32,
+                // Market deals on MetaQuotes-Demo reject IOC here (INVALID_FILL / 10030);
+                // Fill-Or-Kill is accepted for this symbol's execution mode.
+                type_filling: pb::MrpcEnumOrderTypeFilling::OrderFillingFok as i32,
                 type_time: pb::MrpcEnumOrderTypeTime::OrderTimeGtc as i32,
                 ..Default::default()
             }),
