@@ -130,7 +130,7 @@ impl MT5Account {
         let uri = format!("https://{}", self.grpc_server);
         let channel = Channel::from_shared(uri)
             .map_err(|e| MT5Error::Connection(e.to_string()))?
-            .tls_config(ClientTlsConfig::new())
+            .tls_config(ClientTlsConfig::new().with_webpki_roots())
             .map_err(|e| MT5Error::Connection(e.to_string()))?
             .connect()
             .await?;
