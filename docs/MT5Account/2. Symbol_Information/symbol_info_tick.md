@@ -44,12 +44,14 @@ message SymbolInfoTickRequest { string symbol = 1; }
 
 ```protobuf
 message MrpcMqlTick {
-  int64  time = 1;         // Unix seconds, last update
+  int64  time = 1;         // Unix seconds, last update (broker server time zone)
+  int64  time_utc = 9;     // time in UTC (same moment)
   double bid = 2;
   double ask = 3;
   double last = 4;         // last deal price
   uint64 volume = 5;       // volume for the last price
-  int64  time_msc = 6;     // last update, milliseconds
+  int64  time_msc = 6;     // last update, milliseconds (broker server time zone)
+  int64  time_msc_utc = 10;// time_msc in UTC (same moment)
   uint32 flags = 7;        // tick flags
   double volume_real = 8;  // higher-accuracy volume
 }
@@ -67,12 +69,14 @@ message MrpcMqlTick {
 
 | Field | Rust type | Description |
 |-------|-----------|-------------|
-| `time` | `i64` | Last update, Unix **seconds**. |
+| `time` | `i64` | Last update, Unix **seconds** — broker server time zone. |
+| `time_utc` | `i64` | `time` in UTC (same instant). |
 | `bid` | `f64` | Best sell price. |
 | `ask` | `f64` | Best buy price. |
 | `last` | `f64` | Last deal price (0 for pure FX with no exchange last). |
 | `volume` | `u64` | Volume for the last price. |
-| `time_msc` | `i64` | Last update, Unix **milliseconds**. |
+| `time_msc` | `i64` | Last update, Unix **milliseconds** — broker server time zone. |
+| `time_msc_utc` | `i64` | `time_msc` in UTC (same instant). |
 | `flags` | `u32` | Bitmask of what changed (bid/ask/last/volume). |
 | `volume_real` | `f64` | Volume with greater accuracy. |
 
@@ -117,7 +121,7 @@ println!("spread: {:.1} points", (t.ask - t.bid) / point);
 use metarpc_mt5::proto::mt5_term_api as pb;
 
 let t = account.symbol_info_tick(pb::SymbolInfoTickRequest { symbol: "EURUSD".into() }).await?;
-let age_ms = chrono::Utc::now().timestamp_millis() - t.time_msc;
+let age_ms = chrono::Utc::now().timestamp_millis() - t.time_msc_utc;
 if age_ms > 5_000 { println!("[WARN] quote is {age_ms} ms old — market may be closed"); }
 ```
 
